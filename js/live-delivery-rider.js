@@ -42,7 +42,7 @@
     const tell=message=>{if(info.textContent!==message)info.textContent=message;};
     const rpc=async(name,args)=>{
       const {data,error}=await db.rpc(name,args);
-      if (error) throw Error(error.message || 'Could not connect.');
+      if (error) throw Object.assign(Error(error.message || 'Could not connect.'), {code:error.code});
       return data;
     };
     const actionButton=(order,action,label,{style='p',disabled=false}={})=>
@@ -78,6 +78,8 @@
       const drop=directions(Number.isFinite(order.drop_lat)&&Number.isFinite(order.drop_lng)
         ? order.drop_lat+','+order.drop_lng : cleanAddress(order.address));
       const storePhone=safePhone(order.store_phone), phone=safePhone(order.phone);
+      const customer=escape(order.customer||'Name unavailable');
+      const contact=phone?`<p class="pr-order-sub">${escape(phone)}</p>`:'';
       const cod=order.cod_due!=null&&Number.isFinite(Number(order.cod_due))
         ? `<p class="pr-cod">Collect cash · ${peso.format(Number(order.cod_due))} (COD)</p>` : '';
       const time=order.created_at&&Number.isFinite(Date.parse(order.created_at))
@@ -86,7 +88,8 @@
       const heading=pickedUp?'On the way':accepted?'At the store':'Assigned to you';
       const body=pickedUp?`<div class="pr-trip-details">
         <span class="pr-trip-label">Customer</span>
-        <strong class="pr-customer-name">${escape(order.customer||'Customer')}</strong>
+        <strong class="pr-customer-name">${customer}</strong>
+        ${contact}
         <p>${escape(cleanAddress(order.address)||'Drop-off address unavailable')}</p>
         <div class="pr-trip-tools">
           ${phone?`<a class="btn s" href="sms:${phone}">Message customer</a><a class="btn s" href="tel:${phone}">Call</a>`:''}
@@ -99,6 +102,7 @@
         <p class="pr-order-sub">${escape(order.store_address||'')}${time}</p>
         ${order.items?.length?`<ul>${order.items.map(i=>`<li>${escape(i.qty)} × ${escape(i.name||'Item')}</li>`).join('')}</ul>`:''}
         ${cod}
+        ${accepted?`<div class="pr-recipient"><span class="pr-trip-label">Customer</span><strong class="pr-customer-name">${customer}</strong>${contact}</div>`:''}
       </div>`;
       const primary=pickedUp?actionButton(order,'deliver','Mark delivered',{disabled:!handedOff})
         :accepted?actionButton(order,'pickup','Picked up & start delivery',{disabled:!handedOff})
@@ -278,10 +282,19 @@
         loadStatus.textContent='';
         paint();
       } catch(error) {
-        if(alive()&&revision===jobsRevision)loadStatus.textContent=/papalita_rider_workspace|schema cache/i.test(error.message)
-          ? 'Rider v7 needs the self-dispatch database update. Contact your Papalita admin.'
-          : key?'Could not refresh. Showing the last loaded deliveries. Tap Refresh to try again.'
-          :'Could not load your deliveries. Check your connection and tap Refresh.';
+        if(alive()&&revision===jobsRevision){
+          const code=/^[A-Z0-9]{5,10}$/.test(error.code||'')?error.code:'';
+          if(code==='PGRST202'||code==='42883'){
+            loadStatus.textContent='Delivery setup is incomplete. Contact Papalita support.';
+          }else if(code==='42501'){
+            loadStatus.textContent='Your account could not access deliveries. Contact Papalita support.';
+          }else if(code){
+            loadStatus.textContent='The server could not load deliveries. Contact Papalita support with code '+code+'.';
+          }else{
+            loadStatus.textContent=key?'Could not refresh. Showing the last loaded deliveries. Tap Refresh to try again.'
+              :'Could not load deliveries. Tap Refresh to try again.';
+          }
+        }
       } finally {
         refreshing=false;
         refreshButton.removeAttribute('aria-busy');
