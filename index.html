@@ -79,11 +79,25 @@ html[data-pr-theme=dark]{--pr-bg:#121a15;--pr-card:#1c271f;--pr-ink:#edf0e7;--pr
 .pr-trip-header{display:flex;align-items:start;justify-content:space-between;gap:9px;flex-wrap:wrap}
 .pr-trip-header p{margin:4px 0 0}
 .pr-step{font-size:11px;font-weight:750;color:var(--pr-green);border:1px solid var(--pr-line);border-radius:999px;padding:5px 8px;white-space:nowrap}
-.pr-trip-map{position:relative;display:block;width:100%;overflow:hidden;border-radius:12px;background:#253037;margin:12px 0}
-.pr-trip-map svg{display:block;width:100%;height:clamp(124px,39vw,185px);object-fit:cover}
-.pr-trip-map span{position:absolute;left:9px;bottom:8px;display:inline-block;border-radius:6px;padding:4px 8px;background:#101918e8;color:#e7f2ec;font-size:11px}
-.pr-trip-map small{position:absolute;right:9px;bottom:8px;border-radius:6px;padding:4px 8px;background:#101918e8;color:#c8d8cf;font-size:10px}
-.pr-trip-map:focus-visible{outline-offset:3px}
+.pr-availability{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.pr-availability label{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:750;cursor:pointer}
+.pr-availability input{width:21px;height:21px;accent-color:var(--pr-green)}
+.pr-availability label:has(input[hidden]){display:none}
+.pr-map-tools{margin-bottom:10px}
+.pr-map-canvas{height:clamp(220px,40dvh,360px);background:#e2eee3;border-radius:12px;isolation:isolate}
+.pr-map-pin{display:grid;place-items:center;border-radius:50%;border:2px solid white;color:white;font-weight:800;background:#14633e}
+.pr-map-drop{background:#a46017}
+.pr-map-rider{background:#087f45}
+.pr-map-rider svg{width:18px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pr-dialog-body>p.pr-map-disclosure{margin:10px 0 0}
+.pr-dialog-body>p.pr-status-note{margin:8px 0}
+.pr-earnings-total{padding:14px;background:var(--pr-soft);border-radius:12px}
+.pr-earnings-total strong{display:block;font-size:30px}
+.pr-earnings-total p{color:var(--pr-muted);font-size:12px}
+.pr-history-title{margin-top:14px}
+.pr-history-list{list-style:none;margin:0;padding:0}
+.pr-history-list li{display:flex;justify-content:space-between;gap:8px;align-items:start;padding:10px 0;border-bottom:1px solid var(--pr-line);overflow-wrap:anywhere}
+.pr-history-list small{display:block;color:var(--pr-muted)}
 .pr-trip-details{background:var(--pr-soft);padding:13px;border-radius:12px;overflow-wrap:anywhere}
 .pr-trip-details dt,.pr-trip-label{color:var(--pr-muted);font-size:12px;font-weight:650}
 .pr-trip-details dd{font-size:15px;font-weight:750;margin:0}
@@ -124,7 +138,7 @@ html[data-pr-theme=dark]{--pr-bg:#121a15;--pr-card:#1c271f;--pr-ink:#edf0e7;--pr
 </head>
 <body><div id="root"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js"></script><script src="js/ops.js"></script><script src="js/live-delivery-rider.js?fix=deliveries"></script>
+<script src="js/config.js"></script><script src="js/ops.js"></script><script src="js/rider-road-map.js"></script><script src="js/live-delivery-rider.js?update=rider-tools"></script>
 <script>
 (() => { 'use strict';
 /* Rider identity is verified by Supabase Auth and the protected user_roles table. */
@@ -176,6 +190,10 @@ function draw(){
    </div>
    <p data-live-load-status role="status">Loading assigned orders…</p>
    <p data-live-info role="status"></p>
+   <div class="pr-availability">
+    <label><input type="checkbox" aria-label="Available for new deliveries" role="switch" data-rider-availability hidden> <span data-rider-availability-label></span></label>
+    <button class="btn s" type="button" data-delivery-action="history">History &amp; earnings</button>
+   </div>
    <nav class="pr-tabs" aria-label="Delivery views" data-delivery-views hidden></nav>
    <div data-live-jobs></div>
   </main>`;
