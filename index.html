@@ -58,7 +58,6 @@ html[data-pr-theme=dark]{--pr-bg:#121a15;--pr-card:#1c271f;--pr-ink:#edf0e7;--pr
 .pr-app-brand .pr-logo{width:38px;height:38px;border:1px solid var(--pr-line)}
 .pr-app-brand strong{font-size:17px;display:block;line-height:1.15;letter-spacing:.015em;text-transform:uppercase}
 .pr-app-brand strong span{color:var(--pr-green)}
-.pr-app-brand small{font-size:11px;color:var(--pr-muted)}
 .pr-ready .pr-workspace{width:100%;max-width:550px;margin:0 auto;padding:16px 16px max(24px,env(safe-area-inset-bottom))}
 .pr-workspace h1{font-size:clamp(24px,6vw,32px);line-height:1.15;letter-spacing:-.025em;margin:0}
 .pr-workspace p{margin:0}
@@ -95,6 +94,7 @@ html[data-pr-theme=dark]{--pr-bg:#121a15;--pr-card:#1c271f;--pr-ink:#edf0e7;--pr
 .pr-route-stops>div:before{content:'';position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%;background:var(--pr-green)}
 .pr-route-stops>div+div:before{top:17px}
 .pr-pickup-slip{border-top:2px dashed var(--pr-line);border-bottom:2px dashed var(--pr-line)}
+.pr-recipient{border-top:1px dashed var(--pr-line);padding-top:9px;margin-top:9px}
 .pr-pickup-slip ul{list-style:none;padding:9px 0}
 .pr-pickup-slip li{display:flex;gap:8px;padding:5px 0}
 .pr-pickup-slip li:before{content:'•';color:var(--pr-green)}
@@ -124,7 +124,7 @@ html[data-pr-theme=dark]{--pr-bg:#121a15;--pr-card:#1c271f;--pr-ink:#edf0e7;--pr
 </head>
 <body><div id="root"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js"></script><script src="js/ops.js"></script><script src="js/live-delivery-rider.js?v=4"></script>
+<script src="js/config.js"></script><script src="js/ops.js"></script><script src="js/live-delivery-rider.js?fix=deliveries"></script>
 <script>
 (() => { 'use strict';
 /* Rider identity is verified by Supabase Auth and the protected user_roles table. */
@@ -165,7 +165,7 @@ function draw(){
   <header class="pr-app-bar"><div class="pr-app-bar-inner">
    <div class="pr-app-brand">
     <img class="pr-logo" src="images/papalita_mark_color.png" alt="">
-    <div><strong>Papalita <span>Rider</span></strong><small>v7</small></div>
+    <div><strong>Papalita <span>Rider</span></strong></div>
    </div>
    <button class="btn s" type="button" data-pr-account>Account</button>
   </div></header>
@@ -245,7 +245,7 @@ function prAuthLoading(message='Checking your rider account…'){
 function prRiderGate(message=''){
  clearDeliveries();
  document.title='Papalita Rider · Sign in';
- $('#root').innerHTML=`<main class="pr-gate-main"><form id="g" class="panel pr-auth-form"><div class="pr-gate-brand"><img class="pr-logo" src="images/papalita_mark_color.png" alt="Papalita"><div><strong>Papalita</strong><small>Rider portal · v7</small></div></div><h1>Welcome back, rider.</h1><p class="mu" style="margin:7px 0 21px">Sign in to your Papalita rider account.</p><div class="field"><label for="rider-email">Email address</label><input class="in" id="rider-email" name="email" type="email" autocomplete="username" inputmode="email" value="${esc(prLoginEmail)}" required placeholder="you@example.com"></div><div class="field"><label for="rider-password">Password</label><div class="pr-password-wrap"><input class="in" id="rider-password" name="password" type="password" autocomplete="current-password" required><button type="button" class="pr-password-toggle" id="rider-password-toggle" aria-label="Show password" aria-pressed="false">Show</button></div></div><p class="err pr-auth-error" id="pe" role="alert">${esc(message)}</p><button class="btn p blk" id="rider-signin" type="submit">Sign in ${prIcon('arrow')}</button><button type="button" class="btn s blk pr-install-login" data-pr-install>${prIcon('install')}<span class="pr-install-native-label">Install Rider App</span><span class="pr-install-help-label">How to install Rider App</span></button><p class="pr-install-pending" role="status">Install Rider App will appear when Chrome is ready.</p><p class="pr-auth-access">Your account needs the <b>rider</b> role. Contact your Papalita administrator if you need access.</p><p class="sm">New rider? <a class="link" href="https://papalitaoriginal.netlify.app/apply/?role=rider">Apply as a Rider</a></p><a class="link" href="https://tomcaberio99-design.github.io/papalita/">← Back to customer app</a></form></main>`;
+ $('#root').innerHTML=`<main class="pr-gate-main"><form id="g" class="panel pr-auth-form"><div class="pr-gate-brand"><img class="pr-logo" src="images/papalita_mark_color.png" alt="Papalita"><div><strong>Papalita</strong><small>Rider portal</small></div></div><h1>Welcome back, rider.</h1><p class="mu" style="margin:7px 0 21px">Sign in to your Papalita rider account.</p><div class="field"><label for="rider-email">Email address</label><input class="in" id="rider-email" name="email" type="email" autocomplete="username" inputmode="email" value="${esc(prLoginEmail)}" required placeholder="you@example.com"></div><div class="field"><label for="rider-password">Password</label><div class="pr-password-wrap"><input class="in" id="rider-password" name="password" type="password" autocomplete="current-password" required><button type="button" class="pr-password-toggle" id="rider-password-toggle" aria-label="Show password" aria-pressed="false">Show</button></div></div><p class="err pr-auth-error" id="pe" role="alert">${esc(message)}</p><button class="btn p blk" id="rider-signin" type="submit">Sign in ${prIcon('arrow')}</button><button type="button" class="btn s blk pr-install-login" data-pr-install>${prIcon('install')}<span class="pr-install-native-label">Install Rider App</span><span class="pr-install-help-label">How to install Rider App</span></button><p class="pr-install-pending" role="status">Install Rider App will appear when Chrome is ready.</p><p class="pr-auth-access">Your account needs the <b>rider</b> role. Contact your Papalita administrator if you need access.</p><p class="sm">New rider? <a class="link" href="https://papalitaoriginal.netlify.app/apply/?role=rider">Apply as a Rider</a></p><a class="link" href="https://tomcaberio99-design.github.io/papalita/">← Back to customer app</a></form></main>`;
  const form=$('#g'),password=$('#rider-password'),toggle=$('#rider-password-toggle');
  if(prSignOutFailed){const retry=document.createElement('button');retry.type='button';retry.className='btn s blk';retry.style.marginTop='10px';retry.textContent='Retry sign out';retry.onclick=()=>void prRiderSignOut();$('#rider-signin').after(retry);}
  toggle.onclick=()=>{const shown=password.type==='password';password.type=shown?'text':'password';toggle.textContent=shown?'Hide':'Show';toggle.setAttribute('aria-label',shown?'Hide password':'Show password');toggle.setAttribute('aria-pressed',String(shown));};
