@@ -6,105 +6,109 @@
 <meta name="apple-mobile-web-app-title" content="Papalita Rider">
 <script src="./js/rider-install.js?v=4"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css">
-<style>main{max-width:720px;margin:0 auto;padding:16px 16px 60px}.tabs{position:sticky;top:0;background:var(--bg);z-index:5;padding:10px 0}.k{font-size:26px;font-weight:800;display:block}.big-btn{min-height:56px;font-size:17px;width:100%}.steps{display:flex;gap:6px;margin:10px 0}.steps i{flex:1;height:6px;border-radius:3px;background:var(--ln)}.steps i.on{background:var(--or)}</style>
 <!-- PAPALITA RIDER PRESENTATION START -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style id="papalita-rider-presentation">
-:root{--pr-bg:#f8f8f4;--pr-card:#fff;--pr-ink:#203125;--pr-muted:#6d796e;--pr-line:#e1e7de;--pr-soft:#eef4eb;--pr-green:#087f45;--pr-side:#19211b;--pr-yellow:#f1dfa4;--pr-danger:#b84d40}
+:root{--pr-bg:#f8f8f4;--pr-card:#fff;--pr-ink:#203125;--pr-muted:#6d796e;--pr-line:#e1e7de;--pr-soft:#eef4eb;--pr-green:#087f45;--pr-danger:#b84d40}
 body.pr-ready{margin:0;background:var(--pr-bg);color:var(--pr-ink);font-family:Inter,'Plus Jakarta Sans',system-ui,sans-serif;font-size:13px;line-height:1.55;--bg:var(--pr-bg);--ink:var(--pr-ink);--mu:var(--pr-muted);--ln:var(--pr-line);--sf:var(--pr-soft);--or:var(--pr-green);--or-s:var(--pr-soft);--or-d:var(--pr-ink);--er:var(--pr-danger)}
-.pr-ready *{box-sizing:border-box}.pr-ready button,.pr-ready input,.pr-ready textarea,.pr-ready select{font-family:inherit}.pr-ready h1,.pr-ready h2,.pr-ready h3{color:var(--pr-ink)}.pr-ready .mu{color:var(--pr-muted)}.pr-ready .sm{font-size:11px}.pr-ready .row{display:flex;gap:10px;align-items:center}.pr-ready .sp{justify-content:space-between}.pr-ready .grow{flex:1}.pr-icon{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
-.pr-shell{display:grid;grid-template-columns:220px minmax(0,1fr);min-height:100dvh;width:100%}.pr-sidebar{position:sticky;top:0;height:100dvh;padding:26px 14px 15px;display:flex;flex-direction:column;background:var(--pr-side);color:#bac6b8;overflow-y:auto;scrollbar-width:thin}.pr-brand{display:flex;align-items:center;gap:11px;padding:0 8px 28px;text-decoration:none}.pr-logo{width:39px;height:43px;border-radius:11px;background:white;object-fit:contain;padding:5px;flex:none}.pr-brand strong{display:block;font-size:24px;line-height:1.2;letter-spacing:-.6px;color:#fff}.pr-brand small{display:block;font-size:9px;letter-spacing:1.7px;color:#b5c1ad;margin-top:5px}.pr-side-tag{border:1px solid #364334;border-radius:9px;padding:12px;margin:0 2px 25px;display:flex;gap:10px;align-items:center;font-size:11px;color:#d4ddcc}.pr-side-label{padding:0 11px;margin:0 0 10px;color:#9aaa91;font-size:9px;letter-spacing:1.3px;text-transform:uppercase}.pr-side-nav{display:grid;gap:5px}.pr-nav-button{display:flex;align-items:center;gap:12px;width:100%;min-height:43px;border:0;border-radius:8px;padding:11px 12px;background:transparent;color:#c1cbbd;text-align:left;font-size:12px;font-weight:550;cursor:pointer}.pr-nav-button:hover{background:#ffffff09;color:white}.pr-nav-button[aria-current=page]{background:var(--pr-yellow);color:#263223;font-weight:700}.pr-nav-count{margin-left:auto;min-width:23px;padding:2px 6px;border-radius:6px;background:#34462f;color:#e6efdc;font-size:11px;text-align:center;font-weight:750;font-variant-numeric:tabular-nums}.pr-nav-button[aria-current=page] .pr-nav-count{background:#263b24;color:white}.pr-side-bottom{margin-top:auto;padding-top:30px}.pr-side-profile{border-top:1px solid #364334;display:flex;align-items:center;gap:10px;padding:18px 5px 0;margin-top:12px}.pr-avatar{width:33px;height:33px;display:grid;place-items:center;border-radius:50%;background:#e3ead7;color:#3b5033;font-size:12px;font-weight:750;flex:none}.pr-side-profile>div{flex:1;min-width:0}.pr-side-profile strong{display:block;font-size:11px;color:#e4ecd9}.pr-side-profile small{display:block;font-size:9px;color:#a5b49a}.pr-signout{border:0;background:transparent;color:#bdc9b5;width:30px;height:33px;padding:6px;cursor:pointer}.pr-workspace{min-width:0}.pr-topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;min-height:70px;border-bottom:1px solid var(--pr-line);background:var(--pr-card);padding:15px 32px}.pr-breadcrumb{display:flex;align-items:center;gap:12px;font-size:11px;color:var(--pr-muted)}.pr-breadcrumb strong{font-weight:600;color:var(--pr-ink)}.pr-top-actions{display:flex;align-items:center;gap:10px}.pr-local-badge{background:var(--pr-soft);color:var(--pr-muted);font-size:9px;border:1px solid var(--pr-line);border-radius:20px;padding:4px 9px;white-space:nowrap}.pr-icon-button{display:inline-grid;place-items:center;background:var(--pr-card);color:var(--pr-ink);border:1px solid var(--pr-line);border-radius:8px;width:34px;height:34px;cursor:pointer}.pr-icon-button:hover{background:var(--pr-soft)}
-.pr-ready main.pr-page{width:100%;max-width:none!important;margin:0!important;padding:28px 32px 18px!important;min-width:0}.pr-page-heading{margin-bottom:22px}.pr-page-heading h1{font-size:27px!important;letter-spacing:-.8px;line-height:1.25;margin:0}.pr-page-heading p{font-size:12px;color:var(--pr-muted);margin:6px 0 0}.pr-welcome{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:23px 26px;border:1px solid #e6d9a6;border-radius:12px;background:linear-gradient(110deg,#f3eac2,#f8f4e1);margin-bottom:18px}.pr-welcome small{display:block;text-transform:uppercase;letter-spacing:1.6px;color:#6c674b;font-size:8px;font-weight:700;margin-bottom:9px}.pr-welcome h2{font-size:24px;letter-spacing:-.7px;line-height:1.3;color:#223b22;margin:0}.pr-welcome p{font-size:11px;color:#58644d;margin:8px 0 0}.pr-rider-header{display:flex;gap:15px;align-items:center;min-width:245px;border-left:1px solid #d7cfae;padding-left:24px}.pr-rider-header h1{font-size:14px!important;letter-spacing:-.2px;line-height:1.4}.pr-rider-header p{font-size:10px!important;margin-top:4px}.pr-ready .pr-rider-header .chip{font-size:11px;white-space:nowrap;padding:8px 11px;border:1px solid #b6c6a7;background:#fff9;color:#29412b;border-radius:30px}.pr-ready .pr-rider-header .chip.on{background:#dcebcf;color:#294d25;border-color:#becfae}.pr-ready .pr-rider-header .chip:has(input:focus-visible){outline:3px solid var(--pr-green);outline-offset:3px}
-.pr-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin:18px 0}.pr-stat{background:var(--pr-card);border:1px solid var(--pr-line);padding:17px 20px;border-radius:10px;min-width:0}.pr-stat>span{font-size:11px;color:var(--pr-muted)}.pr-stat>b{font-size:26px;line-height:1.25;letter-spacing:-.7px;display:block;margin-top:9px;font-variant-numeric:tabular-nums}.pr-mode-details{border:1px solid var(--pr-line);border-radius:9px;background:var(--pr-card);margin-bottom:21px;overflow:hidden}.pr-mode-details summary{list-style:none;padding:12px 15px;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--pr-muted);font-size:10px}.pr-mode-details summary::-webkit-details-marker{display:none}.pr-mode-details summary>.pr-icon:last-child{margin-left:auto;width:14px;height:14px}.pr-mode-details[open] summary>.pr-icon:last-child{transform:rotate(180deg)}.pr-mode-body{border-top:1px solid var(--pr-line);padding:15px}.pr-mode-body>div{margin:0!important}.pr-ready .pr-mode-body .note{margin:0!important;font-size:11px;background:var(--pr-soft);border-color:var(--pr-line);color:var(--pr-ink);border-radius:8px}.pr-mode-body>p{font-size:10px;color:var(--pr-muted);margin:0 0 12px}.pr-content{min-width:0}.pr-job-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:18px}.pr-content .pr-job-grid>.btn{grid-column:1/-1;justify-self:start;width:auto}.pr-content>h3{font-size:15px!important;letter-spacing:-.2px}.pr-ready .panel{background:var(--pr-card);border:1px solid var(--pr-line);border-radius:11px;box-shadow:none;padding:21px;margin-bottom:17px;color:var(--pr-ink)}.pr-ready .pr-job-grid>.panel{margin:0}.pr-ready .btn{min-height:42px;padding:0 17px;border:1px solid transparent;border-radius:8px;font-size:12px;font-weight:650;box-shadow:none;display:inline-flex;justify-content:center;align-items:center;gap:8px;cursor:pointer}.pr-ready .btn.p{background:var(--pr-green);color:white}.pr-ready .btn.s,.pr-ready .btn.o{background:var(--pr-card);border-color:var(--pr-line);color:var(--pr-ink)}.pr-ready .btn.d{background:var(--pr-card);border-color:#e4c4bc;color:var(--pr-danger)}.pr-ready .btn.blk{width:100%}.pr-ready .btn.big-btn{min-height:48px;font-size:13px;width:100%}.pr-ready .status{display:inline-flex;align-items:center;background:#f4eacf;color:#785e1a;border-radius:6px;padding:4px 8px;font-size:9px;font-weight:650;white-space:nowrap}.pr-ready .status.open{background:var(--pr-soft);color:var(--pr-green)}.pr-ready .status.closed{background:#f7e9e4;color:var(--pr-danger)}.pr-ready .empty{padding:46px 25px;border:1px dashed var(--pr-line);border-radius:12px;background:var(--pr-card);text-align:center;color:var(--pr-ink)}.pr-ready .empty h3{font-size:17px;margin:14px 0 5px}.pr-ready .empty p{font-size:12px;color:var(--pr-muted)}.pr-empty-icon{width:48px;height:48px;display:grid;place-items:center;background:var(--pr-soft);color:var(--pr-green);border-radius:14px;margin:auto}.pr-empty-icon .pr-icon{width:23px;height:23px}.pr-footer{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--pr-line);margin-top:27px;padding:20px 0 0;font-size:9px;color:var(--pr-muted)}
-.pr-card-top{display:flex;align-items:center;gap:11px;justify-content:space-between;margin-bottom:17px}.pr-store-icon{width:36px;height:36px;display:grid;place-items:center;background:var(--pr-soft);border:1px solid var(--pr-line);border-radius:10px;color:var(--pr-green);flex:none}.pr-store-title{flex:1;min-width:0}.pr-store-title h3{font-size:14px;margin:0;line-height:1.4}.pr-order-id{font-size:10px;color:var(--pr-muted);margin-top:3px;overflow-wrap:anywhere}.pr-card-route{position:relative;display:grid;gap:16px;padding:16px;background:var(--pr-soft);border-radius:9px;margin-bottom:15px}.pr-route-stop{display:flex;gap:11px;align-items:flex-start}.pr-route-stop>.pr-icon{width:16px;height:16px;margin-top:3px;color:var(--pr-green)}.pr-route-stop small{display:block;color:var(--pr-muted);font-size:9px;margin-bottom:2px}.pr-route-stop p{font-size:12px;color:var(--pr-ink);margin:0;line-height:1.6}.pr-card-items{font-size:11px;margin-bottom:15px;color:var(--pr-ink);line-height:1.75}.pr-items-label{font-size:10px;color:var(--pr-muted);display:block;margin-bottom:4px}.pr-card-money{display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid var(--pr-line);padding:15px 0}.pr-card-money small{display:block;font-size:10px;color:var(--pr-muted);margin-bottom:4px}.pr-card-money b{font-size:21px;font-variant-numeric:tabular-nums;line-height:1.2;letter-spacing:-.5px}.pr-card-money .pr-cash b{color:var(--pr-danger)}.pr-card-money .pr-cash:last-child{text-align:right}.pr-card-money .pr-payment-label{font-size:12px;letter-spacing:0}.pr-tip{font-size:9px;color:var(--pr-muted);display:block;margin-top:5px}.pr-card-actions{border-top:1px solid var(--pr-line);padding-top:16px;display:grid;gap:9px}.pr-card-actions .row{align-items:stretch}.pr-card-actions .row>.btn:first-child{flex:2}.pr-card-actions .row>.btn:last-child{flex:1}.pr-contact{border-top:1px solid var(--pr-line);padding-top:15px;margin-bottom:15px}.pr-contact b{font-size:12px}.pr-contact p{font-size:11px;color:var(--pr-muted);margin:5px 0}.pr-contact-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.pr-contact-links .btn{font-size:10px;min-height:35px;flex:1;padding:0 10px;white-space:nowrap}.pr-progress{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}.pr-progress span{position:relative;display:block;padding-top:11px;font-size:8px;color:var(--pr-muted);text-align:center}.pr-progress span::before{content:'';height:4px;background:var(--pr-line);position:absolute;top:0;left:0;right:0;border-radius:3px}.pr-progress .on{color:var(--pr-green);font-weight:700}.pr-progress .on::before{background:var(--pr-green)}
-.pr-bottom-nav{display:none}.pr-dialog.ov{position:fixed;inset:0;margin:auto;padding:0;width:min(470px,calc(100% - 28px));max-height:calc(100dvh - 32px);height:auto;background:var(--pr-card);border:1px solid var(--pr-line);border-radius:17px;overflow:auto;color:var(--pr-ink);box-shadow:0 25px 90px #122a2144;z-index:1000}.pr-dialog::backdrop{background:#11241b88;backdrop-filter:blur(4px)}.pr-dialog:not([open]){display:none}.pr-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:20px 22px;background:var(--pr-soft);border-bottom:1px solid var(--pr-line)}.pr-dialog-head h2{font-size:18px;margin:0;letter-spacing:-.5px}.pr-dialog-body{padding:22px}.pr-dialog-body>p{font-size:12px;color:var(--pr-muted);margin:0 0 17px}.pr-dialog .pr-reasons{display:grid;gap:8px}.pr-dialog .pr-reason{padding:12px;border:1px solid var(--pr-line);border-radius:9px;display:flex;gap:10px;align-items:center;font-size:12px;cursor:pointer}.pr-dialog .pr-reason:has(input:checked){background:var(--pr-soft);border-color:var(--pr-green)}.pr-dialog .pr-reason input{accent-color:var(--pr-green)}.pr-ready .in{border:1px solid var(--pr-line);border-radius:9px;background:var(--pr-card);color:var(--pr-ink);min-height:45px;padding:10px 12px;font-size:14px;width:100%}.pr-ready .field{margin-bottom:16px}.pr-ready .field label{font-size:11px;font-weight:650;color:var(--pr-ink);display:block;margin-bottom:6px}.pr-dialog .field{margin:18px 0}.pr-dialog textarea{min-height:85px;resize:vertical}.pr-dialog .err{color:var(--pr-danger)}.pr-dialog .pr-note{font-size:10px;color:var(--pr-muted);line-height:1.6}.pr-dialog-actions{display:flex;gap:10px;margin-top:22px}.pr-dialog-actions .btn{flex:1}.pr-theme-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.pr-theme-options button{display:grid;place-items:center;gap:10px;border:1px solid var(--pr-line);border-radius:10px;background:var(--pr-card);color:var(--pr-ink);padding:20px 5px;font-size:12px}.pr-theme-options button[aria-pressed=true]{outline:2px solid var(--pr-green);outline-offset:1px;background:var(--pr-soft)}
-.pr-ready .pr-gate-main{width:100%;max-width:460px!important;padding:0 16px!important;margin:8vh auto!important}.pr-ready .pr-gate-main #g{margin:0!important;padding:0 25px 24px;border:1px solid var(--pr-line);border-radius:20px;overflow:hidden;box-shadow:0 12px 60px #203a2010}.pr-gate-brand{margin:0 -25px 24px;padding:23px 25px;background:#1e3525;display:flex;align-items:center;gap:11px;color:white}.pr-gate-brand strong{display:block;font-size:23px;letter-spacing:-.5px}.pr-gate-brand small{display:block;color:#c8d5bb;font-size:9px;letter-spacing:1.4px;text-transform:uppercase}.pr-ready #g h1{font-size:24px!important;letter-spacing:-.5px}.pr-ready #g .note{border:1px solid var(--pr-line);border-radius:9px;background:var(--pr-soft);color:var(--pr-ink);padding:13px;font-size:11px;line-height:1.7}.pr-ready #g .demo{display:inline-block;font-size:8px;font-weight:750;background:#f1df9f;color:#60501a;padding:2px 6px;border-radius:4px;margin-right:5px}.pr-ready #g>.btn{width:100%;min-height:45px}.pr-ready #g>.link{display:block;font-size:11px;margin-top:18px;color:var(--pr-green)}.pr-ready :where(a,button,input,select,textarea,summary):focus-visible{outline:2px solid var(--pr-green);outline-offset:3px}.pr-ready #toasts{z-index:10000;bottom:24px}.pr-ready .toast{border:1px solid var(--pr-line);background:var(--pr-ink);color:var(--pr-card);font-size:12px;border-radius:9px}
-html[data-pr-theme=dark]{--pr-bg:#121a15;--pr-card:#1c271f;--pr-ink:#edf0e7;--pr-muted:#aebaa9;--pr-line:#354437;--pr-soft:#293b2b;--pr-green:#88bd88;--pr-danger:#f0ada0}.pr-ready[data-pr-dark=true] .btn.p{color:#142e1c}.pr-ready[data-pr-dark=true] .pr-welcome{background:linear-gradient(110deg,#2d422c,#26382a);border-color:#4e6047}.pr-ready[data-pr-dark=true] .pr-welcome h2{color:#f0f2dd}.pr-ready[data-pr-dark=true] .pr-welcome small,.pr-ready[data-pr-dark=true] .pr-welcome p{color:#c6d3b9}.pr-ready[data-pr-dark=true] .pr-rider-header{border-color:#4f6044}.pr-ready[data-pr-dark=true] .pr-rider-header .chip{background:#31452d;border-color:#65805d;color:#e5edd6}.pr-ready[data-pr-dark=true] .status{background:#4c432a;color:#f0d58a}.pr-ready[data-pr-dark=true] .status.closed{background:#4b302c;color:#ffc2b3}
-@media(min-width:1550px){.pr-job-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:1120px){.pr-rider-header{min-width:220px}.pr-ready main.pr-page{padding:25px 24px 18px!important}.pr-topbar{padding-left:24px;padding-right:24px}.pr-welcome{padding:22px}.pr-welcome h2{font-size:21px}.pr-stats{gap:12px}.pr-stat{padding:16px}.pr-stat>b{font-size:23px}}
-@media(max-width:900px){.pr-shell{grid-template-columns:200px minmax(0,1fr)}.pr-sidebar{padding-left:10px;padding-right:10px}.pr-job-grid{grid-template-columns:1fr}.pr-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.pr-welcome{display:block}.pr-rider-header{padding:17px 0 0;border:0;border-top:1px solid #d7cfae;margin-top:18px}.pr-welcome h2{font-size:23px}.pr-rider-header>div:first-child{flex:1}}
-@media(max-width:700px){.pr-shell{display:block}.pr-sidebar{display:none}.pr-topbar{position:sticky;top:0;z-index:20;min-height:65px;padding:12px 16px}.pr-breadcrumb{gap:8px}.pr-breadcrumb>span{display:none}.pr-breadcrumb>.pr-icon{display:none}.pr-breadcrumb strong{font-size:12px}.pr-breadcrumb::before{content:'';width:27px;height:31px;background:white url('images/papalita_mark_color.png') center/20px auto no-repeat;border:1px solid var(--pr-line);border-radius:8px;margin-right:1px}.pr-top-actions{gap:7px}.pr-local-badge{font-size:8px;padding:4px 7px}.pr-icon-button{width:31px;height:31px}.pr-icon-button .pr-icon{width:16px;height:16px}.pr-ready main.pr-page{padding:23px 16px 100px!important}.pr-page-heading{margin-bottom:19px}.pr-page-heading h1{font-size:24px!important}.pr-page-heading p{font-size:11px}.pr-welcome{padding:21px 20px}.pr-welcome h2{font-size:22px}.pr-welcome>div>p{font-size:11px}.pr-welcome small{font-size:7px}.pr-rider-header h1{font-size:13px!important}.pr-rider-header p{font-size:9px!important}.pr-stats{gap:11px}.pr-stat{padding:15px 13px}.pr-stat>span{font-size:10px}.pr-stat>b{font-size:24px;margin-top:8px}.pr-mode-details summary{font-size:9px;padding:11px 12px;gap:7px}.pr-mode-details summary>.pr-icon{width:15px;height:15px}.pr-ready .panel{padding:18px;border-radius:11px}.pr-card-route{padding:14px}.pr-card-top{gap:9px}.pr-store-title h3{font-size:13px}.pr-store-icon{width:32px;height:32px}.pr-order-id{font-size:9px}.pr-card-money b{font-size:22px}.pr-card-actions .btn.big-btn{min-height:49px;font-size:13px}.pr-job-grid{gap:15px}.pr-bottom-nav{display:flex;position:fixed;left:0;right:0;bottom:0;background:var(--pr-card);border-top:1px solid var(--pr-line);padding:8px 8px calc(9px + env(safe-area-inset-bottom,0px));z-index:30;gap:4px}.pr-bottom-nav .pr-nav-button{display:flex;flex-direction:column;justify-content:center;gap:4px;position:relative;min-height:49px;padding:5px 2px;font-size:9px;text-align:center;flex:1;background:transparent;color:var(--pr-muted)}.pr-bottom-nav .pr-nav-button[aria-current=page]{background:var(--pr-soft);color:var(--pr-green)}.pr-bottom-nav .pr-nav-count{position:absolute;top:0;right:calc(50% - 25px);font-size:8px;min-width:16px;padding:0 4px;line-height:16px;border-radius:5px;background:var(--pr-green);color:var(--pr-card)}.pr-bottom-nav .pr-icon{width:20px;height:20px}.pr-footer{font-size:8px;gap:10px;flex-wrap:wrap}.pr-ready #toasts{bottom:86px}.pr-ready .in{font-size:16px}.pr-dialog-head{padding:18px}.pr-dialog-head h2{font-size:17px}.pr-dialog-body{padding:18px}.pr-dialog .pr-reason{font-size:12px;padding:12px}.pr-ready .pr-gate-main{margin:5vh auto!important;padding:0 16px 30px!important}.pr-ready #g .in{font-size:16px}.pr-ready .pr-content>div[style*='grid']{gap:11px!important}.pr-ready .k{font-size:25px}.pr-ready .pr-content>p.sm{font-size:10px}}
-@media(prefers-reduced-motion:reduce){.pr-ready *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
-.pr-dialog.ov[open]{display:block}
-.pr-dialog.ov{height:fit-content}.pr-rider-header h3{font-size:14px!important;letter-spacing:-.2px;line-height:1.4}.pr-card-money .pr-cash b.pr-payment-label{color:var(--pr-ink)}
-@media(max-width:700px){.pr-rider-header h3{font-size:13px!important}}
-@media(max-width:700px){.pr-shell[data-pr-tab=active] .pr-welcome,.pr-shell[data-pr-tab=active] .pr-stats,.pr-shell[data-pr-tab=earn] .pr-stats{display:none}.pr-shell[data-pr-tab=active] .pr-page-heading{margin-bottom:15px}.pr-shell[data-pr-tab=active] .pr-mode-details{margin-bottom:15px}}
-@media(max-width:700px){.pr-bottom-nav .pr-nav-button{font-size:10px}}
-
-.pr-route-stop .pr-map-link{margin-top:6px;min-height:36px;padding:0 10px;white-space:normal;text-align:left}
+.pr-ready *{box-sizing:border-box}
+.pr-ready button,.pr-ready input,.pr-ready textarea,.pr-ready select{font-family:inherit}
+.pr-ready h1,.pr-ready h2,.pr-ready h3{color:var(--pr-ink)}
+.pr-ready .mu{color:var(--pr-muted)}
+.pr-icon{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.pr-logo{width:39px;height:43px;border-radius:11px;background:white;object-fit:contain;padding:5px;flex:none}
+.pr-icon-button{display:inline-grid;place-items:center;background:var(--pr-card);color:var(--pr-ink);border:1px solid var(--pr-line);border-radius:8px;width:34px;height:34px;cursor:pointer}
+.pr-icon-button:hover{background:var(--pr-soft)}
+.pr-dialog.ov{position:fixed;inset:0;margin:auto;padding:0;width:min(470px,calc(100% - 28px));max-height:calc(100dvh - 32px);height:auto;background:var(--pr-card);border:1px solid var(--pr-line);border-radius:17px;overflow:auto;color:var(--pr-ink);box-shadow:0 25px 90px #122a2144;z-index:1000}
+.pr-dialog::backdrop{background:#11241b88;backdrop-filter:blur(4px)}
+.pr-dialog:not([open]){display:none}
+.pr-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:20px 22px;background:var(--pr-soft);border-bottom:1px solid var(--pr-line)}
+.pr-dialog-head h2{font-size:18px;margin:0;letter-spacing:-.5px}
+.pr-dialog-body{padding:22px}
+.pr-dialog-body>p{font-size:12px;color:var(--pr-muted);margin:0 0 17px}
+.pr-ready .in{border:1px solid var(--pr-line);border-radius:9px;background:var(--pr-card);color:var(--pr-ink);min-height:45px;padding:10px 12px;font-size:16px;width:100%}
+.pr-ready .field{margin-bottom:16px}
+.pr-ready .field label{font-size:11px;font-weight:650;color:var(--pr-ink);display:block;margin-bottom:6px}
+.pr-theme-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pr-theme-options button{display:grid;place-items:center;gap:10px;border:1px solid var(--pr-line);border-radius:10px;background:var(--pr-card);color:var(--pr-ink);padding:20px 5px;font-size:12px}
+.pr-theme-options button[aria-pressed=true]{outline:2px solid var(--pr-green);outline-offset:1px;background:var(--pr-soft)}
+.pr-ready .pr-gate-main{width:100%;max-width:460px!important;padding:0 16px!important;margin:8vh auto!important}
+.pr-ready .pr-gate-main #g{margin:0!important;padding:0 25px 24px;border:1px solid var(--pr-line);border-radius:20px;overflow:hidden;box-shadow:0 12px 60px #203a2010}
+.pr-gate-brand{margin:0 -25px 24px;padding:23px 25px;background:#1e3525;display:flex;align-items:center;gap:11px;color:white}
+.pr-gate-brand strong{display:block;font-size:23px;letter-spacing:-.5px}
+.pr-gate-brand small{display:block;color:#c8d5bb;font-size:9px;letter-spacing:1.4px;text-transform:uppercase}
+.pr-ready #g h1{font-size:24px!important;letter-spacing:-.5px}
+.pr-ready #g>.btn{width:100%;min-height:45px}
+.pr-ready #g>.link{display:block;font-size:11px;margin-top:18px;color:var(--pr-green)}
+.pr-ready :where(a,button,input,select,textarea,summary):focus-visible{outline:2px solid var(--pr-green);outline-offset:3px}
+html[data-pr-theme=dark]{--pr-bg:#121a15;--pr-card:#1c271f;--pr-ink:#edf0e7;--pr-muted:#aebaa9;--pr-line:#354437;--pr-soft:#293b2b;--pr-green:#88bd88;--pr-danger:#f0ada0}
+.pr-ready[data-pr-dark=true] .btn.p{color:#142e1c}
 .pr-install-login{margin-top:8px}
-.pr-page-heading .pr-install-button{margin-top:12px}
 .pr-rider-installed [data-pr-install]{display:none!important}
 .pr-install-native-label,.pr-rider-install-ready .pr-install-help-label{display:none}
 .pr-rider-install-ready .pr-install-native-label{display:inline}
 .pr-rider-install-pending [data-pr-install]{display:none!important}
 .pr-install-pending{display:none}
 .pr-rider-install-pending .pr-install-pending{display:block;margin-top:8px;color:var(--pr-muted);font-size:12px}
-
+.pr-ready .pr-gate-main .panel{background:var(--pr-card);color:var(--pr-ink)}
+.pr-dialog.ov[open]{display:block;height:fit-content}
+.pr-app-bar{background:var(--pr-card);border-bottom:1px solid var(--pr-line)}
+.pr-app-bar-inner{max-width:680px;margin:auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pr-app-brand{display:flex;align-items:center;gap:10px}
+.pr-app-brand .pr-logo{width:38px;height:38px;border:1px solid var(--pr-line)}
+.pr-app-brand strong{font-size:16px;display:block;line-height:1.15}
+.pr-app-brand small{font-size:11px;color:var(--pr-muted)}
+.pr-ready .pr-workspace{width:100%;max-width:680px;margin:0 auto;padding:24px 16px max(24px,env(safe-area-inset-bottom))}
+.pr-workspace h1{font-size:clamp(25px,6vw,34px);line-height:1.15;letter-spacing:-.035em;margin:0}
+.pr-workspace p{margin:0}
+.pr-workspace .pr-intro{color:var(--pr-muted);font-size:14px;margin:7px 0 0}
+.pr-page-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.pr-workspace .btn,.pr-app-bar .btn,.pr-dialog .btn{min-height:44px;padding:8px 14px;border-radius:11px;font-size:14px;line-height:1.25}
+.pr-app-bar .btn.s,.pr-workspace .btn.s,.pr-dialog .btn.s{background:var(--pr-card);color:var(--pr-ink);border:1px solid var(--pr-line)}
+.pr-workspace .btn:disabled{opacity:.55;cursor:not-allowed}
+.pr-workspace [data-live-info]:empty,.pr-workspace [data-live-load-status]:empty{display:none}
+.pr-workspace [data-live-info],.pr-workspace [data-live-load-status]{font-size:14px;color:var(--pr-ink);background:var(--pr-soft);border-radius:10px;padding:10px 12px;margin-bottom:12px}
+.pr-assigned-list{display:grid;gap:14px}
+.pr-assigned-card,.pr-no-deliveries{background:var(--pr-card);border:1px solid var(--pr-line);border-radius:17px;padding:16px}
+.pr-assigned-head{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:6px 12px;margin-bottom:14px}
+.pr-assigned-head h2,.pr-no-deliveries h2{margin:0;font-size:18px;line-height:1.3;overflow-wrap:anywhere}
+.pr-assigned-ref{color:var(--pr-muted);font-size:12px}
+.pr-next-step{display:flex;gap:10px;align-items:flex-start;background:var(--pr-soft);border-radius:12px;padding:12px}
+.pr-step-number{display:grid;flex:none;place-items:center;width:31px;height:31px;border-radius:50%;border:1px solid var(--pr-green);color:var(--pr-green);font-weight:800}
+.pr-step-label{color:var(--pr-muted);font-size:11px;font-weight:700}
+.pr-next-step h3{font-size:16px;line-height:1.35;margin:0 0 2px}
+.pr-next-step p{font-size:13px;color:var(--pr-muted);overflow-wrap:anywhere}
+.pr-assigned-card .pr-order-action{width:100%;margin-top:10px;font-weight:750}
+.pr-addresses{display:grid;grid-template-columns:1fr;gap:10px;margin:14px 0 0}
+.pr-addresses dt{font-size:12px;color:var(--pr-muted);font-weight:700}
+.pr-addresses dd{margin:2px 0 0;overflow-wrap:anywhere;font-size:14px}
+.pr-addresses a{display:inline-flex;align-items:center;min-height:44px;color:var(--pr-green);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.pr-no-deliveries p{color:var(--pr-muted);font-size:14px;margin-top:6px}
+.pr-account-actions{display:grid;gap:8px}
+@media(min-width:500px){.pr-addresses{grid-template-columns:repeat(2,minmax(0,1fr))}.pr-assigned-card,.pr-no-deliveries{padding:20px}}
+@media(max-width:700px){.pr-ready .pr-gate-main{margin:5vh auto!important;padding:0 16px 30px!important}}
+@media(prefers-reduced-motion:reduce){.pr-ready *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 <!-- PAPALITA RIDER PRESENTATION END -->
 
-<style id="papalita-rider-auth">.pr-ready .pr-auth-form h1{font-size:26px!important;line-height:1.25}.pr-auth-form .pr-password-wrap{position:relative}.pr-auth-form .pr-password-wrap input{padding-right:63px}.pr-password-toggle{position:absolute;right:7px;top:6px;bottom:6px;border-radius:6px;padding:0 9px;font-size:10px;color:var(--pr-green);background:var(--pr-soft)}.pr-auth-error{font-size:12px;margin:0 0 13px;color:var(--pr-danger)}.pr-auth-error:empty{display:none}.pr-auth-access{font-size:10px;line-height:1.7;color:var(--pr-muted);margin:17px 0}.pr-auth-delivery-note{border:1px solid var(--pr-line);border-radius:8px;background:var(--pr-soft);font-size:10px;color:var(--pr-muted);margin-top:15px}.pr-auth-delivery-note summary{padding:11px 12px;cursor:pointer;font-weight:600}.pr-auth-delivery-note p{padding:0 12px 13px;line-height:1.7}.pr-auth-loading{padding:0 25px 25px!important;overflow:hidden;max-width:430px;margin:auto}.pr-auth-loading .pr-gate-brand{margin-bottom:21px}.pr-auth-loading p{font-size:13px;color:var(--pr-muted)}.pr-ready .pr-local-badge{font-size:8px}.pr-auth-form button:disabled{opacity:.65;cursor:wait}
-@media(max-width:700px){.pr-ready .pr-auth-form h1{font-size:24px!important}.pr-ready .pr-auth-form .in{font-size:16px}.pr-auth-form .pr-password-wrap input{padding-right:63px}.pr-auth-form .pr-password-toggle{font-size:11px}.pr-auth-form .pr-auth-access,.pr-auth-delivery-note{font-size:11px}}
+<style id="papalita-rider-auth">.pr-ready .pr-auth-form h1{font-size:26px!important;line-height:1.25}.pr-auth-form .pr-password-wrap{position:relative}.pr-auth-form .pr-password-wrap input{padding-right:63px}.pr-password-toggle{position:absolute;right:7px;top:6px;bottom:6px;border-radius:6px;padding:0 9px;font-size:10px;color:var(--pr-green);background:var(--pr-soft)}.pr-auth-error{font-size:12px;margin:0 0 13px;color:var(--pr-danger)}.pr-auth-error:empty{display:none}.pr-auth-access{font-size:10px;line-height:1.7;color:var(--pr-muted);margin:17px 0}.pr-auth-loading{padding:0 25px 25px!important;overflow:hidden;max-width:430px;margin:auto}.pr-auth-loading .pr-gate-brand{margin-bottom:21px}.pr-auth-loading p{font-size:13px;color:var(--pr-muted)}.pr-auth-form button:disabled{opacity:.65;cursor:wait}
+@media(max-width:700px){.pr-ready .pr-auth-form h1{font-size:24px!important}.pr-ready .pr-auth-form .in{font-size:16px}.pr-auth-form .pr-password-wrap input{padding-right:63px}.pr-auth-form .pr-password-toggle{font-size:11px}.pr-auth-form .pr-auth-access{font-size:11px}}
 </style>
 </head>
 <body><div id="root"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js"></script><script src="js/images.js"></script><script src="js/data.js"></script><script src="js/ops.js"></script><script src="js/live-delivery-rider.js?v=2"></script>
+<script src="js/config.js"></script><script src="js/ops.js"></script><script src="js/live-delivery-rider.js?v=3"></script>
 <script>
 (() => { 'use strict';
 /* Rider identity is verified by Supabase Auth and the protected user_roles table. */
-const { $, $$, esc, peso, load, save, stageOf, STEPS, R, live, setLive, update, tell, toast, addrBrgy, items, modeBar } = OPS;
-let me = null, tab = 'jobs';
-const online = () => localStorage.getItem('foodie.rider.on.' + me.id) !== '0', setOnline = v => localStorage.setItem('foodie.rider.on.' + me.id, v ? '1' : '0');
-const skipKey = () => 'foodie.rider.skip.' + me.id, skipped = () => { try { return JSON.parse(localStorage.getItem(skipKey())) || []; } catch (e) { return []; } };
-const km = o => { const b = (window.BRGYS || []).find(x => x.n === addrBrgy(o)); return b ? b.km : null; };
-const REASONS_CANCEL = ['Vehicle problem', 'Emergency', 'Store is taking too long', 'Too far from me', 'Other'];
-const REASONS_FAIL = ['Customer unreachable', 'Wrong or unsafe address', 'Customer refused the order', 'Food was damaged', 'Other'];
-function ask(title, sub, reasons, ok) { return new Promise(res => { const ov = document.createElement('div'); ov.className = 'ov';
-  ov.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(title)}"><form class="pd" style="padding-top:26px" novalidate><h2>${esc(title)}</h2><p class="mu sm" style="margin:6px 0 12px">${esc(sub)}</p>${reasons.map((r, i) => `<label class="opt"><input type="radio" name="rs" value="${esc(r)}" ${i ? '' : 'checked'}><span class="grow">${esc(r)}</span></label>`).join('')}<div class="field" style="margin-top:8px"><label for="rn">Note (optional)</label><textarea class="in" id="rn" maxlength="200"></textarea></div><div class="row"><button type="button" class="btn o grow" data-x>Go back</button><button class="btn d grow">${esc(ok)}</button></div></form></div>`;
-  document.body.append(ov); const done = v => { document.removeEventListener('keydown', esc2); ov.remove(); res(v); }, esc2 = e => { if (e.key === 'Escape') done(null); }; document.addEventListener('keydown', esc2);
-  $('[data-x]', ov).onclick = () => done(null); ov.addEventListener('mousedown', e => { if (e.target === ov) done(null); });
-  $('form', ov).onsubmit = e => { e.preventDefault(); done({ reason: $('input[name=rs]:checked', ov).value, note: $('#rn', ov).value.trim() }); }; }); }
-function gate(message='') { return prRiderGate(message); }
-const mine = o => o.rider && o.rider.id === me.id;
-function card(o, act) { const r = R(o.rid), s = stageOf(o), cod = o.pay.method === 'cod' && o.pay.status !== 'paid', d = km(o);
-  const first = me.name.split(' ')[0], sms = `sms:${o.contact.phone}?body=${encodeURIComponent(`Hi ${o.contact.name}, this is ${first}, your Foodie rider. I'm on my way with your order ${o.id}.`)}`;
-  return `<div class="panel"><div class="row sp"><h3>${esc(r.name)}</h3><span class="status ${s === 5 ? 'open' : s < 0 ? 'closed' : 'n'}">${s < 0 ? 'Cancelled' : STEPS[s] || ''}</span></div><p class="mu sm">${o.id} · ${esc(addrBrgy(o))}${d != null ? ' · about ' + d + ' km from town center' : ''}</p>
-  ${act === 'detail' ? `<div class="steps" aria-label="Progress">${[2, 3, 4].map(n => `<i class="${s >= n ? 'on' : ''}"></i>`).join('')}</div>` : ''}<div class="sm" style="margin:8px 0">${items(o)}</div><div class="row sp sm"><span class="mu">You earn</span><b>${peso(o.fee + (o.tip || 0))}${o.tip ? ` <span class="sm mu" style="font-weight:500">(incl. ${peso(o.tip)} tip)</span>` : ''}</b></div>${cod ? `<div class="row sp sm"><span class="mu">Collect cash</span><b style="color:var(--er)">${peso(o.total)}</b></div>` : '<div class="row sp sm"><span class="mu">Payment</span><b>Paid online (demo)</b></div>'}
-  ${o.review && o.review.rider ? `<p class="sm">Customer rating: ★ ${o.review.rider}${o.review.comment ? ' “' + esc(o.review.comment) + '”' : ''}</p>` : ''}${o.remitted ? '<p class="sm"><span class="status open">Cash remitted</span></p>' : ''}${o.cancelReason && act === '' ? `<p class="sm mu">${esc(o.cancelReason)}</p>` : ''}
-  ${act === 'detail' ? `<div class="panel" style="background:var(--or-s);border:0;margin-top:10px"><b>${esc(o.contact.name)}</b><p class="sm">${esc(o.addr)}</p>${o.note ? `<p class="sm mu">Note: ${esc(o.note)}</p>` : ''}<div class="row wrap" style="margin-top:8px"><a class="btn s sm grow" href="tel:${esc(o.contact.phone)}">Call customer</a><a class="btn s sm grow" href="${sms}">Text customer</a><a class="btn s sm grow" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.addr.split('—').pop() + ', Surigao del Norte')}">Open in Maps</a></div></div>` : ''}
-  <div style="margin-top:12px">${act === 'accept' ? `<div class="row"><button class="btn p big-btn" style="flex:2" data-acc="${o.id}">Accept delivery</button><button class="btn s big-btn" style="flex:1" data-skip="${o.id}">Skip</button></div>` : act === 'detail' ? (s === 2 ? `<button class="btn p big-btn" data-go="${o.id}" data-st="3">I'm at the store</button><button class="btn d blk" style="margin-top:8px" data-cx="${o.id}">Cancel delivery</button>` : s === 3 ? `<button class="btn p big-btn" data-go="${o.id}" data-st="4">Picked up, start delivery</button><button class="btn d blk" style="margin-top:8px" data-cx="${o.id}">Cancel delivery</button>` : s === 4 ? `<button class="btn p big-btn" data-done="${o.id}">Mark delivered</button><button class="btn d blk" style="margin-top:8px" data-fail="${o.id}">Can't deliver</button>` : '') : ''}</div></div>`; }
-function draw() { if (!me) return gate(); const s = load(), sk = skipped(), act = s.orders.filter(o => mine(o) && stageOf(o) >= 2 && stageOf(o) < 5), done = s.orders.filter(o => mine(o) && stageOf(o) === 5);
-  const failed = s.orders.filter(o => o.failedBy === me.name), cxn = s.orders.reduce((a, o) => a + (o.riderCancels || []).filter(c => c.rider === me.name).length, 0);
-  const jobs = online() ? s.orders.filter(o => o.status === 'active' && !o.rider && stageOf(o) >= 1 && stageOf(o) <= 2 && !sk.includes(o.id)) : [];
-  const day = new Date().toDateString(), tdone = done.filter(o => new Date(o.upd || o.createdAt).toDateString() === day), sum = (l, f) => l.reduce((a, o) => a + f(o), 0), cashOf = l => sum(l.filter(o => o.pay.method === 'cod' && !o.remitted), o => o.total - (o.tip || 0)), remitted = sum(done.filter(o => o.pay.method === 'cod' && o.remitted), o => o.total - (o.tip || 0)), rv = s.orders.filter(o => o.rider && o.rider.id === me.id && o.review && o.review.rider);
-  $('#root').innerHTML = `<main><div class="row sp"><div><h1 style="font-size:24px">${esc(me.name)}</h1><p class="mu sm">${esc(me.vehicle)} · Alegria${rv.length ? ` · ★ ${OPS.avg(rv.map(o => o.review.rider))} (${rv.length})` : ''}</p></div><label class="chip ${online() ? 'on' : ''}" style="cursor:pointer"><input type="checkbox" id="on" ${online() ? 'checked' : ''} class="sr">${online() ? 'Online' : 'Offline'}</label></div><div style="margin-top:14px">${modeBar()}</div>
-  <div class="chips tabs">${[['jobs', `Jobs (${jobs.length})`], ['active', `Active (${act.length})`], ['done', `Done (${done.length})`], ['earn', 'Earnings']].map(([k, l]) => `<button class="chip ${tab === k ? 'on' : ''}" data-t="${k}">${l}</button>`).join('')}<button class="chip" data-out>Sign out</button></div>
-  ${tab === 'jobs' ? (!online() ? '<div class="empty"><h3>You are offline</h3><p>Go online to see delivery jobs.</p></div>' : jobs.length ? jobs.map(o => card(o, 'accept')).join('') + (sk.length ? '<button class="btn s sm" data-unskip>Show skipped jobs again</button>' : '') : '<div class="empty"><h3>No jobs right now</h3><p>New jobs appear here when a store starts preparing an order.</p>' + (sk.length ? '<button class="btn s sm" data-unskip>Show skipped jobs again</button>' : '') + '</div>')
-   : tab === 'active' ? (act.length ? act.map(o => card(o, 'detail')).join('') : '<div class="empty"><h3>No active delivery</h3><p>Accept a job to start.</p></div>')
-   : tab === 'done' ? (done.length ? done.slice().reverse().map(o => card(o, '')).join('') : '<div class="empty"><h3>No deliveries yet</h3></div>')
-   : `<h3 style="margin-bottom:8px">Today</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div class="panel" style="margin:0"><span class="mu sm">Deliveries</span><span class="k">${tdone.length}</span></div><div class="panel" style="margin:0"><span class="mu sm">Earnings</span><span class="k">${peso(sum(tdone, o => o.fee + (o.tip || 0)))}</span></div></div>
-   <h3 style="margin:16px 0 8px">All time</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div class="panel" style="margin:0"><span class="mu sm">Deliveries</span><span class="k">${done.length}</span></div><div class="panel" style="margin:0"><span class="mu sm">Earnings</span><span class="k">${peso(sum(done, o => o.fee + (o.tip || 0)))}</span></div></div>
-   <div class="panel" style="margin-top:12px"><span class="mu sm">Cash to hand over to the operator (COD, tips excluded)</span><span class="k">${peso(cashOf(done))}</span><span class="sm mu">Already remitted: ${peso(remitted)}</span></div><div class="panel"><div class="row sp sm"><span class="mu">Deliveries you cancelled</span><b>${cxn}</b></div><div class="row sp sm" style="margin-top:6px"><span class="mu">Failed deliveries</span><b>${failed.length}</b></div></div><p class="sm mu">Earnings equal the delivery fee in demo mode. Real payouts are set by your operator.</p>`}</main>`;
-  $$('[data-t]').forEach(b => b.onclick = () => { tab = b.dataset.t; draw(); }); $('[data-out]').onclick = () => { void prRiderSignOut(); };
-  $('#on').onchange = e => { setOnline(e.target.checked); draw(); }; $('#modebtn').onclick = () => { setLive(!live()); draw(); };
-  $$('[data-unskip]').forEach(b => b.onclick = () => { localStorage.removeItem(skipKey()); draw(); });
-  $$('[data-skip]').forEach(b => b.onclick = () => { const a = skipped(); a.push(b.dataset.skip); localStorage.setItem(skipKey(), JSON.stringify(a)); toast('Job skipped.'); draw(); });
-  $$('[data-acc]').forEach(b => b.onclick = () => { let taken = false; update(b.dataset.acc, o => { if (o.rider) { taken = true; return; } o.rider = { id: me.id, name: me.name, phone: me.phone, vehicle: me.vehicle }; o.stage = 2; }); if (taken) toast('Another rider already took this job.'); else { toast('Delivery accepted.'); tab = 'active'; } draw(); });
-  $$('[data-go]').forEach(b => b.onclick = () => { update(b.dataset.go, o => { o.stage = +b.dataset.st; }); toast('Status updated.'); draw(); });
-  $$('[data-cx]').forEach(b => b.onclick = async () => { const v = await ask('Cancel this delivery?', 'The order goes back to other riders and the customer is told. Frequent cancellations may be reviewed by the operator.', REASONS_CANCEL, 'Cancel delivery'); if (!v) return;
-    update(b.dataset.cx, (o, sx) => { (o.riderCancels = o.riderCancels || []).push({ rider: me.name, reason: v.reason, note: v.note, at: Date.now() }); delete o.rider; o.stage = 1; o.notified = 1; tell(sx, o, 'Finding a new rider', `${me.name} cancelled (${v.reason}). We are assigning another rider.`); }); toast('Delivery cancelled. The job is back in the pool.'); tab = 'jobs'; draw(); });
-  $$('[data-fail]').forEach(b => b.onclick = async () => { const v = await ask("Can't deliver this order?", 'The order will be marked as failed and the customer is told. No cash should be collected.', REASONS_FAIL, 'Mark as failed'); if (!v) return;
-    update(b.dataset.fail, (o, sx) => { o.status = 'cancelled'; o.cancelReason = `Delivery failed: ${v.reason}${v.note ? ' (' + v.note + ')' : ''}`; o.failedBy = me.name; if (o.pay.status === 'demo_authorized') o.pay.status = 'refund_pending'; tell(sx, o, 'Delivery failed', `${v.reason}. Please contact support or the store.`); }); toast('Marked as failed.'); tab = 'done'; draw(); });
-  $$('[data-done]').forEach(b => b.onclick = () => { const o = load().orders.find(x => x.id === b.dataset.done), cod = o.pay.method === 'cod'; if (!confirm(cod ? `Did you collect ${peso(o.total)} in cash?` : 'Mark this order as delivered?')) return; update(o.id, x => { x.stage = 5; if (cod) x.pay.status = 'paid'; }); toast('Delivered. Nice work!'); tab = 'done'; draw(); }); }
+const { $, esc } = OPS;
+let me = null;
+let activeRiderId = null;
+let stopDeliveries = null;
 
-/* PAPALITA RIDER PRESENTATION ADAPTER START */
-/* Presentation adapter: the original rider actions and browser data handlers are reused. */
-const prIcons={install:'<path d="M12 3v12m-4-4 4 4 4-4M4 16v4h16v-4"/>',jobs:'<path d="M3 9 5 3h14l2 6M3 9c0 4 6 4 6 0 0 4 6 4 6 0 0 4 6 4 6 0M4 12v9h16v-9M9 21v-7h6v7"/>',active:'<path d="M3 5h11v12H3zM14 9h4l3 5v3h-7M7 17v2M18 17v2"/><circle cx="7" cy="19" r="2"/><circle cx="18" cy="19" r="2"/>',done:'<rect x="4" y="4" width="16" height="17" rx="2"/><path d="M9 3h6v4H9zM8 13l3 3 5-6"/>',earn:'<rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 8V3h14M16 11h5v5h-5z"/>',arrow:'<path d="M4 12h16M14 6l6 6-6 6"/>',down:'<path d="m6 9 6 6 6-6"/>',pin:'<path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2"/>',store:'<path d="M3 9 5 3h14l2 6M3 9c0 4 6 4 6 0 0 4 6 4 6 0 0 4 6 4 6 0M4 12v9h16v-9"/>',phone:'<path d="m4 3 4-1 3 6-3 2c2 4 3 5 6 6l2-3 6 3-1 4c-10 3-20-7-17-17Z"/>',message:'<path d="M3 3h18v14H9l-6 4V3Z"/><path d="M7 8h10M7 12h6"/>',refresh:'<path d="M20 8a8 8 0 1 0 0 9M20 3v6h-6"/>',logout:'<path d="M9 3H4v18h5M9 12h12M17 8l4 4-4 4"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>',moon:'<path d="M20 14a8 8 0 0 1-10-10 8.5 8.5 0 1 0 10 10Z"/>',screen:'<rect x="3" y="3" width="18" height="13" rx="1"/><path d="M12 16v5M7 21h10"/>',close:'<path d="m6 6 12 12M6 18 18 6"/>',user:'<circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>'};
-const prIcon=name=>`<svg class="pr-icon" viewBox="0 0 24 24" aria-hidden="true">${prIcons[name]||prIcons.jobs}</svg>`;
-const prTabLabels={jobs:'Available jobs',active:'Active deliveries',done:'Delivery history',earn:'Earnings'};
-let prModeOpen=false,prTheme='light',prRenderedTab=null;try{prTheme=localStorage.getItem('papalita.rider.appearance.v1')||'light';}catch(_){}
+const prIcons={install:'<path d="M12 3v12m-4-4 4 4 4-4M4 16v4h16v-4"/>',arrow:'<path d="M4 12h16M14 6l6 6-6 6"/>',logout:'<path d="M9 3H4v18h5M9 12h12M17 8l4 4-4 4"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>',moon:'<path d="M20 14a8 8 0 0 1-10-10 8.5 8.5 0 1 0 10 10Z"/>',screen:'<rect x="3" y="3" width="18" height="13" rx="1"/><path d="M12 16v5M7 21h10"/>',close:'<path d="m6 6 12 12M6 18 18 6"/>'};
+const prIcon=name=>`<svg class="pr-icon" viewBox="0 0 24 24" aria-hidden="true">${prIcons[name]}</svg>`;
+let prTheme='light';try{prTheme=localStorage.getItem('papalita.rider.appearance.v1')||'light';}catch(_){}
 const prMedia=window.matchMedia('(prefers-color-scheme: dark)');
 function prApplyTheme(){const dark=prTheme==='dark'||prTheme==='system'&&prMedia.matches;document.documentElement.dataset.prTheme=dark?'dark':'light';document.body.classList.add('pr-ready');document.body.dataset.prDark=String(dark);}
 prApplyTheme();prMedia.addEventListener?.('change',prApplyTheme);
@@ -117,61 +121,58 @@ document.addEventListener('click',event=>{
  });
 });
 function prAppearance(){const d=prModal('Appearance',`<p>Choose how your rider workspace looks on this device.</p><div class="pr-theme-options">${[['light','Light','sun'],['dark','Dark','moon'],['system','System','screen']].map(([key,label,icon])=>`<button type="button" data-pr-theme="${key}" aria-pressed="${prTheme===key}">${prIcon(icon)}${label}</button>`).join('')}</div>`);d.querySelectorAll('[data-pr-theme]').forEach(b=>b.onclick=()=>{prTheme=b.dataset.prTheme;try{localStorage.setItem('papalita.rider.appearance.v1',prTheme);}catch(_){}prApplyTheme();d.querySelectorAll('[data-pr-theme]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});}
-ask=function(title,sub,reasons,ok){return new Promise(resolve=>{const d=prModal(title,`<p>${esc(sub)}</p><form id="pr-reason-form"><div class="pr-reasons">${reasons.map((reason,i)=>`<label class="pr-reason"><input type="radio" name="rs" value="${esc(reason)}" ${i===0?'checked':''} required><span>${esc(reason)}</span></label>`).join('')}</div><div class="field"><label for="rn">Note (optional)</label><textarea class="in" id="rn" maxlength="200" placeholder="Add a short explanation"></textarea></div><p class="pr-note">This updates the browser-stored delivery record in the supplied rider file.</p><div class="pr-dialog-actions"><button type="button" class="btn s" data-back>Go back</button><button class="btn d" type="submit">${esc(ok)}</button></div></form>`);let value=null;d.querySelector('[data-back]').onclick=()=>d.close();d.querySelector('form').onsubmit=e=>{e.preventDefault();value={reason:d.querySelector('input[name=rs]:checked').value,note:d.querySelector('#rn').value.trim()};d.close();};d.addEventListener('close',()=>resolve(value),{once:true});});};
-function prDirections(place,label){
- const address=String(place||'').trim();
- if(!address||address.toLowerCase()==='pickup at store')return '';
- const destination=/\bSurigao del Norte\b/i.test(address)?address
-  : address+(/\bAlegria\b/i.test(address)?'':', Alegria')+', Surigao del Norte';
- const url='https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(destination);
- return `<a class="btn s sm pr-map-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${prIcon('pin')}${label}</a>`;
+function clearDeliveries(){
+ const stop=stopDeliveries;
+ stopDeliveries=null;
+ activeRiderId=null;
+ stop?.();
 }
-card=function(o,act){
- const rest=R(o.rid)||{},s=stageOf(o),phone=String(o.contact?.phone||'').replace(/[^+\d]/g,''),contact=o.contact||{},cod=o.pay?.method==='cod'&&o.pay?.status!=='paid',distance=km(o),earn=Number(o.fee||0)+Number(o.tip||0),first=me.name.split(' ')[0];
- const sms='sms:'+phone+'?body='+encodeURIComponent(`Hi ${contact.name||''}, this is ${first}, your Papalita rider. I'm on my way with your order ${o.id}.`);
- const storeAddress=[rest.name?.trim(),rest.addr?.trim()].filter(Boolean).join(', ');
- const pickup=act==='detail'?prDirections(storeAddress,'Directions to store'):'';
- const dropAddress=String(o.addr||o.delivery_address||'').replace(/^.*? — /,'');
- const drop=act==='detail'&&o.fulfillment!=='pickup'&&o.fulfillment_type!=='pickup'
-  ?prDirections(dropAddress,'Directions to drop-off'):'';
- const actions=act==='accept'?`<div class="row"><button class="btn p big-btn" data-acc="${esc(o.id)}">Accept delivery ${prIcon('arrow')}</button><button class="btn s big-btn" data-skip="${esc(o.id)}">Skip</button></div>`:act==='detail'?(s===2?`<button class="btn p big-btn" data-go="${esc(o.id)}" data-st="3">I'm at the store ${prIcon('arrow')}</button><button class="btn d blk" data-cx="${esc(o.id)}">Cancel delivery</button>`:s===3?`<button class="btn p big-btn" data-go="${esc(o.id)}" data-st="4">Picked up · Start delivery ${prIcon('arrow')}</button><button class="btn d blk" data-cx="${esc(o.id)}">Cancel delivery</button>`:s===4?`<button class="btn p big-btn" data-done="${esc(o.id)}">Mark delivered ${prIcon('done')}</button><button class="btn d blk" data-fail="${esc(o.id)}">Can't deliver</button>`:''):'';
- return `<article class="panel pr-delivery-card"><div class="pr-card-top"><span class="pr-store-icon">${prIcon('store')}</span><div class="pr-store-title"><h3>${esc(rest.name||'Store')}</h3><div class="pr-order-id">Order ${esc(o.id)}</div></div><span class="status ${s===5?'open':s<0?'closed':'n'}">${esc(s<0?'Cancelled':STEPS[s]||'Order received')}</span></div>${act==='detail'?`<div class="pr-progress" aria-label="Delivery progress">${[[2,'Assigned'],[3,'At the store'],[4,'On the way']].map(([n,label])=>`<span class="${s>=n?'on':''}">${label}</span>`).join('')}</div>`:''}<div class="pr-card-route"><div class="pr-route-stop">${prIcon('store')}<div><small>Pick up from</small><p>${esc(rest.name||'Store')}</p>${pickup}</div></div><div class="pr-route-stop">${prIcon('pin')}<div><small>Deliver to${distance!=null?' · about '+esc(distance)+' km from town center':''}</small><p>${esc(act==='detail'?(dropAddress.trim()||addrBrgy(o)):addrBrgy(o))}</p>${drop}</div></div></div><div class="pr-card-items"><span class="pr-items-label">Order items</span>${items(o)}</div><div class="pr-card-money"><div><small>Recorded rider earnings</small><b>${peso(earn)}</b>${o.tip?`<span class="pr-tip">Includes ${peso(o.tip)} tip</span>`:''}</div><div class="pr-cash"><small>${cod?'Cash to collect':'Payment record'}</small><b class="${cod?'':'pr-payment-label'}">${cod?peso(o.total):esc(o.pay?.method==='cod'?'Cash recorded paid':String(o.pay?.status||'Not verified').replaceAll('_',' '))}</b></div></div>${act==='detail'?`<div class="pr-contact"><b>${esc(contact.name||'Customer')}</b>${o.note?`<p>Note: ${esc(o.note)}</p>`:''}<div class="pr-contact-links">${phone?`<a class="btn s" href="tel:${esc(phone)}">${prIcon('phone')}Call</a><a class="btn s" href="${esc(sms)}">${prIcon('message')}Text</a>`:''}</div></div>`:''}${o.review?.rider?`<p class="sm">Customer rating: ★ ${esc(o.review.rider)}${o.review.comment?' · '+esc(o.review.comment):''}</p>`:''}${o.remitted?'<p class="sm"><span class="status open">Cash remitted</span></p>':''}${o.cancelReason&&act===''?`<p class="sm mu">${esc(o.cancelReason)}</p>`:''}${actions?`<div class="pr-card-actions">${actions}</div>`:''}</article>`;
-};
-const prOriginalDraw=draw;
-draw=function(){
- if(document.querySelector('.pr-dialog[open]'))return;
- prOriginalDraw();if(!me)return;
- const root=$('#root'),main=root.querySelector('main'),header=main.firstElementChild,mode=header.nextElementSibling,tabs=main.querySelector('.tabs'),buttons=[...tabs.querySelectorAll('[data-t]')],signout=tabs.querySelector('[data-out]');
- const data=load(),all=data.orders||[],done=all.filter(o=>mine(o)&&stageOf(o)===5),today=done.filter(o=>new Date(o.upd||o.createdAt).toDateString()===new Date().toDateString()),active=all.filter(o=>mine(o)&&stageOf(o)>=2&&stageOf(o)<5),jobs=online()?all.filter(o=>o.status==='active'&&!o.rider&&stageOf(o)>=1&&stageOf(o)<=2&&!skipped().includes(o.id)):[],earn=today.reduce((n,o)=>n+Number(o.fee||0)+Number(o.tip||0),0);
- const subtitle={jobs:'Choose your next pickup in Alegria.',active:'Your pickup, customer and next step in one place.',done:'A record of your completed deliveries.',earn:'Recorded delivery fees, tips and cash handovers.'};
- const shell=document.createElement('div');shell.className='pr-shell';shell.innerHTML=`<aside class="pr-sidebar"><a class="pr-brand" href="#jobs"><img class="pr-logo" src="images/papalita_mark_color.png" alt="Papalita"><span><strong>Papalita</strong><small>Rider portal</small></span></a><div class="pr-side-tag">${prIcon('active')}<span>Your delivery workspace</span></div><p class="pr-side-label">On the road</p><nav class="pr-side-nav" aria-label="Rider navigation"></nav><div class="pr-side-bottom"><button class="pr-nav-button" data-pr-appearance>${prIcon('sun')}Appearance</button><a class="pr-nav-button" href="https://tomcaberio99-design.github.io/papalita/">${prIcon('arrow')}Customer app</a><div class="pr-side-profile"><span class="pr-avatar">${esc(me.name.slice(0,1))}</span><div><strong>${esc(me.name)}</strong><small>${esc(me.vehicle||'Rider')}</small></div></div></div></aside><div class="pr-workspace"><header class="pr-topbar"><div class="pr-breadcrumb"><span>Rider workspace</span>${prIcon('arrow')}<strong>${prTabLabels[tab]||'Available jobs'}</strong></div><div class="pr-top-actions"><button class="btn p sm" data-pr-live-deliveries>Live deliveries</button><button class="pr-icon-button" data-pr-refresh aria-label="Refresh deliveries">${prIcon('refresh')}</button><button class="pr-icon-button" data-pr-account aria-label="Your rider account">${prIcon('user')}</button></div></header><main class="pr-page"><div class="pr-page-heading"><h1>${prTabLabels[tab]||'Available jobs'}</h1><p>${subtitle[tab]||''}</p><button type="button" class="btn s sm pr-install-button" data-pr-install>${prIcon('install')}<span class="pr-install-native-label">Install Rider App</span><span class="pr-install-help-label">How to install Rider App</span></button><p class="pr-install-pending" role="status">Install Rider App will appear when Chrome is ready.</p></div><section class="pr-welcome"><div><small>Good food, delivered with care</small><h2>${online()?'Ready for your next delivery?':'You’re taking a break.'}</h2><p>${online()?'Your next pickup is one tap away.':'Switch online whenever you’re ready to see jobs.'}</p></div></section><section class="pr-stats" aria-label="Rider summary">${[['Available jobs',jobs.length],['Active deliveries',active.length],['Completed today',today.length],['Today’s recorded earnings',peso(earn)]].map(([label,value])=>`<div class="pr-stat"><span>${label}</span><b>${value}</b></div>`).join('')}</section><details class="pr-mode-details" ${prModeOpen?'open':''}><summary>${prIcon('screen')}Supabase sign-in · delivery data stays on this device ${prIcon('down')}</summary><div class="pr-mode-body"><p>Your Supabase rider account is verified. Delivery assignments, updates and earnings still use browser storage and are not synced to live assignments.</p></div></details><div class="pr-content"></div><footer class="pr-footer"><span>Papalita · Good Food, Good Mood.</span><span>Supabase login · local delivery data</span></footer></main></div><nav class="pr-bottom-nav" aria-label="Mobile rider navigation"></nav>`;
- shell.dataset.prTab=tab;const content=shell.querySelector('.pr-content');
- const candidates=[...main.childNodes];candidates.forEach(node=>{if(node!==header&&node!==mode&&node!==tabs)content.append(node);});
- header.classList.add('pr-rider-header');const oldHeading=header.querySelector('h1');if(oldHeading){const name=document.createElement('h3');name.textContent=oldHeading.textContent;oldHeading.replaceWith(name);}shell.querySelector('.pr-welcome').append(header);
- shell.querySelector('.pr-mode-body').append(mode);const modeLabel=mode.querySelector('.note>span'),modeButton=mode.querySelector('#modebtn');if(modeLabel)modeLabel.textContent=live()?'Manual browser updates are selected.':'Automatic demo progression is selected.';if(modeButton)modeButton.textContent=live()?'Use automatic updates':'Use manual updates';
- const counts={jobs:jobs.length,active:active.length,done:done.length};
- buttons.forEach(button=>{const key=button.dataset.t;button.className='pr-nav-button';button.innerHTML=`${prIcon(key)}<span>${prTabLabels[key]}</span>${counts[key]>0?`<span class="pr-nav-count">${counts[key]}</span>`:''}`;if(tab===key)button.setAttribute('aria-current','page');shell.querySelector('.pr-side-nav').append(button);const mobile=button.cloneNode(true);mobile.querySelector('span').textContent={jobs:'Jobs',active:'Active',done:'History',earn:'Earnings'}[key];mobile.setAttribute('aria-label',prTabLabels[key]+(counts[key]>0?' '+counts[key]:''));mobile.onclick=button.onclick;shell.querySelector('.pr-bottom-nav').append(mobile);});
- signout.className='pr-signout';signout.setAttribute('aria-label','Sign out');signout.innerHTML=prIcon('logout');shell.querySelector('.pr-side-profile').append(signout);
- root.replaceChildren(shell);document.title='Papalita Rider · '+prTabLabels[tab];if(prRenderedTab!==tab){window.scrollTo({top:0,left:0,behavior:'instant'});prRenderedTab=tab;}
- if(tab!=='earn'&&content.querySelector('.pr-delivery-card')){const grid=document.createElement('div');grid.className='pr-job-grid';[...content.childNodes].forEach(node=>grid.append(node));content.append(grid);}
- content.querySelectorAll('.empty').forEach(empty=>empty.insertAdjacentHTML('afterbegin',`<span class="pr-empty-icon">${prIcon(tab==='done'?'done':'jobs')}</span>`));
- shell.querySelector('.pr-brand').onclick=e=>{e.preventDefault();tab='jobs';draw();};
- shell.querySelector('[data-pr-live-deliveries]').onclick=()=>{
-  if(!window.PapalitaLiveRider){toast('Live deliveries could not load. Refresh to retry.');return;}
-  const id=me.id;
-  const d=prModal('Live deliveries','<p data-live-info role="status">Loading assigned orders…</p><div data-live-jobs style="margin-top:12px"></div>');
-  window.PapalitaLiveRider.open(d,prGetAuthClient(),()=>me?.id===id,esc);
- };
- shell.querySelector('[data-pr-appearance]').onclick=prAppearance;shell.querySelector('[data-pr-refresh]').onclick=()=>{draw();toast('Browser delivery records refreshed.');};
- shell.querySelector('[data-pr-account]').onclick=()=>{const d=prModal('Your rider account',`<p><b>${esc(me.name)}</b><br>${esc(me.email||'')}<br>${esc(me.vehicle||'Rider')} · Alegria</p><p class="pr-note">Signed in with Supabase. Rider access is checked from your account roles.</p><button class="btn s blk" data-pr-show-appearance>${prIcon('sun')}Appearance</button><button class="btn d blk" style="margin-top:10px" data-pr-signout>${prIcon('logout')}Sign out</button>`);d.querySelector('[data-pr-signout]').onclick=()=>{d.close();signout.onclick();};d.querySelector('[data-pr-show-appearance]').onclick=()=>{d.close();prAppearance();};};
- shell.querySelector('.pr-mode-details').addEventListener('toggle',e=>{prModeOpen=e.target.open;});
-};
 
-/* PAPALITA RIDER PRESENTATION ADAPTER END */
+function draw(){
+ if(activeRiderId===me.id)return;
+ clearDeliveries();
+ const id=me.id;
+ const root=$('#root');
+ document.title='Papalita Rider · My deliveries';
+ root.innerHTML=`
+  <header class="pr-app-bar"><div class="pr-app-bar-inner">
+   <div class="pr-app-brand">
+    <img class="pr-logo" src="images/papalita_mark_color.png" alt="">
+    <div><strong>Papalita Rider</strong><small>v6</small></div>
+   </div>
+   <button class="btn s" type="button" data-pr-account>Account</button>
+  </div></header>
+  <main class="pr-workspace" aria-labelledby="pr-delivery-title">
+   <div class="pr-page-title">
+    <div><h1 id="pr-delivery-title">My deliveries</h1><p class="pr-intro">Mga order nga gi-assign sa imo.</p></div>
+    <button class="btn s" type="button" data-live-refresh>Refresh</button>
+   </div>
+   <p data-live-load-status role="status">Loading assigned orders…</p>
+   <p data-live-info role="status"></p>
+   <div class="pr-assigned-list" data-live-jobs></div>
+  </main>`;
+ root.querySelector('[data-pr-account]').onclick=()=>{
+  const d=prModal('Your rider account',`<p><b>${esc(me.name)}</b><br>${esc(me.email||'')}</p>
+   <div class="pr-account-actions">
+    <button class="btn s blk" type="button" data-pr-install>${prIcon('install')}<span class="pr-install-native-label">Install Rider App</span><span class="pr-install-help-label">How to install Rider App</span></button>
+    <button class="btn s blk" type="button" data-pr-show-appearance>${prIcon('sun')}Appearance</button>
+    <button class="btn d blk" type="button" data-pr-signout>${prIcon('logout')}Sign out</button>
+   </div>`);
+  d.querySelector('[data-pr-signout]').onclick=()=>{d.close();void prRiderSignOut();};
+  d.querySelector('[data-pr-show-appearance]').onclick=()=>{d.close();prAppearance();};
+ };
+ const workspace=root.querySelector('main');
+ if(!window.PapalitaLiveRider?.mount){
+  workspace.querySelector('[data-live-load-status]').textContent='Could not open your deliveries. Tap Refresh to try again.';
+  workspace.querySelector('[data-live-refresh]').onclick=()=>location.reload();
+  return;
+ }
+ stopDeliveries=window.PapalitaLiveRider.mount(workspace,prGetAuthClient(),()=>me?.id===id,esc);
+ activeRiderId=id;
+}
 
 /* PAPALITA SUPABASE RIDER AUTH */
-/* Supabase Auth gate. Delivery storage and rider actions are deliberately unchanged. */
-let prAuthClient=null,prAuthGeneration=0,prAuthBusy=false,prSigningIn=false,prSigningOut=false,prAuthScheduled=false,prAuthCheckedAt=0,prAuthSubscription=null,prLoginEmail='',prSignOutFailed=false;
+let prAuthClient=null,prAuthGeneration=0,prAuthBusy=false,prSigningIn=false,prSigningOut=false,prAuthScheduled=false,prAuthCheckedAt=0,prLoginEmail='',prSignOutFailed=false;
 function prGetAuthClient(){
  if(prAuthClient?.auth)return prAuthClient;
  if(window.PAPALITA_DB?.auth){prAuthClient=window.PAPALITA_DB;return prAuthClient;}
@@ -196,7 +197,7 @@ async function prAuthorizeRider(client,user){
  if(!rider){const error=Error('This account has no rider access. Ask your Papalita administrator to assign the rider role.');error.code='RIDER_ROLE_REQUIRED';throw error;}
  // Profiles provide display details only. A profile field cannot grant rider access.
  let profile={};try{const q=await client.from('profiles').select('*').eq('id',user.id).maybeSingle();if(!q.error&&q.data)profile=q.data;}catch(_){}
- return {id:user.id,name:String(profile.full_name||profile.name||String(user.email||'').split('@')[0]||'Rider'),phone:String(profile.phone||''),vehicle:String(profile.vehicle||profile.vehicle_type||'Delivery rider'),email:String(user.email||''),avatar_url:String(profile.avatar_url||''),auth:true};
+ return {id:user.id,name:String(profile.full_name||profile.name||String(user.email||'').split('@')[0]||'Rider'),email:String(user.email||'')};
 }
 async function prVerifiedIdentity(client){
  const result=await client.auth.getUser();if(result.error)throw result.error;
@@ -209,12 +210,14 @@ async function prRiderCredentials(email,password){
  return prVerifiedIdentity(client);
 }
 function prAuthLoading(message='Checking your rider account…'){
+ clearDeliveries();
  document.title='Papalita Rider · Checking account';
  $('#root').innerHTML=`<main class="pr-gate-main"><section class="panel pr-auth-loading" role="status"><div class="pr-gate-brand"><img class="pr-logo" src="images/papalita_mark_color.png" alt="Papalita"><div><strong>Papalita</strong><small>Rider portal</small></div></div><p>${esc(message)}</p></section></main>`;
 }
 function prRiderGate(message=''){
+ clearDeliveries();
  document.title='Papalita Rider · Sign in';
- $('#root').innerHTML=`<main class="pr-gate-main"><form id="g" class="panel pr-auth-form"><div class="pr-gate-brand"><img class="pr-logo" src="images/papalita_mark_color.png" alt="Papalita"><div><strong>Papalita</strong><small>Rider portal · v5</small></div></div><h1>Welcome back, rider.</h1><p class="mu" style="margin:7px 0 21px">Sign in to your Papalita rider account.</p><div class="field"><label for="rider-email">Email address</label><input class="in" id="rider-email" name="email" type="email" autocomplete="username" inputmode="email" value="${esc(prLoginEmail)}" required placeholder="you@example.com"></div><div class="field"><label for="rider-password">Password</label><div class="pr-password-wrap"><input class="in" id="rider-password" name="password" type="password" autocomplete="current-password" required><button type="button" class="pr-password-toggle" id="rider-password-toggle" aria-label="Show password" aria-pressed="false">Show</button></div></div><p class="err pr-auth-error" id="pe" role="alert">${esc(message)}</p><button class="btn p blk" id="rider-signin" type="submit">Sign in ${prIcon('arrow')}</button><button type="button" class="btn s blk pr-install-login" data-pr-install>${prIcon('install')}<span class="pr-install-native-label">Install Rider App</span><span class="pr-install-help-label">How to install Rider App</span></button><p class="pr-install-pending" role="status">Install Rider App will appear when Chrome is ready.</p><p class="pr-auth-access">Your account needs the <b>rider</b> role. Contact your Papalita administrator if you need access.</p><details class="pr-auth-delivery-note"><summary>About delivery data</summary><p>Open Live deliveries to see orders assigned by Papalita and share GPS. The Jobs, Active, History and Earnings tabs display browser records separately.</p></details><p class="sm">New rider? <a class="link" href="https://papalitaoriginal.netlify.app/apply/?role=rider">Apply as a Rider</a></p><a class="link" href="https://tomcaberio99-design.github.io/papalita/">← Back to customer app</a></form></main>`;
+ $('#root').innerHTML=`<main class="pr-gate-main"><form id="g" class="panel pr-auth-form"><div class="pr-gate-brand"><img class="pr-logo" src="images/papalita_mark_color.png" alt="Papalita"><div><strong>Papalita</strong><small>Rider portal · v6</small></div></div><h1>Welcome back, rider.</h1><p class="mu" style="margin:7px 0 21px">Sign in to your Papalita rider account.</p><div class="field"><label for="rider-email">Email address</label><input class="in" id="rider-email" name="email" type="email" autocomplete="username" inputmode="email" value="${esc(prLoginEmail)}" required placeholder="you@example.com"></div><div class="field"><label for="rider-password">Password</label><div class="pr-password-wrap"><input class="in" id="rider-password" name="password" type="password" autocomplete="current-password" required><button type="button" class="pr-password-toggle" id="rider-password-toggle" aria-label="Show password" aria-pressed="false">Show</button></div></div><p class="err pr-auth-error" id="pe" role="alert">${esc(message)}</p><button class="btn p blk" id="rider-signin" type="submit">Sign in ${prIcon('arrow')}</button><button type="button" class="btn s blk pr-install-login" data-pr-install>${prIcon('install')}<span class="pr-install-native-label">Install Rider App</span><span class="pr-install-help-label">How to install Rider App</span></button><p class="pr-install-pending" role="status">Install Rider App will appear when Chrome is ready.</p><p class="pr-auth-access">Your account needs the <b>rider</b> role. Contact your Papalita administrator if you need access.</p><p class="sm">New rider? <a class="link" href="https://papalitaoriginal.netlify.app/apply/?role=rider">Apply as a Rider</a></p><a class="link" href="https://tomcaberio99-design.github.io/papalita/">← Back to customer app</a></form></main>`;
  const form=$('#g'),password=$('#rider-password'),toggle=$('#rider-password-toggle');
  if(prSignOutFailed){const retry=document.createElement('button');retry.type='button';retry.className='btn s blk';retry.style.marginTop='10px';retry.textContent='Retry sign out';retry.onclick=()=>void prRiderSignOut();$('#rider-signin').after(retry);}
  toggle.onclick=()=>{const shown=password.type==='password';password.type=shown?'text':'password';toggle.textContent=shown?'Hide':'Show';toggle.setAttribute('aria-label',shown?'Hide password':'Show password');toggle.setAttribute('aria-pressed',String(shown));};
@@ -226,23 +229,25 @@ async function prRiderSubmit(form){
  if(!email||!password){error.textContent='Enter your email address and password.';return;}
  prLoginEmail=email;prSigningIn=true;prAuthBusy=true;me=null;const generation=++prAuthGeneration;
  error.textContent='';button.disabled=true;button.textContent='Signing in…';form.setAttribute('aria-busy','true');
- try{const identity=await prRiderCredentials(email,password);if(generation!==prAuthGeneration)return;me=identity;tab='jobs';prSignOutFailed=false;prAuthCheckedAt=Date.now();prAuthBusy=false;draw();}
+ try{const identity=await prRiderCredentials(email,password);if(generation!==prAuthGeneration)return;me=identity;prSignOutFailed=false;prAuthCheckedAt=Date.now();prAuthBusy=false;draw();}
  catch(e){if(generation===prAuthGeneration){me=null;error.textContent=prAuthMessage(e);}}
  finally{passwordInput.value='';prSigningIn=false;if(generation===prAuthGeneration)prAuthBusy=false;if(form.isConnected){button.disabled=false;button.innerHTML='Sign in '+prIcon('arrow');form.removeAttribute('aria-busy');}}
 }
 function prLockRider(message=''){
- ++prAuthGeneration;me=null;prAuthBusy=false;prDropLegacyLogin();prCloseAuthDialogs();gate(message);
+ ++prAuthGeneration;me=null;prAuthBusy=false;prDropLegacyLogin();prCloseAuthDialogs();prRiderGate(message);
 }
 async function prHydrateRider(){
  if(prAuthBusy||prSigningOut||prSigningIn)return;
- const previousId=me?.id,previousTab=tab,generation=++prAuthGeneration;prAuthBusy=true;me=null;prCloseAuthDialogs();prAuthLoading();
+ const generation=++prAuthGeneration;prAuthBusy=true;
+ if(!me)prAuthLoading();
  try{
   const client=prGetAuthClient(),session=await client.auth.getSession();if(session.error)throw session.error;
   if(generation!==prAuthGeneration)return;
-  if(!session.data?.session){gate();return;}
+  if(!session.data?.session){me=null;prCloseAuthDialogs();prRiderGate();return;}
+  if(me&&me.id!==session.data.session.user?.id){me=null;prCloseAuthDialogs();prAuthLoading();}
   const identity=await prVerifiedIdentity(client);if(generation!==prAuthGeneration)return;
-  me=identity;tab=identity.id===previousId?previousTab:'jobs';prAuthCheckedAt=Date.now();prAuthBusy=false;draw();
- }catch(error){if(generation===prAuthGeneration){me=null;gate(prAuthMessage(error));}}
+  me=identity;prAuthCheckedAt=Date.now();prAuthBusy=false;draw();
+ }catch(error){if(generation===prAuthGeneration){me=null;prCloseAuthDialogs();prRiderGate(prAuthMessage(error));}}
  finally{if(generation===prAuthGeneration)prAuthBusy=false;}
 }
 function prScheduleAuthCheck(){
@@ -252,25 +257,25 @@ function prScheduleAuthCheck(){
 async function prRiderSignOut(){
  if(prSigningOut)return;
  prSigningOut=true;prSignOutFailed=false;++prAuthGeneration;me=null;prAuthBusy=true;prCloseAuthDialogs();prDropLegacyLogin();prAuthLoading('Signing out…');
- try{const result=await prGetAuthClient().auth.signOut({scope:'local'});if(result.error)throw result.error;gate();}
- catch(error){prSignOutFailed=true;gate('Sign-out could not be completed: '+prAuthMessage(error)+' Please try again.');}
+ try{const result=await prGetAuthClient().auth.signOut({scope:'local'});if(result.error)throw result.error;prRiderGate();}
+ catch(error){prSignOutFailed=true;prRiderGate('Sign-out could not be completed: '+prAuthMessage(error)+' Please try again.');}
  finally{me=null;prSigningOut=false;prAuthBusy=false;}
 }
 async function prRiderBoot(){
  me=null;prDropLegacyLogin();prAuthLoading();
  try{
   const client=prGetAuthClient();
-  const listener=client.auth.onAuthStateChange((event,session)=>{
+  client.auth.onAuthStateChange((event,session)=>{
    // Keep this callback synchronous; all network work is deferred outside it.
    if(event==='SIGNED_OUT'){prLockRider();return;}
    if(event==='SIGNED_IN'||event==='USER_UPDATED'||event==='TOKEN_REFRESHED'){
     if(!prSigningIn&&(!me||me.id!==session?.user?.id||event==='USER_UPDATED'||Date.now()-prAuthCheckedAt>60000))prScheduleAuthCheck();
    }
-  });prAuthSubscription=listener?.data?.subscription||null;
+  });
   await prHydrateRider();
- }catch(error){me=null;prAuthBusy=false;gate(prAuthMessage(error));}
+ }catch(error){me=null;prAuthBusy=false;prRiderGate(prAuthMessage(error));}
 }
 
-setInterval(() => { if (me && !document.querySelector('.ov') && !/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) draw(); }, 4000); void prRiderBoot();
+void prRiderBoot();
 })();
 </script></body></html>
