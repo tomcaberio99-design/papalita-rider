@@ -1,4 +1,4 @@
-/* Assigned Supabase deliveries and explicit, foreground GPS sharing. */
+/* Rider self-dispatch and explicit, foreground GPS sharing. */
 (() => {
   'use strict';
   const cleanAddress = value => String(value || '').replace(/^.*? — /,'').trim();
@@ -9,13 +9,35 @@
       ? place : place + (/\bAlegria\b/i.test(place)?'':', Alegria') + ', Surigao del Norte';
     return 'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(address);
   }
-  function mount(workspace, db, isCurrent, escape) {
+  const peso=new Intl.NumberFormat('en-PH',{style:'currency',currency:'PHP'});
+  const orderTime=new Intl.DateTimeFormat('en-PH',{hour:'numeric',minute:'2-digit',timeZone:'Asia/Manila'});
+  const phaseLabel={confirmed:'Store confirmed',preparing:'Preparing',ready:'Ready at the store'};
+  const safePhone=value=>String(value||'').replace(/[^+0-9]/g,'');
+
+  function routeGraphic(mode) {
+    const pin=(x,y,color)=>`<g transform="translate(${x} ${y})"><path d="M0 24C-4 17-14 7-14 0a14 14 0 1 1 28 0C14 7 4 17 0 24Z" fill="${color}"/><circle r="5" fill="#effaf3"/></g>`;
+    return `<svg viewBox="0 0 360 148" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+      <rect width="360" height="148" fill="#253037"/>
+      <path d="M0 124 60 110 89 116 141 148M240 0l15 26 15 47 35 75H360V0Z" fill="#2a3b39"/>
+      <g fill="none" stroke="#19242a" stroke-width="3">
+        <path d="M-15 52 64 25 132 44 246 23 371 33M0 107l66-21 59 13 48-16 73 11 35-16 85 17M-5 130l86-12 59 11 54-13 64 19 62-20 47 9M17 0l24 43 13 29 17 76M103 0l-7 44 13 35 12 69M153 0l8 33 18 43 11 72M210 0l13 45 18 30 12 73M287 0l-12 41 17 37 18 70M344 0l-18 53 14 43 9 52"/>
+        <path d="M12 74l19-9 21 7 13-6M99 19l47 5 8-11M132 66l-13 33 16 17 4 14M225 59l-26 7 13 24m74-33 36 4 13 22"/>
+      </g>
+      ${mode==='store'?pin(180,58,'#248256'):`<path d="M69 96l49-15 26 8 35-12 33 9 27-16 48 4 15-24" fill="none" stroke="#7ae2a0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        ${pin(69,72,'#268357')}${pin(302,26,'#a37e47')}`}
+    </svg>`;
+  }
+
+  function mount(workspace, db, isCurrent, escape, modal) {
     const list=workspace.querySelector('[data-live-jobs]');
+    const views=workspace.querySelector('[data-delivery-views]');
     const info=workspace.querySelector('[data-live-info]');
     const loadStatus=workspace.querySelector('[data-live-load-status]');
     const refreshButton=workspace.querySelector('[data-live-refresh]');
-    let rows=[], key='', share=null, requesting=false, refreshing=false, mounted=true;
-    let savingOrder=null, jobsRevision=0;
+    const skipped=new Set();
+    let offers=[], rows=[], view='', selectedId='', key='';
+    let share=null, requesting=false, refreshing=false, mounted=true, savingOrder=null, jobsRevision=0;
+    let completedId='', confirmedAction=null;
     const alive=()=>mounted && workspace.isConnected && isCurrent();
     const tell=message=>{if(info.textContent!==message)info.textContent=message;};
     const rpc=async(name,args)=>{
@@ -23,64 +45,105 @@
       if (error) throw Error(error.message || 'Could not connect.');
       return data;
     };
-    function nextStep(order) {
+    const actionButton=(order,action,label,{style='p',disabled=false}={})=>
+      `<button type="button" class="btn ${style}" data-delivery-action="${action}" data-order-id="${escape(order.id)}"
+        ${disabled||savingOrder?'disabled':''}>${savingOrder===order.id?'Saving…':label}</button>`;
+    const orderRef=order=>'Order #'+escape(String(order.id).slice(0,8));
+    const statusLabel=order=>phaseLabel[order.status]||'Awaiting pickup';
+    function mapPanel(mode, url) {
+      const label=url?(mode==='store'?'Directions to store':'Directions to customer'):'Route overview · illustration';
+      const graphic=routeGraphic(mode)+`<span>${label}</span>`+(url?'<small aria-hidden="true">Illustration</small>':'');
+      return url?`<a class="pr-trip-map" href="${escape(url)}" target="_blank" rel="noopener noreferrer">${graphic}</a>`
+        :`<div class="pr-trip-map">${graphic}</div>`;
+    }
+    function offerCard(order) {
+      return `<article class="pr-trip pr-trip-offer">
+        <header class="pr-trip-header"><h2 class="pr-job-alert">New job alert</h2><span class="pr-step">Step 1 of 3</span></header>
+        ${mapPanel('route')}
+        <dl class="pr-trip-details pr-route-stops">
+          <div><dt>Pick up at</dt><dd>${escape(order.store||'Store')}</dd><span class="pr-order-sub">${escape(order.store_address||'')}</span></div>
+          <div><dt>Drop-off area</dt><dd>${escape(order.barangay?order.barangay+', Alegria':'Alegria')}</dd></div>
+        </dl>
+        <p class="pr-status-note">${statusLabel(order)} · ${orderRef(order)}</p>
+        <div class="pr-trip-actions">
+          ${actionButton(order,'skip','Skip',{style:'s'})}
+          ${actionButton(order,'claim','Accept delivery')}
+        </div>
+      </article>`;
+    }
+    function assignedCard(order) {
       const accepted=!!order.rider_accepted_at, pickedUp=!!order.rider_picked_up_at;
-      if (share?.id===order.id) {
-        return {number:3,title:'Live GPS',hint:'Keep Papalita open while you deliver the order.',action:'stop',label:'Stop sharing'};
-      }
-      if (!order.assignment_version && order.status!=='out_for_delivery') {
-        return {title:'Waiting for the store',hint:'The admin needs to enable Accept and Confirm Pickup. GPS is available after the store hands over the order.'};
-      }
-      if (pickedUp || !order.assignment_version) {
-        const canShare=order.status==='out_for_delivery';
-        return {
-          number:3,title:pickedUp?'Pickup confirmed':'Out for delivery',
-          hint:!canShare?'Wait for the store to mark the order Hand to Rider.'
-            : share?'Stop sharing on your other delivery first.'
-            :'Padulong na sa customer? I-share imong location.',
-          action:canShare?'gps':null,label:requesting?'Starting GPS…':'Share live GPS',disabled:requesting||!!share
-        };
-      }
-      if (!accepted) {
-        return {number:1,title:'New assignment',hint:'Dawata ang order kung ikaw ang mo-deliver.',action:'accept',
-          label:savingOrder===order.id?'Saving…':'Accept assignment',disabled:!!savingOrder};
-      }
-      if (order.status!=='out_for_delivery') {
-        return {number:2,title:'Waiting for the store',hint:'Assignment accepted. Hulat nga i-tap sa store ang Hand to Rider.'};
-      }
-      return {number:2,title:'Ready for pickup',hint:'I-confirm kung nadawat na nimo ang order gikan sa store.',action:'pickup',
-        label:savingOrder===order.id?'Saving…':'Confirm pickup',disabled:!!savingOrder};
+      const handedOff=order.status==='out_for_delivery';
+      const store=directions([order.store,order.store_address].filter(Boolean).join(', '));
+      const drop=directions(Number.isFinite(order.drop_lat)&&Number.isFinite(order.drop_lng)
+        ? order.drop_lat+','+order.drop_lng : cleanAddress(order.address));
+      const storePhone=safePhone(order.store_phone), phone=safePhone(order.phone);
+      const cod=order.cod_due!=null&&Number.isFinite(Number(order.cod_due))
+        ? `<p class="pr-cod">Collect cash · ${peso.format(Number(order.cod_due))} (COD)</p>` : '';
+      const time=order.created_at&&Number.isFinite(Date.parse(order.created_at))
+        ? ' · '+orderTime.format(new Date(order.created_at)) : '';
+      const sharing=share?.id===order.id;
+      const heading=pickedUp?'On the way':accepted?'At the store':'Assigned to you';
+      const body=pickedUp?`<div class="pr-trip-details">
+        <span class="pr-trip-label">Customer</span>
+        <strong class="pr-customer-name">${escape(order.customer||'Customer')}</strong>
+        <p>${escape(cleanAddress(order.address)||'Drop-off address unavailable')}</p>
+        <div class="pr-trip-tools">
+          ${phone?`<a class="btn s" href="sms:${phone}">Message customer</a><a class="btn s" href="tel:${phone}">Call</a>`:''}
+          ${sharing?actionButton(order,'stop','Stop sharing GPS',{style:'s'}):
+            actionButton(order,'gps',requesting?'Starting GPS…':'Share live GPS',{style:'s',disabled:requesting||!!share||!handedOff})}
+        </div>
+        ${cod?`<div style="margin-top:10px">${cod}</div>`:''}
+      </div>`:`<div class="pr-trip-details pr-pickup-slip">
+        <span class="pr-trip-label">Collect from</span><h3>${escape(order.store||'Store')}</h3>
+        <p class="pr-order-sub">${escape(order.store_address||'')}${time}</p>
+        ${order.items?.length?`<ul>${order.items.map(i=>`<li>${escape(i.qty)} × ${escape(i.name||'Item')}</li>`).join('')}</ul>`:''}
+        ${cod}
+      </div>`;
+      const primary=pickedUp?actionButton(order,'deliver','Mark delivered',{disabled:!handedOff})
+        :accepted?actionButton(order,'pickup','Picked up & start delivery',{disabled:!handedOff})
+        :actionButton(order,'accept','Accept assignment');
+      return `<article class="pr-trip">
+        <header class="pr-trip-header"><div><h2>${heading}</h2><p class="pr-order-sub">${orderRef(order)}</p></div>
+          <span class="pr-step">Step ${pickedUp?3:accepted?2:1} of 3</span>
+        </header>
+        ${mapPanel(pickedUp?'route':'store',pickedUp?drop:store)}
+        ${body}
+        ${accepted&&!handedOff&&!pickedUp?'<p class="pr-status-note">Hulat nga i-tap sa store ang <b>Hand to Rider</b>.</p>':''}
+        <div class="pr-trip-actions">${primary}</div>
+        ${pickedUp?'':`<div class="pr-trip-tools">
+          ${storePhone?`<a class="btn s" href="tel:${storePhone}">Call store</a>`:''}
+          ${['confirmed','preparing','ready'].includes(order.status)?actionButton(order,'release','Release job',{style:'s'}):''}
+        </div>`}
+      </article>`;
     }
     function paint() {
-      const fingerprint=JSON.stringify([rows,share?.id,requesting,savingOrder]);
+      const fingerprint=JSON.stringify([offers,rows,view,selectedId,[...skipped],share?.id,requesting,savingOrder,completedId]);
       if(key===fingerprint)return;
       key=fingerprint;
-      const focused=list.contains(document.activeElement)?document.activeElement.dataset.orderId:null;
-      list.innerHTML=rows.length?rows.map(o=>{
-        const store=directions([o.store,o.store_address].filter(Boolean).join(', '));
-        const drop=directions(Number.isFinite(o.drop_lat)&&Number.isFinite(o.drop_lng)
-          ? o.drop_lat+','+o.drop_lng : cleanAddress(o.address));
-        const step=nextStep(o);
-        return `<article class="pr-assigned-card">
-          <header class="pr-assigned-head"><h2>${escape(o.store||'Store')}</h2><span class="pr-assigned-ref">Order #${escape(String(o.id).slice(0,8))}</span></header>
-          <div class="pr-next-step">
-            ${step.number?`<span class="pr-step-number" aria-hidden="true">${step.number}</span>`:''}
-            <div>${step.number?`<span class="pr-step-label">Step ${step.number} of 3</span>`:''}
-            <h3>${step.title}</h3><p>${step.hint}</p></div>
-          </div>
-          ${step.action?`<button type="button" class="btn ${step.action==='stop'?'s':'p'} pr-order-action" data-delivery-action="${step.action}"
-            data-order-id="${escape(o.id)}" ${step.disabled?'disabled':''}>${step.label}</button>`:''}
-          <dl class="pr-addresses">
-            <div><dt>Pickup · Store</dt><dd>${escape(o.store_address||o.store||'Address unavailable')}
-              ${store?`<br><a href="${escape(store)}" target="_blank" rel="noopener noreferrer">Directions to store</a>`:''}</dd></div>
-            <div><dt>Drop-off · Customer</dt><dd>${escape(cleanAddress(o.address)||'Address unavailable')}
-              ${drop?`<br><a href="${escape(drop)}" target="_blank" rel="noopener noreferrer">Directions to customer</a>`:''}</dd></div>
-          </dl>
-        </article>`;
-      }).join(''):`<section class="pr-no-deliveries"><h2>No assigned deliveries</h2>
-        <p>Mogawas diri ang order kung i-assign na sa admin sa imo.</p></section>`;
-      if(focused)Array.from(list.querySelectorAll('[data-order-id]'))
-        .find(button=>button.dataset.orderId===focused&&!button.disabled)?.focus({preventScroll:true});
+      const focused=workspace.contains(document.activeElement)?document.activeElement.dataset.deliveryAction:null;
+      const visible=offers.filter(order=>!skipped.has(order.id));
+      const active=rows.find(order=>order.id===selectedId)||rows[0];
+      views.hidden=false;
+      views.innerHTML=`<button type="button" class="btn s" data-delivery-action="available" aria-pressed="${view==='available'}">Available · ${visible.length}</button>
+        <button type="button" class="btn s" data-delivery-action="my" aria-pressed="${view==='my'}">My deliveries · ${rows.length}</button>`;
+      if(view==='available') {
+        list.innerHTML=visible.length?offerCard(visible[0])
+          :`<section class="pr-no-deliveries"><h2>No available deliveries</h2><p>Mogawas diri ang delivery kung i-confirm na sa store.</p>
+            ${offers.length?'<button type="button" class="btn s" data-delivery-action="unskip">Show skipped jobs</button>':''}</section>`;
+      } else if(active){
+        const index=rows.indexOf(active);
+        list.innerHTML=assignedCard(active)+(rows.length>1?`<div class="pr-jobs-nav">
+          <button type="button" class="btn s" data-delivery-action="previous" data-order-id="${escape(rows[index-1]?.id||'')}" ${index===0?'disabled':''}>Previous</button>
+          <span>${index+1} of ${rows.length}</span>
+          <button type="button" class="btn s" data-delivery-action="next" data-order-id="${escape(rows[index+1]?.id||'')}" ${index===rows.length-1?'disabled':''}>Next</button></div>`:'');
+      } else {
+        list.innerHTML=`<section class="pr-no-deliveries"><h2>${completedId?'Delivered':'No assigned deliveries'}</h2>
+          <p>${completedId?'Na-update na ang order sa customer.':'Dawata ang usa ka job gikan sa Available Deliveries.'}</p>
+          <button type="button" class="btn s" data-delivery-action="available">View available deliveries</button></section>`;
+      }
+      if(focused)Array.from(workspace.querySelectorAll('[data-delivery-action]'))
+        .find(button=>button.dataset.deliveryAction===focused&&!button.disabled)?.focus({preventScroll:true});
     }
     async function end(message) {
       const session=share;
@@ -123,7 +186,8 @@
       try {
         const token=await rpc('papalita_tracking_share',{p_order_id:id});
         if (!token) throw Error('Could not start GPS sharing.');
-        if (!alive()) {
+        if (!alive() || !rows.some(row=>row.id===id&&row.status==='out_for_delivery'&&
+          row.assignment_version===order.assignment_version&&row.rider_picked_up_at)) {
           await rpc('papalita_tracking_share',{p_order_id:id,p_share_key:token});
           return;
         }
@@ -138,25 +202,57 @@
         if(alive())paint();
       }
     }
-    async function saveProgress(button) {
-      if(!alive()||savingOrder||button.disabled)return;
-      const order=rows.find(row=>row.id===button.dataset.orderId);
-      if(!order?.assignment_version)return;
-      const action=button.dataset.deliveryAction;
+    function confirmAction(order,action) {
+      const deliver=action==='deliver';
+      const dialog=modal(deliver?'Mark this order delivered?':'Release this job?',
+        `<p>${deliver?'Confirm once the customer has received the order.':'Another rider can accept this order after you release it.'}</p>
+        <div class="pr-account-actions"><button type="button" class="btn p blk" data-pr-confirm>${deliver?'Mark delivered':'Release job'}</button>
+        <button type="button" class="btn s blk" data-pr-back>Go back</button></div>`);
+      confirmedAction=dialog;
+      dialog.querySelector('[data-pr-back]').onclick=()=>dialog.close();
+      dialog.querySelector('[data-pr-confirm]').onclick=()=>{
+        dialog.close();
+        void save(order,action);
+      };
+      dialog.addEventListener('close',()=>{if(confirmedAction===dialog)confirmedAction=null;},{once:true});
+    }
+    async function save(order, action) {
+      if(!alive()||savingOrder)return;
       savingOrder=order.id;
       ++jobsRevision;
       tell('');
       paint();
       try{
-        const progress=await rpc('papalita_tracking_rider_progress',{
-          p_order_id:order.id,p_assignment_version:order.assignment_version,p_action:action
-        });
-        if(!alive())return;
-        if(!progress?.rider_accepted_at || (action==='pickup'&&!progress.rider_picked_up_at)){
-          throw Error('The delivery update could not be confirmed. Please try again.');
+        if(action==='claim'){
+          const version=await rpc('papalita_rider_claim',{p_order_id:order.id});
+          if(!alive())return;
+          if(!version)throw Error('Acceptance could not be confirmed. Tap Refresh.');
+          offers=offers.filter(offer=>offer.id!==order.id);
+          view='my';
+          selectedId=order.id;
+          completedId='';
+          tell('Delivery accepted.');
+        }else if(action==='accept'||action==='pickup'){
+          const progress=await rpc('papalita_tracking_rider_progress',{
+            p_order_id:order.id,p_assignment_version:order.assignment_version,p_action:action
+          });
+          if(!alive())return;
+          if(!progress?.rider_accepted_at || (action==='pickup'&&!progress.rider_picked_up_at)){
+            throw Error('The delivery update could not be confirmed. Please try again.');
+          }
+          Object.assign(order,progress);
+          tell(action==='accept'?'Assignment accepted.':'Pickup confirmed. You can now share live GPS.');
+        }else{
+          const saved=await rpc('papalita_rider_finish_step',{
+            p_order_id:order.id,p_assignment_version:order.assignment_version,p_action:action
+          });
+          if(!alive())return;
+          if(!saved)throw Error('The delivery update could not be confirmed. Please try again.');
+          if(share?.id===order.id)void end();
+          rows=rows.filter(row=>row.id!==order.id);
+          completedId=action==='deliver'?order.id:'';
+          tell(action==='deliver'?'Order marked delivered.':'Job released back to Available Deliveries.');
         }
-        Object.assign(order,progress);
-        tell(action==='accept'?'Assignment accepted.':'Pickup confirmed. You can now share live GPS.');
       }catch(error){
         if(alive())tell(error.message);
       }finally{
@@ -170,29 +266,47 @@
       refreshButton.setAttribute('aria-busy','true');
       const revision=jobsRevision;
       try {
-        const jobs=await rpc('papalita_tracking_jobs');
+        const snapshot=await rpc('papalita_rider_workspace');
         if(!alive()||revision!==jobsRevision)return;
-        rows=Array.isArray(jobs)?jobs:[];
+        if(!Array.isArray(snapshot?.assigned)||!Array.isArray(snapshot?.available))throw Error('Could not load deliveries.');
+        rows=snapshot.assigned;
+        offers=snapshot.available;
+        if(!view)view=rows.length?'my':'available';
         if(share&&!rows.some(o=>o.id===share.id&&o.status==='out_for_delivery'&&o.assignment_version===share.version)){
           void end('This delivery has ended or was reassigned.');
         }
         loadStatus.textContent='';
         paint();
-      } catch {
-        if(alive()&&revision===jobsRevision)loadStatus.textContent=key
-          ? 'Could not refresh. Showing the last loaded deliveries. Tap Refresh to try again.'
-          : 'Could not load your deliveries. Check your internet connection and tap Refresh. If it still fails, contact Papalita support.';
+      } catch(error) {
+        if(alive()&&revision===jobsRevision)loadStatus.textContent=/papalita_rider_workspace|schema cache/i.test(error.message)
+          ? 'Rider v7 needs the self-dispatch database update. Contact your Papalita admin.'
+          : key?'Could not refresh. Showing the last loaded deliveries. Tap Refresh to try again.'
+          :'Could not load your deliveries. Check your connection and tap Refresh.';
       } finally {
         refreshing=false;
         refreshButton.removeAttribute('aria-busy');
+        if(alive()&&revision!==jobsRevision&&!savingOrder)void refresh();
       }
     }
     const click=event=>{
       const button=event.target.closest('[data-delivery-action]');
       if(!button || button.disabled)return;
-      if(button.dataset.deliveryAction==='stop')void end();
-      else if(button.dataset.deliveryAction==='gps')void start(button.dataset.orderId);
-      else void saveProgress(button);
+      const action=button.dataset.deliveryAction;
+      const id=button.dataset.orderId;
+      if(action==='available'||action==='my'){view=action;paint();return;}
+      if(action==='previous'||action==='next'){selectedId=id;paint();return;}
+      if(action==='unskip'){skipped.clear();paint();return;}
+      if(action==='skip'){skipped.add(id);paint();return;}
+      if(savingOrder)return;
+      if(action==='stop'){void end();return;}
+      if(action==='gps'){void start(id);return;}
+      const order=(action==='claim'?offers:rows).find(row=>row.id===id);
+      if(!order)return;
+      if(action==='deliver'||action==='release'){
+        if(!confirmedAction?.open)confirmAction(order,action);
+        return;
+      }
+      void save(order,action);
     };
     const leaving=()=>{void end();};
     const visibility=()=>{
@@ -206,7 +320,7 @@
     };
     document.addEventListener('visibilitychange',visibility);
     window.addEventListener('pagehide',leaving);
-    list.addEventListener('click',click);
+    workspace.addEventListener('click',click);
     refreshButton.addEventListener('click',refresh);
     const poll=setInterval(refresh,5000);
     void refresh();
@@ -215,7 +329,8 @@
       clearInterval(poll);
       document.removeEventListener('visibilitychange',visibility);
       window.removeEventListener('pagehide',leaving);
-      list.removeEventListener('click',click);
+      workspace.removeEventListener('click',click);
+      if(confirmedAction?.open)confirmedAction.close();
       refreshButton.removeEventListener('click',refresh);
       void end();
     };
