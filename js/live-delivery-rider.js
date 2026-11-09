@@ -13,6 +13,7 @@
     const list=dialog.querySelector('[data-live-jobs]');
     const info=dialog.querySelector('[data-live-info]');
     let rows=[], key='', share=null, requesting=false, refreshing=false, poll;
+    let savingOrder=null, jobsRevision=0;
     const alive=()=>dialog.open && isCurrent();
     const tell=message=>{info.textContent=message;};
     const rpc=async(name,args)=>{
@@ -20,8 +21,22 @@
       if (error) throw Error(error.message || 'Could not connect.');
       return data;
     };
+    function nextStep(order) {
+      const accepted=!!order.rider_accepted_at, pickedUp=!!order.rider_picked_up_at;
+      if(!order.assignment_version) {
+        return '<p class="sm mu">Acceptance controls will appear after the rider progress database update.</p>';
+      }
+      if(pickedUp)return '<p class="sm"><b>Pickup confirmed</b></p>';
+      const action=accepted?'pickup':'accept';
+      const label=accepted?'Confirm pickup':'Accept assignment';
+      const disabled=!!savingOrder || (accepted && order.status!=='out_for_delivery');
+      return `<p class="sm"><b>${accepted?'Assignment accepted':'New assignment'}</b></p>
+        <button class="btn p sm" type="button" data-delivery-action="${action}" data-order-id="${escape(order.id)}" ${disabled?'disabled':''}>
+          ${savingOrder===order.id?'Saving…':label}</button>
+        ${accepted && order.status!=='out_for_delivery'?'<p class="sm mu">Confirm pickup after the store marks this order Hand to Rider.</p>':''}`;
+    }
     function paint() {
-      const fingerprint=JSON.stringify([rows,share?.id,requesting]);
+      const fingerprint=JSON.stringify([rows,share?.id,requesting,savingOrder]);
       if(key===fingerprint)return;
       key=fingerprint;
       list.innerHTML=rows.length?rows.map(o=>{
@@ -29,6 +44,7 @@
         const drop=directions(Number.isFinite(o.drop_lat)&&Number.isFinite(o.drop_lng)
           ? o.drop_lat+','+o.drop_lng : cleanAddress(o.address));
         const sharing=share?.id===o.id;
+        const gpsAvailable=!o.assignment_version || !!o.rider_picked_up_at;
         const disabled=requesting || !!share || o.status!=='out_for_delivery';
         return `<article class="panel"><b>Order #${escape(o.id.slice(0,8))}</b>
           <p class="sm mu">${escape(o.status.replaceAll('_',' '))} · ${escape(o.store||'Store')}</p>
@@ -37,9 +53,10 @@
             ${store?`<a class="btn s sm" href="${escape(store)}" target="_blank" rel="noopener noreferrer">Store directions</a>`:''}
             ${drop?`<a class="btn s sm" href="${escape(drop)}" target="_blank" rel="noopener noreferrer">Drop-off directions</a>`:''}
           </div>
-          ${sharing?'<button class="btn s sm" data-stop-gps>Stop sharing</button>':
-            `<button class="btn p sm" data-start-gps="${escape(o.id)}" ${disabled?'disabled':''}>Share live GPS</button>`}
-          ${o.status!=='out_for_delivery'?'<p class="sm mu">GPS sharing opens after the store hands off this order.</p>':''}
+          ${nextStep(o)}
+          ${sharing?'<button class="btn s sm" data-stop-gps>Stop sharing</button>':gpsAvailable?
+            `<button class="btn p sm" data-start-gps="${escape(o.id)}" ${disabled?'disabled':''}>Share live GPS</button>`:''}
+          ${gpsAvailable&&o.status!=='out_for_delivery'?'<p class="sm mu">GPS sharing opens after the store hands off this order.</p>':''}
         </article>`;
       }).join(''):'<p class="mu sm">No live deliveries assigned to your account.</p>';
     }
@@ -76,7 +93,8 @@
       },{enableHighAccuracy:true,maximumAge:0,timeout:10000});
     }
     async function start(id) {
-      if (!alive() || share || requesting || !rows.some(o=>o.id===id&&o.status==='out_for_delivery'))return;
+      if (!alive() || share || requesting || !rows.some(o=>o.id===id&&o.status==='out_for_delivery'&&
+          (!o.assignment_version||o.rider_picked_up_at)))return;
       if (!window.isSecureContext || !navigator.geolocation){tell('Open Papalita over HTTPS on a device with GPS.');return;}
       requesting=true;paint();tell('Allow location access when the browser asks.');
       try {
@@ -97,22 +115,50 @@
         if(alive())paint();
       }
     }
+    async function saveProgress(button) {
+      if(!alive()||savingOrder||button.disabled)return;
+      const order=rows.find(row=>row.id===button.dataset.orderId);
+      if(!order?.assignment_version)return;
+      const action=button.dataset.deliveryAction;
+      savingOrder=order.id;
+      ++jobsRevision;
+      paint();
+      try{
+        const progress=await rpc('papalita_tracking_rider_progress',{
+          p_order_id:order.id,p_assignment_version:order.assignment_version,p_action:action
+        });
+        if(!alive())return;
+        if(!progress?.rider_accepted_at || (action==='pickup'&&!progress.rider_picked_up_at)){
+          throw Error('The delivery update could not be confirmed. Please try again.');
+        }
+        Object.assign(order,progress);
+        tell(action==='accept'?'Assignment accepted.':'Pickup confirmed. You can now share live GPS.');
+      }catch(error){
+        if(alive())tell(error.message);
+      }finally{
+        savingOrder=null;
+        if(alive()){paint();void refresh();}
+      }
+    }
     async function refresh() {
-      if(!alive() || refreshing || document.hidden)return;
+      if(!alive() || refreshing || savingOrder || document.hidden)return;
       refreshing=true;
+      const revision=jobsRevision;
       try {
         const jobs=await rpc('papalita_tracking_jobs');
-        if(!alive())return;
+        if(!alive()||revision!==jobsRevision)return;
         rows=Array.isArray(jobs)?jobs:[];
         if(share&&!rows.some(o=>o.id===share.id&&o.status==='out_for_delivery'))void end('This delivery has ended or was reassigned.');
-        if(!key)tell('Sharing starts only when you tap Share live GPS on an order that is out for delivery.');
+        if(!key)tell('Accept your assignment, confirm pickup, then share GPS when you’re on the way.');
         paint();
       } catch {
-        if(alive()&&!share)tell('Could not load live deliveries. Check the tracking setup and connection.');
+        if(alive()&&!share&&revision===jobsRevision)tell('Could not load live deliveries. Check the tracking setup and connection.');
       } finally {refreshing=false;}
     }
     list.addEventListener('click',event=>{
       if(event.target.closest('[data-stop-gps]')){void end();return;}
+      const action=event.target.closest('[data-delivery-action]');
+      if(action){void saveProgress(action);return;}
       const button=event.target.closest('[data-start-gps]');
       if(button)void start(button.dataset.startGps);
     });
