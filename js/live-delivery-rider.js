@@ -9,13 +9,15 @@
       ? place : place + (/\bAlegria\b/i.test(place)?'':', Alegria') + ', Surigao del Norte';
     return 'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(address);
   }
-  function open(dialog, db, isCurrent, escape) {
-    const list=dialog.querySelector('[data-live-jobs]');
-    const info=dialog.querySelector('[data-live-info]');
-    let rows=[], key='', share=null, requesting=false, refreshing=false, poll;
+  function mount(workspace, db, isCurrent, escape) {
+    const list=workspace.querySelector('[data-live-jobs]');
+    const info=workspace.querySelector('[data-live-info]');
+    const loadStatus=workspace.querySelector('[data-live-load-status]');
+    const refreshButton=workspace.querySelector('[data-live-refresh]');
+    let rows=[], key='', share=null, requesting=false, refreshing=false, mounted=true;
     let savingOrder=null, jobsRevision=0;
-    const alive=()=>dialog.open && isCurrent();
-    const tell=message=>{info.textContent=message;};
+    const alive=()=>mounted && workspace.isConnected && isCurrent();
+    const tell=message=>{if(info.textContent!==message)info.textContent=message;};
     const rpc=async(name,args)=>{
       const {data,error}=await db.rpc(name,args);
       if (error) throw Error(error.message || 'Could not connect.');
@@ -23,42 +25,62 @@
     };
     function nextStep(order) {
       const accepted=!!order.rider_accepted_at, pickedUp=!!order.rider_picked_up_at;
-      if(!order.assignment_version) {
-        return '<p class="sm mu">Acceptance controls will appear after the rider progress database update.</p>';
+      if (share?.id===order.id) {
+        return {number:3,title:'Live GPS',hint:'Keep Papalita open while you deliver the order.',action:'stop',label:'Stop sharing'};
       }
-      if(pickedUp)return '<p class="sm"><b>Pickup confirmed</b></p>';
-      const action=accepted?'pickup':'accept';
-      const label=accepted?'Confirm pickup':'Accept assignment';
-      const disabled=!!savingOrder || (accepted && order.status!=='out_for_delivery');
-      return `<p class="sm"><b>${accepted?'Assignment accepted':'New assignment'}</b></p>
-        <button class="btn p sm" type="button" data-delivery-action="${action}" data-order-id="${escape(order.id)}" ${disabled?'disabled':''}>
-          ${savingOrder===order.id?'Saving…':label}</button>
-        ${accepted && order.status!=='out_for_delivery'?'<p class="sm mu">Confirm pickup after the store marks this order Hand to Rider.</p>':''}`;
+      if (!order.assignment_version && order.status!=='out_for_delivery') {
+        return {title:'Waiting for the store',hint:'The admin needs to enable Accept and Confirm Pickup. GPS is available after the store hands over the order.'};
+      }
+      if (pickedUp || !order.assignment_version) {
+        const canShare=order.status==='out_for_delivery';
+        return {
+          number:3,title:pickedUp?'Pickup confirmed':'Out for delivery',
+          hint:!canShare?'Wait for the store to mark the order Hand to Rider.'
+            : share?'Stop sharing on your other delivery first.'
+            :'Padulong na sa customer? I-share imong location.',
+          action:canShare?'gps':null,label:requesting?'Starting GPS…':'Share live GPS',disabled:requesting||!!share
+        };
+      }
+      if (!accepted) {
+        return {number:1,title:'New assignment',hint:'Dawata ang order kung ikaw ang mo-deliver.',action:'accept',
+          label:savingOrder===order.id?'Saving…':'Accept assignment',disabled:!!savingOrder};
+      }
+      if (order.status!=='out_for_delivery') {
+        return {number:2,title:'Waiting for the store',hint:'Assignment accepted. Hulat nga i-tap sa store ang Hand to Rider.'};
+      }
+      return {number:2,title:'Ready for pickup',hint:'I-confirm kung nadawat na nimo ang order gikan sa store.',action:'pickup',
+        label:savingOrder===order.id?'Saving…':'Confirm pickup',disabled:!!savingOrder};
     }
     function paint() {
       const fingerprint=JSON.stringify([rows,share?.id,requesting,savingOrder]);
       if(key===fingerprint)return;
       key=fingerprint;
+      const focused=list.contains(document.activeElement)?document.activeElement.dataset.orderId:null;
       list.innerHTML=rows.length?rows.map(o=>{
         const store=directions([o.store,o.store_address].filter(Boolean).join(', '));
         const drop=directions(Number.isFinite(o.drop_lat)&&Number.isFinite(o.drop_lng)
           ? o.drop_lat+','+o.drop_lng : cleanAddress(o.address));
-        const sharing=share?.id===o.id;
-        const gpsAvailable=!o.assignment_version || !!o.rider_picked_up_at;
-        const disabled=requesting || !!share || o.status!=='out_for_delivery';
-        return `<article class="panel"><b>Order #${escape(o.id.slice(0,8))}</b>
-          <p class="sm mu">${escape(o.status.replaceAll('_',' '))} · ${escape(o.store||'Store')}</p>
-          <p class="sm"><b>Drop-off</b> · ${escape(cleanAddress(o.address)||'Address unavailable')}</p>
-          <div class="row wrap" style="margin:8px 0">
-            ${store?`<a class="btn s sm" href="${escape(store)}" target="_blank" rel="noopener noreferrer">Store directions</a>`:''}
-            ${drop?`<a class="btn s sm" href="${escape(drop)}" target="_blank" rel="noopener noreferrer">Drop-off directions</a>`:''}
+        const step=nextStep(o);
+        return `<article class="pr-assigned-card">
+          <header class="pr-assigned-head"><h2>${escape(o.store||'Store')}</h2><span class="pr-assigned-ref">Order #${escape(String(o.id).slice(0,8))}</span></header>
+          <div class="pr-next-step">
+            ${step.number?`<span class="pr-step-number" aria-hidden="true">${step.number}</span>`:''}
+            <div>${step.number?`<span class="pr-step-label">Step ${step.number} of 3</span>`:''}
+            <h3>${step.title}</h3><p>${step.hint}</p></div>
           </div>
-          ${nextStep(o)}
-          ${sharing?'<button class="btn s sm" data-stop-gps>Stop sharing</button>':gpsAvailable?
-            `<button class="btn p sm" data-start-gps="${escape(o.id)}" ${disabled?'disabled':''}>Share live GPS</button>`:''}
-          ${gpsAvailable&&o.status!=='out_for_delivery'?'<p class="sm mu">GPS sharing opens after the store hands off this order.</p>':''}
+          ${step.action?`<button type="button" class="btn ${step.action==='stop'?'s':'p'} pr-order-action" data-delivery-action="${step.action}"
+            data-order-id="${escape(o.id)}" ${step.disabled?'disabled':''}>${step.label}</button>`:''}
+          <dl class="pr-addresses">
+            <div><dt>Pickup · Store</dt><dd>${escape(o.store_address||o.store||'Address unavailable')}
+              ${store?`<br><a href="${escape(store)}" target="_blank" rel="noopener noreferrer">Directions to store</a>`:''}</dd></div>
+            <div><dt>Drop-off · Customer</dt><dd>${escape(cleanAddress(o.address)||'Address unavailable')}
+              ${drop?`<br><a href="${escape(drop)}" target="_blank" rel="noopener noreferrer">Directions to customer</a>`:''}</dd></div>
+          </dl>
         </article>`;
-      }).join(''):'<p class="mu sm">No live deliveries assigned to your account.</p>';
+      }).join(''):`<section class="pr-no-deliveries"><h2>No assigned deliveries</h2>
+        <p>Mogawas diri ang order kung i-assign na sa admin sa imo.</p></section>`;
+      if(focused)Array.from(list.querySelectorAll('[data-order-id]'))
+        .find(button=>button.dataset.orderId===focused&&!button.disabled)?.focus({preventScroll:true});
     }
     async function end(message) {
       const session=share;
@@ -81,7 +103,7 @@
           });
           if (share!==session || !alive()) return;
           if (!saved) {void end('This delivery is no longer available for GPS sharing.');return;}
-          tell(document.hidden?'GPS paused while Papalita is in the background.':'Sharing GPS with this customer. Keep Papalita visible on your phone.');
+          tell(document.hidden?'GPS paused while Papalita is in the background.':'Sharing GPS with this customer.');
         } catch {
           if (share===session && alive()) tell('GPS could not sync. Retrying…');
         } finally {session.busy=false;}
@@ -93,8 +115,9 @@
       },{enableHighAccuracy:true,maximumAge:0,timeout:10000});
     }
     async function start(id) {
-      if (!alive() || share || requesting || !rows.some(o=>o.id===id&&o.status==='out_for_delivery'&&
-          (!o.assignment_version||o.rider_picked_up_at)))return;
+      const order=rows.find(o=>o.id===id);
+      if (!alive() || share || requesting || order?.status!=='out_for_delivery' ||
+          (order.assignment_version&&!order.rider_picked_up_at))return;
       if (!window.isSecureContext || !navigator.geolocation){tell('Open Papalita over HTTPS on a device with GPS.');return;}
       requesting=true;paint();tell('Allow location access when the browser asks.');
       try {
@@ -104,7 +127,7 @@
           await rpc('papalita_tracking_share',{p_order_id:id,p_share_key:token});
           return;
         }
-        const session={id,token,busy:false,timer:null};
+        const session={id,token,version:order.assignment_version,busy:false,timer:null};
         share=session;
         sample(session);
         session.timer=setInterval(()=>sample(session),7000);
@@ -122,6 +145,7 @@
       const action=button.dataset.deliveryAction;
       savingOrder=order.id;
       ++jobsRevision;
+      tell('');
       paint();
       try{
         const progress=await rpc('papalita_tracking_rider_progress',{
@@ -143,25 +167,33 @@
     async function refresh() {
       if(!alive() || refreshing || savingOrder || document.hidden)return;
       refreshing=true;
+      refreshButton.setAttribute('aria-busy','true');
       const revision=jobsRevision;
       try {
         const jobs=await rpc('papalita_tracking_jobs');
         if(!alive()||revision!==jobsRevision)return;
         rows=Array.isArray(jobs)?jobs:[];
-        if(share&&!rows.some(o=>o.id===share.id&&o.status==='out_for_delivery'))void end('This delivery has ended or was reassigned.');
-        if(!key)tell('Accept your assignment, confirm pickup, then share GPS when you’re on the way.');
+        if(share&&!rows.some(o=>o.id===share.id&&o.status==='out_for_delivery'&&o.assignment_version===share.version)){
+          void end('This delivery has ended or was reassigned.');
+        }
+        loadStatus.textContent='';
         paint();
       } catch {
-        if(alive()&&!share&&revision===jobsRevision)tell('Could not load live deliveries. Check the tracking setup and connection.');
-      } finally {refreshing=false;}
+        if(alive()&&revision===jobsRevision)loadStatus.textContent=key
+          ? 'Could not refresh. Showing the last loaded deliveries. Tap Refresh to try again.'
+          : 'Could not load your deliveries. Check your internet connection and tap Refresh. If it still fails, contact Papalita support.';
+      } finally {
+        refreshing=false;
+        refreshButton.removeAttribute('aria-busy');
+      }
     }
-    list.addEventListener('click',event=>{
-      if(event.target.closest('[data-stop-gps]')){void end();return;}
-      const action=event.target.closest('[data-delivery-action]');
-      if(action){void saveProgress(action);return;}
-      const button=event.target.closest('[data-start-gps]');
-      if(button)void start(button.dataset.startGps);
-    });
+    const click=event=>{
+      const button=event.target.closest('[data-delivery-action]');
+      if(!button || button.disabled)return;
+      if(button.dataset.deliveryAction==='stop')void end();
+      else if(button.dataset.deliveryAction==='gps')void start(button.dataset.orderId);
+      else void saveProgress(button);
+    };
     const leaving=()=>{void end();};
     const visibility=()=>{
       if(!alive())return;
@@ -174,14 +206,19 @@
     };
     document.addEventListener('visibilitychange',visibility);
     window.addEventListener('pagehide',leaving);
-    dialog.addEventListener('close',()=>{
+    list.addEventListener('click',click);
+    refreshButton.addEventListener('click',refresh);
+    const poll=setInterval(refresh,5000);
+    void refresh();
+    return ()=>{
+      mounted=false;
       clearInterval(poll);
       document.removeEventListener('visibilitychange',visibility);
       window.removeEventListener('pagehide',leaving);
+      list.removeEventListener('click',click);
+      refreshButton.removeEventListener('click',refresh);
       void end();
-    },{once:true});
-    poll=setInterval(refresh,5000);
-    void refresh();
+    };
   }
-  window.PapalitaLiveRider={open};
+  window.PapalitaLiveRider={mount};
 })();
