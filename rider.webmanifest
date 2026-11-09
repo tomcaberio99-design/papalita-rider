@@ -1,0 +1,25 @@
+{
+  "id": "/papalita-rider/",
+  "name": "Papalita Rider",
+  "short_name": "Papalita Rider",
+  "description": "Papalita's rider workspace for deliveries in Alegria.",
+  "start_url": "./?launch=rider",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8f8f4",
+  "theme_color": "#087F32",
+  "icons": [
+    {
+      "src": "images/papalita-rider-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/papalita-rider-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
