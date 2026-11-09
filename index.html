@@ -56,9 +56,9 @@ html[data-pr-theme=dark]{--pr-bg:#121a15;--pr-card:#1c271f;--pr-ink:#edf0e7;--pr
 .pr-app-bar-inner{max-width:550px;margin:auto;padding:max(12px,env(safe-area-inset-top)) 16px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .pr-app-brand{display:flex;align-items:center;gap:10px}
 .pr-app-brand .pr-logo{width:38px;height:38px;border:1px solid var(--pr-line)}
-.pr-app-brand strong{font-size:17px;display:block;line-height:1.15;letter-spacing:.015em;text-transform:uppercase}
+.pr-app-brand strong{font-size:clamp(13px,4.1vw,17px);white-space:nowrap;display:block;line-height:1.15;letter-spacing:.015em;text-transform:uppercase}
 .pr-app-brand strong span{color:var(--pr-green)}
-.pr-ready .pr-workspace{width:100%;max-width:550px;margin:0 auto;padding:16px 16px max(24px,env(safe-area-inset-bottom))}
+.pr-ready .pr-workspace{width:100%;max-width:550px;margin:0 auto;padding:18px 16px calc(90px + env(safe-area-inset-bottom))}
 .pr-workspace h1{font-size:clamp(24px,6vw,32px);line-height:1.15;letter-spacing:-.025em;margin:0}
 .pr-workspace p{margin:0}
 .pr-page-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
@@ -68,22 +68,40 @@ html[data-pr-theme=dark]{--pr-bg:#121a15;--pr-card:#1c271f;--pr-ink:#edf0e7;--pr
 .pr-workspace .btn:disabled{opacity:.55;cursor:not-allowed}
 .pr-workspace [data-live-info]:empty,.pr-workspace [data-live-load-status]:empty{display:none}
 .pr-workspace [data-live-info],.pr-workspace [data-live-load-status]{font-size:13px;color:var(--pr-ink);background:var(--pr-soft);border-radius:10px;padding:10px 12px;margin-bottom:12px}
-.pr-tabs{display:flex;gap:7px;margin-bottom:14px}
-.pr-tabs[hidden]{display:none}
-.pr-tabs .btn{flex:1}
-.pr-tabs .btn[aria-pressed=true]{border-color:var(--pr-green);color:var(--pr-green);background:var(--pr-soft)}
+.pr-rider-shell [hidden],.pr-dialog [hidden]{display:none!important}
+.pr-nav{position:fixed;z-index:20;inset:auto 0 0;background:var(--pr-card);border-top:1px solid var(--pr-line);padding:5px 8px calc(5px + env(safe-area-inset-bottom))}
+.pr-nav-inner{max-width:550px;margin:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+.pr-nav button{min-height:54px;display:grid;justify-items:center;align-content:center;gap:4px;padding:5px 1px;color:var(--pr-muted);font-size:clamp(10px,2.7vw,13px);font-weight:700;border-radius:12px;line-height:1.2}
+.pr-nav button[aria-current=page]{background:var(--pr-soft);color:var(--pr-green)}
+.pr-nav .pr-icon{width:22px;height:22px}
+.pr-page-title p{margin:4px 0 0;color:var(--pr-muted)}
 .pr-trip,.pr-no-deliveries{background:var(--pr-card);border:1px solid var(--pr-line);border-radius:18px;padding:14px}
 .pr-trip-offer{background:linear-gradient(160deg,var(--pr-soft),var(--pr-card) 52%)}
 .pr-trip h2,.pr-no-deliveries h2{margin:0;font-size:23px;line-height:1.25;overflow-wrap:anywhere}
 .pr-trip h2.pr-job-alert{font-size:18px;text-transform:uppercase;letter-spacing:.04em}
 .pr-trip-header{display:flex;align-items:start;justify-content:space-between;gap:9px;flex-wrap:wrap}
 .pr-trip-header p{margin:4px 0 0}
+.pr-active-header{align-items:center;margin-bottom:12px}
+.pr-active-header h2{font-size:clamp(16px,4.5vw,19px)}
+.pr-active-header .pr-step{background:var(--pr-soft)}
+.pr-order-items{margin-top:8px;padding:6px 0;color:var(--pr-muted)}
+.pr-order-items summary{cursor:pointer;font-weight:700;min-height:35px}
+.pr-order-items ul{margin:0;padding-left:22px}
+.pr-trip .pr-cod{margin-top:10px}
+[data-pr-verification] .btn{margin-top:8px}
 .pr-step{font-size:11px;font-weight:750;color:var(--pr-green);border:1px solid var(--pr-line);border-radius:999px;padding:5px 8px;white-space:nowrap}
-.pr-availability{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
-.pr-availability label{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:750;cursor:pointer}
-.pr-availability input{width:21px;height:21px;accent-color:var(--pr-green)}
-.pr-availability label:has(input[hidden]){display:none}
-.pr-map-tools{margin-bottom:10px}
+.pr-availability{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 10px;border:1px solid var(--pr-line);background:var(--pr-soft);border-radius:999px;font-weight:750;cursor:pointer}
+.pr-availability:has(input[hidden]){display:none}
+.pr-availability input{appearance:none;width:14px;height:14px;margin:0;border:2px solid var(--pr-muted);border-radius:50%;cursor:pointer}
+.pr-availability input:checked{background:var(--pr-green);border-color:var(--pr-green)}
+.pr-availability input:disabled{opacity:.5;cursor:wait}
+.pr-account-card{background:var(--pr-card);border:1px solid var(--pr-line);border-radius:16px;padding:16px;margin-bottom:14px;overflow-wrap:anywhere}
+.pr-account-card h2{margin:0 0 8px;font-size:17px}
+.pr-account-card p{color:var(--pr-muted)}
+.pr-account-card .btn{justify-content:flex-start}
+.pr-account-version{text-align:center;color:var(--pr-muted);font-size:12px}
+.pr-form-message{color:var(--pr-muted);margin:8px 0}
+.pr-trip-tools{overflow-wrap:anywhere}
 .pr-map-canvas{height:clamp(220px,40dvh,360px);background:#e2eee3;border-radius:12px;isolation:isolate}
 .pr-map-pin{display:grid;place-items:center;border-radius:50%;border:2px solid white;color:white;font-weight:800;background:#14633e}
 .pr-map-drop{background:#a46017}
@@ -106,6 +124,7 @@ html[data-pr-theme=dark]{--pr-bg:#121a15;--pr-card:#1c271f;--pr-ink:#edf0e7;--pr
 .pr-trip-details .pr-customer-name,.pr-trip-details h3{display:block;margin:2px 0 4px;font-size:17px}
 .pr-route-stops>div{padding-left:16px;position:relative}
 .pr-route-stops>div:before{content:'';position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%;background:var(--pr-green)}
+.pr-route-stops>div+div{margin-top:10px;padding-top:10px;border-top:1px solid var(--pr-line)}
 .pr-route-stops>div+div:before{top:17px}
 .pr-pickup-slip{border-top:2px dashed var(--pr-line);border-bottom:2px dashed var(--pr-line)}
 .pr-recipient{border-top:1px dashed var(--pr-line);padding-top:9px;margin-top:9px}
@@ -115,6 +134,7 @@ html[data-pr-theme=dark]{--pr-bg:#121a15;--pr-card:#1c271f;--pr-ink:#edf0e7;--pr
 .pr-cod{border-top:1px dashed var(--pr-line);padding-top:9px;font-size:15px;font-weight:750}
 .pr-workspace .pr-status-note{margin:10px 0 0;color:var(--pr-muted);font-size:13px}
 .pr-trip-actions{display:flex;gap:8px;margin-top:12px;align-items:stretch}
+.pr-trip-actions.pr-delivery-actions{display:grid}
 .pr-trip-actions .btn.p{flex:1;min-height:50px;font-weight:800}
 .pr-ready[data-pr-dark=true] .pr-trip-actions .btn.p{background:#34d680;color:#0c2116;box-shadow:0 5px 20px #2fd47625}
 .pr-trip-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
@@ -138,7 +158,7 @@ html[data-pr-theme=dark]{--pr-bg:#121a15;--pr-card:#1c271f;--pr-ink:#edf0e7;--pr
 </head>
 <body><div id="root"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js"></script><script src="js/ops.js"></script><script src="js/rider-road-map.js"></script><script src="js/live-delivery-rider.js?update=rider-tools"></script>
+<script src="js/config.js"></script><script src="js/ops.js"></script><script src="js/rider-road-map.js"></script><script src="js/live-delivery-rider.js?update=rider-navigation"></script>
 <script>
 (() => { 'use strict';
 /* Rider identity is verified by Supabase Auth and the protected user_roles table. */
@@ -147,7 +167,12 @@ let me = null;
 let activeRiderId = null;
 let stopDeliveries = null;
 
-const prIcons={install:'<path d="M12 3v12m-4-4 4 4 4-4M4 16v4h16v-4"/>',arrow:'<path d="M4 12h16M14 6l6 6-6 6"/>',logout:'<path d="M9 3H4v18h5M9 12h12M17 8l4 4-4 4"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>',moon:'<path d="M20 14a8 8 0 0 1-10-10 8.5 8.5 0 1 0 10 10Z"/>',screen:'<rect x="3" y="3" width="18" height="13" rx="1"/><path d="M12 16v5M7 21h10"/>',close:'<path d="m6 6 12 12M6 18 18 6"/>'};
+const prIcons={
+ available:'<path d="M4 4h16l2 10v5H2v-5l2-10Zm-2 10h6l2 2h4l2-2h6"/>',
+ my:'<path d="m12 3 9 5v8l-9 5-9-5V8l9-5Zm-9 5 9 5 9-5m-9 5v8m-4.5-15.5 9 5"/>',
+ earnings:'<path d="M3 6h17v13H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Zm17 4h-5a2 2 0 0 0 0 4h5M3 6l13-3 2 3"/>',
+ account:'<circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2H4Z"/>',
+ install:'<path d="M12 3v12m-4-4 4 4 4-4M4 16v4h16v-4"/>',arrow:'<path d="M4 12h16M14 6l6 6-6 6"/>',logout:'<path d="M9 3H4v18h5M9 12h12M17 8l4 4-4 4"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>',moon:'<path d="M20 14a8 8 0 0 1-10-10 8.5 8.5 0 1 0 10 10Z"/>',screen:'<rect x="3" y="3" width="18" height="13" rx="1"/><path d="M12 16v5M7 21h10"/>',close:'<path d="m6 6 12 12M6 18 18 6"/>'};
 const prIcon=name=>`<svg class="pr-icon" viewBox="0 0 24 24" aria-hidden="true">${prIcons[name]}</svg>`;
 let prTheme='dark';try{prTheme=localStorage.getItem('papalita.rider.appearance.v1')||'dark';}catch(_){}
 const prMedia=window.matchMedia('(prefers-color-scheme: dark)');
@@ -169,51 +194,162 @@ function clearDeliveries(){
  stop?.();
 }
 
+function prRenderAccount(){
+ if(!me)return;
+ const name=$('[data-pr-profile-name]'),email=$('[data-pr-profile-email]'),phone=$('[data-pr-profile-phone]');
+ if(!name||!email||!phone)return;
+ name.textContent=me.name;
+ email.textContent=me.email;
+ phone.textContent=me.phone;
+ phone.hidden=!me.phone;
+}
+
+function prEditProfile(){
+ const riderId=me.id;
+ const dialog=prModal('Edit Profile',`<form>
+  <div class="field"><label for="pr-profile-name">Full name</label><input class="in" id="pr-profile-name" name="name" autocomplete="name" maxlength="100" value="${esc(me.name)}" required></div>
+  <div class="field"><label for="pr-profile-phone">Phone number (optional)</label><input class="in" id="pr-profile-phone" name="phone" type="tel" autocomplete="tel" maxlength="25" value="${esc(me.phone)}"></div>
+  <p class="pr-form-message" role="status"></p>
+  <button class="btn p blk" type="submit">Save Profile</button>
+ </form>`);
+ const form=dialog.querySelector('form'),button=form.querySelector('button'),status=form.querySelector('[role=status]');
+ form.onsubmit=async event=>{
+  event.preventDefault();
+  if(button.disabled||me?.id!==riderId)return;
+  const name=form.elements.name.value.trim(),phone=form.elements.phone.value.trim();
+  if(!name){status.textContent='Enter your full name.';return;}
+  if(phone&&!/^\+?[0-9]{7,15}$/.test(phone.replace(/[\s()-]/g,''))){
+   status.textContent='Enter a valid phone number.';return;
+  }
+  button.disabled=true;status.textContent='Saving…';
+  try{
+   const {data,error}=await prGetAuthClient().auth.updateUser({data:{full_name:name,phone}});
+   if(error)throw error;
+   if(data?.user?.id!==riderId)throw Error('The server could not confirm your profile update.');
+   if(me?.id!==riderId)return;
+   me={...me,name,phone};
+   prRenderAccount();
+   $('[data-pr-account-status]').textContent='Profile updated.';
+   if(dialog.open)dialog.close();
+  }catch(error){if(dialog.open)status.textContent=prAuthMessage(error);}
+  finally{button.disabled=false;}
+ };
+}
+
+function prChangePassword(){
+ const riderId=me.id;
+ const dialog=prModal('Change Password',`<form>
+  <div class="field"><label for="pr-current-password">Current password</label><input class="in" id="pr-current-password" type="password" name="current" autocomplete="current-password" required></div>
+  <div class="field"><label for="pr-new-password">New password</label><input class="in" id="pr-new-password" type="password" name="password" autocomplete="new-password" minlength="8" required></div>
+  <div class="field"><label for="pr-confirm-password">Confirm new password</label><input class="in" id="pr-confirm-password" type="password" name="confirm" autocomplete="new-password" minlength="8" required></div>
+  <div class="field" data-pr-verification hidden>
+   <label for="pr-password-code">Verification code</label>
+   <input class="in" id="pr-password-code" name="nonce" inputmode="numeric" autocomplete="one-time-code">
+   <button class="btn s" type="button" data-pr-send-code>Send verification code</button>
+  </div>
+  <p class="pr-form-message" role="status"></p>
+  <button class="btn p blk" type="submit">Update Password</button>
+ </form>`);
+ const form=dialog.querySelector('form'),button=form.querySelector('[type=submit]'),status=form.querySelector('[role=status]');
+ const verification=form.querySelector('[data-pr-verification]'),send=form.querySelector('[data-pr-send-code]');
+ send.onclick=async()=>{
+  if(me?.id!==riderId||send.disabled||button.disabled)return;
+  send.disabled=true;button.disabled=true;status.textContent='Sending verification code…';
+  try{
+   const {error}=await prGetAuthClient().auth.reauthenticate();
+   if(error)throw error;
+   if(dialog.open)status.textContent='Check your email for the verification code.';
+  }catch(error){if(dialog.open)status.textContent=prAuthMessage(error);}
+  finally{send.disabled=false;button.disabled=false;}
+ };
+ form.onsubmit=async event=>{
+  event.preventDefault();
+  if(button.disabled||me?.id!==riderId)return;
+  const {current,password,confirm,nonce}=form.elements;
+  if(password.value!==confirm.value){status.textContent='The new passwords do not match.';return;}
+  if(password.value===current.value){status.textContent='Choose a different password.';return;}
+  button.disabled=true;send.disabled=true;status.textContent='Updating password…';
+  try{
+   const payload={current_password:current.value,password:password.value};
+   if(!verification.hidden)payload.nonce=nonce.value.trim();
+   const {data,error}=await prGetAuthClient().auth.updateUser(payload);
+   if(error)throw error;
+   if(data?.user?.id!==riderId)throw Error('The server could not confirm your password update.');
+   if(me?.id!==riderId)return;
+   form.reset();
+   $('[data-pr-account-status]').textContent='Password updated.';
+   if(dialog.open)dialog.close();
+  }catch(error){
+   if(!dialog.open)return;
+   if(error?.code==='reauthentication_needed'||/reauthentication required/i.test(error?.message||'')){
+    verification.hidden=false;nonce.required=true;
+    status.textContent='Send a verification code and enter it to finish changing your password.';
+   }else status.textContent=prAuthMessage(error);
+  }finally{button.disabled=false;send.disabled=false;}
+ };
+ dialog.addEventListener('close',()=>form.reset(),{once:true});
+}
+
 function draw(){
- if(activeRiderId===me.id)return;
+ if(activeRiderId===me.id){prRenderAccount();return;}
  clearDeliveries();
  const id=me.id;
  const root=$('#root');
- document.title='Papalita Rider · My deliveries';
+ document.title='Papalita Rider';
  root.innerHTML=`
+ <div class="pr-rider-shell">
   <header class="pr-app-bar"><div class="pr-app-bar-inner">
    <div class="pr-app-brand">
     <img class="pr-logo" src="images/papalita_mark_color.png" alt="">
     <div><strong>Papalita <span>Rider</span></strong></div>
    </div>
-   <button class="btn s" type="button" data-pr-account>Account</button>
+   <label class="pr-availability"><input type="checkbox" aria-label="Available for new deliveries" role="switch" data-rider-availability hidden><span data-rider-availability-label></span></label>
   </div></header>
   <main class="pr-workspace" aria-labelledby="pr-delivery-title">
    <div class="pr-page-title">
-    <h1 id="pr-delivery-title">Deliveries</h1>
+    <div><h1 id="pr-delivery-title" tabindex="-1">Deliveries</h1><p data-view-summary hidden></p></div>
     <button class="btn s" type="button" data-live-refresh>Refresh</button>
    </div>
-   <p data-live-load-status role="status">Loading assigned orders…</p>
-   <p data-live-info role="status"></p>
-   <div class="pr-availability">
-    <label><input type="checkbox" aria-label="Available for new deliveries" role="switch" data-rider-availability hidden> <span data-rider-availability-label></span></label>
-    <button class="btn s" type="button" data-delivery-action="history">History &amp; earnings</button>
-   </div>
-   <nav class="pr-tabs" aria-label="Delivery views" data-delivery-views hidden></nav>
-   <div data-live-jobs></div>
-  </main>`;
- root.querySelector('[data-pr-account]').onclick=()=>{
-  const d=prModal('Your rider account',`<p><b>${esc(me.name)}</b><br>${esc(me.email||'')}</p>
-   <div class="pr-account-actions">
-    <button class="btn s blk" type="button" data-pr-install>${prIcon('install')}<span class="pr-install-native-label">Install Rider App</span><span class="pr-install-help-label">How to install Rider App</span></button>
-    <button class="btn s blk" type="button" data-pr-show-appearance>${prIcon('sun')}Appearance</button>
-    <button class="btn d blk" type="button" data-pr-signout>${prIcon('logout')}Sign out</button>
-   </div>`);
-  d.querySelector('[data-pr-signout]').onclick=()=>{d.close();void prRiderSignOut();};
-  d.querySelector('[data-pr-show-appearance]').onclick=()=>{d.close();prAppearance();};
- };
- const workspace=root.querySelector('main');
+   <section data-deliveries-page>
+    <p data-live-load-status role="status">Loading assigned orders…</p>
+    <p data-live-info role="status"></p>
+    <div data-live-jobs></div>
+   </section>
+   <section data-rider-history aria-label="Delivery history" hidden></section>
+   <section data-rider-account hidden>
+    <div class="pr-account-card">
+     <h2 data-pr-profile-name></h2><p data-pr-profile-email></p><p data-pr-profile-phone hidden></p>
+    </div>
+    <div class="pr-account-card">
+     <h2>Account Settings</h2>
+     <p class="pr-form-message" data-pr-account-status role="status"></p>
+     <div class="pr-account-actions">
+      <button class="btn s blk" type="button" data-pr-edit-profile>${prIcon('account')}Edit Profile</button>
+      <button class="btn s blk" type="button" data-pr-change-password>Change Password</button>
+      <button class="btn s blk" type="button" data-pr-show-appearance>${prIcon('sun')}Appearance</button>
+      <button class="btn s blk" type="button" data-pr-install>${prIcon('install')}<span class="pr-install-native-label">Install Rider App</span><span class="pr-install-help-label">How to install Rider App</span></button>
+      <button class="btn d blk" type="button" data-pr-signout>${prIcon('logout')}Sign out</button>
+     </div>
+    </div>
+    <footer class="pr-account-version">Papalita Rider · Version 1.0</footer>
+   </section>
+  </main>
+  <nav class="pr-nav" aria-label="Rider navigation"><div class="pr-nav-inner">
+   ${[['available','Available'],['my','My Deliveries'],['earnings','Earnings'],['account','Account']].map(([key,label])=>
+    `<button type="button" data-delivery-action="${key}"${key==='available'?' aria-current="page"':''}>${prIcon(key)}<span>${label}</span></button>`).join('')}
+  </div></nav>
+ </div>`;
+ prRenderAccount();
+ root.querySelector('[data-pr-edit-profile]').onclick=prEditProfile;
+ root.querySelector('[data-pr-change-password]').onclick=prChangePassword;
+ root.querySelector('[data-pr-signout]').onclick=()=>void prRiderSignOut();
+ root.querySelector('[data-pr-show-appearance]').onclick=prAppearance;
  if(!window.PapalitaLiveRider?.mount){
-  workspace.querySelector('[data-live-load-status]').textContent='Could not open your deliveries. Tap Refresh to try again.';
-  workspace.querySelector('[data-live-refresh]').onclick=()=>location.reload();
+  root.querySelector('[data-live-load-status]').textContent='Could not open your deliveries. Tap Refresh to try again.';
+  root.querySelector('[data-live-refresh]').onclick=()=>location.reload();
   return;
  }
- stopDeliveries=window.PapalitaLiveRider.mount(workspace,prGetAuthClient(),()=>me?.id===id,esc,prModal);
+ stopDeliveries=window.PapalitaLiveRider.mount(root,prGetAuthClient(),()=>me?.id===id,esc,prModal);
  activeRiderId=id;
 }
 
@@ -243,7 +379,13 @@ async function prAuthorizeRider(client,user){
  if(!rider){const error=Error('This account has no rider access. Ask your Papalita administrator to assign the rider role.');error.code='RIDER_ROLE_REQUIRED';throw error;}
  // Profiles provide display details only. A profile field cannot grant rider access.
  let profile={};try{const q=await client.from('profiles').select('*').eq('id',user.id).maybeSingle();if(!q.error&&q.data)profile=q.data;}catch(_){}
- return {id:user.id,name:String(profile.full_name||profile.name||String(user.email||'').split('@')[0]||'Rider'),email:String(user.email||'')};
+ const metadata=user.user_metadata||{};
+ return {
+  id:user.id,
+  name:String(metadata.full_name||profile.full_name||profile.name||String(user.email||'').split('@')[0]||'Rider'),
+  email:String(user.email||''),
+  phone:String(metadata.phone??profile.phone??'')
+ };
 }
 async function prVerifiedIdentity(client){
  const result=await client.auth.getUser();if(result.error)throw result.error;
