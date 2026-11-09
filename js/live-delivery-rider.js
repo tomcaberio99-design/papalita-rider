@@ -24,13 +24,19 @@
 
   function mount(workspace, db, isCurrent, escape, modal) {
     const list=workspace.querySelector('[data-live-jobs]');
-    const views=workspace.querySelector('[data-delivery-views]');
+    const navigation=workspace.querySelector('.pr-nav');
+    const title=workspace.querySelector('#pr-delivery-title');
+    const summary=workspace.querySelector('[data-view-summary]');
+    const deliveriesPage=workspace.querySelector('[data-deliveries-page]');
+    const historyPage=workspace.querySelector('[data-rider-history]');
+    const accountPage=workspace.querySelector('[data-rider-account]');
+    const pageTitles={available:'Available',my:'My Deliveries',earnings:'Earnings',account:'Account'};
     const info=workspace.querySelector('[data-live-info]');
     const loadStatus=workspace.querySelector('[data-live-load-status]');
     const refreshButton=workspace.querySelector('[data-live-refresh]');
     const skipped=new Set();
     const availability=workspace.querySelector('[data-rider-availability]');
-    let online=null, savingAvailability=false, mapDialog=null;
+    let online=null, savingAvailability=false, mapDialog=null, loadingHistory=false;
     let offers=[], rows=[], view='', selectedId='', key='';
     let share=null, requesting=false, refreshing=false, mounted=true, savingOrder=null, jobsRevision=0;
     let completedId='', confirmedAction=null;
@@ -65,45 +71,43 @@
       const handedOff=order.status==='out_for_delivery';
       const storePhone=safePhone(order.store_phone), phone=safePhone(order.phone);
       const customer=escape(order.customer||'Name unavailable');
-      const contact=phone?`<p class="pr-order-sub">${escape(phone)}</p>`:'';
       const cod=order.cod_due!=null&&Number.isFinite(Number(order.cod_due))
         ? `<p class="pr-cod">Collect cash · ${peso.format(Number(order.cod_due))} (COD)</p>` : '';
       const time=order.created_at&&Number.isFinite(Date.parse(order.created_at))
         ? ' · '+orderTime.format(new Date(order.created_at)) : '';
       const sharing=share?.id===order.id;
-      const heading=pickedUp?'On the way':accepted?'At the store':'Assigned to you';
-      const body=pickedUp?`<div class="pr-trip-details">
-        <span class="pr-trip-label">Customer</span>
-        <strong class="pr-customer-name">${customer}</strong>
-        ${contact}
-        <p>${escape(cleanAddress(order.address)||'Drop-off address unavailable')}</p>
-        <div class="pr-trip-tools">
-          ${phone?`<a class="btn s" href="sms:${phone}">Message customer</a><a class="btn s" href="tel:${phone}">Call</a>`:''}
-          ${sharing?actionButton(order,'stop','Stop sharing GPS',{style:'s'}):
-            actionButton(order,'gps',requesting?'Starting GPS…':'Share live GPS',{style:'s',disabled:requesting||!!share||!handedOff})}
-        </div>
-        ${cod?`<div style="margin-top:10px">${cod}</div>`:''}
-      </div>`:`<div class="pr-trip-details pr-pickup-slip">
-        <span class="pr-trip-label">Collect from</span><h3>${escape(order.store||'Store')}</h3>
-        <p class="pr-order-sub">${escape(order.store_address||'')}${time}</p>
-        ${order.items?.length?`<ul>${order.items.map(i=>`<li>${escape(i.qty)} × ${escape(i.name||'Item')}</li>`).join('')}</ul>`:''}
-        ${cod}
-        ${accepted?`<div class="pr-recipient"><span class="pr-trip-label">Customer</span><strong class="pr-customer-name">${customer}</strong>${contact}</div>`:''}
-      </div>`;
-      const primary=pickedUp?actionButton(order,'deliver','Mark delivered',{disabled:!handedOff})
+      const phase=pickedUp?'On the way':accepted?'At the store':'Assigned to you';
+      const primary=pickedUp?actionButton(order,'deliver','Mark delivered',{style:'s',disabled:!handedOff})
         :accepted?actionButton(order,'pickup','Picked up & start delivery',{disabled:!handedOff})
         :actionButton(order,'accept','Accept assignment');
       return `<article class="pr-trip">
-        <header class="pr-trip-header"><div><h2>${heading}</h2><p class="pr-order-sub">${orderRef(order)}</p></div>
-          <span class="pr-step">Step ${pickedUp?3:accepted?2:1} of 3</span>
+        <header class="pr-trip-header pr-active-header">
+          <h2>Delivery #${escape(String(order.id).slice(0,8))}</h2>
+          <span class="pr-step">${phase}</span>
         </header>
-        ${accepted?`<div class="pr-trip-tools pr-map-tools">${actionButton(order,'map','Open street map',{style:'s'})}</div>`:''}
-        ${body}
-        ${accepted&&!handedOff&&!pickedUp?'<p class="pr-status-note">Hulat nga i-tap sa store ang <b>Hand to Rider</b>.</p>':''}
-        <div class="pr-trip-actions">${primary}</div>
+        <dl class="pr-trip-details pr-route-stops">
+          <div><dt>Pickup</dt><dd>${escape(order.store||'Store')}</dd>
+            <span class="pr-order-sub">${escape(order.store_address||'')}${time}</span></div>
+          ${accepted?`<div><dt>Drop-off</dt><dd class="pr-customer-name">${customer}</dd>
+            <span class="pr-order-sub">${escape(cleanAddress(order.address)||'Drop-off address unavailable')}</span>
+            ${phone?`<p class="pr-order-sub">${escape(phone)}</p>`:''}
+          </div>`:''}
+        </dl>
+        ${!pickedUp&&order.items?.length?`<details class="pr-order-items"><summary>Order items</summary>
+          <ul>${order.items.map(i=>`<li>${escape(i.qty)} × ${escape(i.name||'Item')}</li>`).join('')}</ul>
+        </details>`:''}
+        ${cod}
+        ${accepted&&!handedOff&&!pickedUp?'<p class="pr-status-note">Wait for the store to select <b>Hand to Rider</b>.</p>':''}
+        <div class="pr-trip-actions pr-delivery-actions">
+          ${accepted?actionButton(order,'map','Navigate',{style:pickedUp?'p':'s'}):''}
+          ${primary}
+        </div>
         <div class="pr-trip-tools">
           ${accepted?actionButton(order,'report','Report a problem',{style:'s'}):''}
           ${!pickedUp&&storePhone?`<a class="btn s" href="tel:${storePhone}">Call store</a>`:''}
+          ${pickedUp&&phone?`<a class="btn s" href="sms:${phone}">Message customer</a><a class="btn s" href="tel:${phone}">Call customer</a>`:''}
+          ${pickedUp?(sharing?actionButton(order,'stop','Stop sharing GPS',{style:'s'}):
+            actionButton(order,'gps',requesting?'Starting GPS…':'Share live GPS',{style:'s',disabled:requesting||!!share||!handedOff})):''}
           ${['confirmed','preparing','ready'].includes(order.status)?actionButton(order,'release','Release job',{style:'s'}):''}
         </div>
       </article>`;
@@ -115,18 +119,30 @@
       const focused=workspace.contains(document.activeElement)?document.activeElement.dataset.deliveryAction:null;
       const visible=offers.filter(order=>!skipped.has(order.id));
       const active=rows.find(order=>order.id===selectedId)||rows[0];
-      views.hidden=false;
+      const page=view||'available';
+      const isDeliveries=page==='available'||page==='my';
+      title.textContent=pageTitles[page];
+      summary.hidden=!isDeliveries||online===null;
+      const count=page==='available'?visible.length:rows.length;
+      summary.textContent=count+' '+(page==='available'?'available':'active')+' '+(count===1?'delivery':'deliveries');
+      deliveriesPage.hidden=!isDeliveries;
+      historyPage.hidden=page!=='earnings';
+      accountPage.hidden=page!=='account';
+      refreshButton.hidden=page==='account';
+      navigation.querySelectorAll('button').forEach(button=>{
+        if(button.dataset.deliveryAction===page)button.setAttribute('aria-current','page');
+        else button.removeAttribute('aria-current');
+      });
       availability.hidden=online===null;
       availability.checked=online===true;
       availability.disabled=savingAvailability||!!savingOrder;
       workspace.querySelector('[data-rider-availability-label]').textContent=online?'Online':'Offline';
-      views.innerHTML=`<button type="button" class="btn s" data-delivery-action="available" aria-pressed="${view==='available'}">Available · ${visible.length}</button>
-        <button type="button" class="btn s" data-delivery-action="my" aria-pressed="${view==='my'}">My deliveries · ${rows.length}</button>`;
+      if(!isDeliveries||online===null)return;
       if(view==='available') {
         list.innerHTML=online===false
           ? '<section class="pr-no-deliveries"><h2>You’re offline</h2><p>Switch to Online to see new jobs. You can still finish your current deliveries.</p></section>'
           : visible.length?offerCard(visible[0])
-          :`<section class="pr-no-deliveries"><h2>No available deliveries</h2><p>Mogawas diri ang delivery kung i-confirm na sa store.</p>
+          :`<section class="pr-no-deliveries"><h2>No available deliveries</h2><p>Deliveries appear here after the store confirms them.</p>
             ${offers.length?'<button type="button" class="btn s" data-delivery-action="unskip">Show skipped jobs</button>':''}</section>`;
       } else if(active){
         const index=rows.indexOf(active);
@@ -136,7 +152,7 @@
           <button type="button" class="btn s" data-delivery-action="next" data-order-id="${escape(rows[index+1]?.id||'')}" ${index===rows.length-1?'disabled':''}>Next</button></div>`:'');
       } else {
         list.innerHTML=`<section class="pr-no-deliveries"><h2>${completedId?'Delivered':'No assigned deliveries'}</h2>
-          <p>${completedId?'Na-update na ang order sa customer.':'Dawata ang usa ka job gikan sa Available Deliveries.'}</p>
+          <p>${completedId?'The customer’s order status is now Delivered.':'Accept a delivery from the Available tab.'}</p>
           <button type="button" class="btn s" data-delivery-action="available">View available deliveries</button></section>`;
       }
       if(focused)Array.from(workspace.querySelectorAll('[data-delivery-action]'))
@@ -222,11 +238,14 @@
     }
 
     async function showHistory(){
-      const dialog=modal('Delivery history & earnings','<div data-rider-history role="status">Loading earnings…</div>');
-      const panel=dialog.querySelector('[data-rider-history]');
+      if(!alive()||loadingHistory)return;
+      const panel=historyPage;
+      loadingHistory=true;
+      panel.setAttribute('role','status');
+      panel.textContent='Loading earnings…';
       try{
         const history=await rpc('papalita_rider_earnings');
-        if(!alive()||!dialog.open)return;
+        if(!alive())return;
         panel.removeAttribute('role');
         panel.innerHTML=`<div class="pr-earnings-total">
           <span>Total delivery earnings</span><strong>${peso.format(Number(history.total))}</strong>
@@ -237,7 +256,8 @@
           <div><b>${escape(row.store||'Store')}</b><small>${escape(historyDate.format(new Date(row.delivered_at)))} · #${escape(row.order_id.slice(0,8))}</small></div>
           <strong>${row.earned==null?'Fee unavailable':peso.format(Number(row.earned))}</strong></li>`).join('')+'</ul>'
           :'<p class="pr-status-note">Your completed deliveries will appear here.</p>'}`;
-      }catch{if(dialog.open)panel.textContent='Could not load your earnings. Reopen this screen to try again.';}
+      }catch{if(alive())panel.textContent='Could not load your earnings. Tap Refresh to try again.';}
+      finally{loadingHistory=false;}
     }
 
     function reportProblem(order){
@@ -403,8 +423,16 @@
       if(!button || button.disabled)return;
       const action=button.dataset.deliveryAction;
       const id=button.dataset.orderId;
-      if(action==='history'){void showHistory();return;}
-      if(action==='available'||action==='my'){view=action;paint();return;}
+      if(Object.hasOwn(pageTitles,action)){
+        if(view!==action){
+          view=action;
+          paint();
+          window.scrollTo(0,0);
+          title.focus({preventScroll:true});
+          if(action==='earnings')void showHistory();
+        }
+        return;
+      }
       if(action==='previous'||action==='next'){selectedId=id;paint();return;}
       if(action==='unskip'){skipped.clear();paint();return;}
       if(action==='skip'){skipped.add(id);paint();return;}
@@ -435,9 +463,11 @@
     document.addEventListener('visibilitychange',visibility);
     window.addEventListener('pagehide',leaving);
     workspace.addEventListener('click',click);
-    refreshButton.addEventListener('click',refresh);
+    const refreshView=()=>view==='earnings'?showHistory():refresh();
+    refreshButton.addEventListener('click',refreshView);
     availability.addEventListener('change',setAvailability);
     const poll=setInterval(refresh,5000);
+    paint();
     void refresh();
     return ()=>{
       mounted=false;
@@ -446,7 +476,7 @@
       window.removeEventListener('pagehide',leaving);
       workspace.removeEventListener('click',click);
       if(confirmedAction?.open)confirmedAction.close();
-      refreshButton.removeEventListener('click',refresh);
+      refreshButton.removeEventListener('click',refreshView);
       availability.removeEventListener('change',setAvailability);
       void end();
     };
