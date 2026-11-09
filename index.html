@@ -53,39 +53,66 @@ html[data-pr-theme=dark]{--pr-bg:#121a15;--pr-card:#1c271f;--pr-ink:#edf0e7;--pr
 .pr-ready .pr-gate-main .panel{background:var(--pr-card);color:var(--pr-ink)}
 .pr-dialog.ov[open]{display:block;height:fit-content}
 .pr-app-bar{background:var(--pr-card);border-bottom:1px solid var(--pr-line)}
-.pr-app-bar-inner{max-width:680px;margin:auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pr-app-bar-inner{max-width:550px;margin:auto;padding:max(12px,env(safe-area-inset-top)) 16px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .pr-app-brand{display:flex;align-items:center;gap:10px}
 .pr-app-brand .pr-logo{width:38px;height:38px;border:1px solid var(--pr-line)}
-.pr-app-brand strong{font-size:16px;display:block;line-height:1.15}
+.pr-app-brand strong{font-size:17px;display:block;line-height:1.15;letter-spacing:.015em;text-transform:uppercase}
+.pr-app-brand strong span{color:var(--pr-green)}
 .pr-app-brand small{font-size:11px;color:var(--pr-muted)}
-.pr-ready .pr-workspace{width:100%;max-width:680px;margin:0 auto;padding:24px 16px max(24px,env(safe-area-inset-bottom))}
-.pr-workspace h1{font-size:clamp(25px,6vw,34px);line-height:1.15;letter-spacing:-.035em;margin:0}
+.pr-ready .pr-workspace{width:100%;max-width:550px;margin:0 auto;padding:16px 16px max(24px,env(safe-area-inset-bottom))}
+.pr-workspace h1{font-size:clamp(24px,6vw,32px);line-height:1.15;letter-spacing:-.025em;margin:0}
 .pr-workspace p{margin:0}
-.pr-workspace .pr-intro{color:var(--pr-muted);font-size:14px;margin:7px 0 0}
-.pr-page-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
-.pr-workspace .btn,.pr-app-bar .btn,.pr-dialog .btn{min-height:44px;padding:8px 14px;border-radius:11px;font-size:14px;line-height:1.25}
+.pr-page-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.pr-page-title span,.pr-order-sub{color:var(--pr-muted);font-size:13px}
+.pr-workspace .btn,.pr-app-bar .btn,.pr-dialog .btn{min-height:44px;padding:8px 13px;border-radius:11px;font-size:14px;line-height:1.24}
 .pr-app-bar .btn.s,.pr-workspace .btn.s,.pr-dialog .btn.s{background:var(--pr-card);color:var(--pr-ink);border:1px solid var(--pr-line)}
 .pr-workspace .btn:disabled{opacity:.55;cursor:not-allowed}
 .pr-workspace [data-live-info]:empty,.pr-workspace [data-live-load-status]:empty{display:none}
-.pr-workspace [data-live-info],.pr-workspace [data-live-load-status]{font-size:14px;color:var(--pr-ink);background:var(--pr-soft);border-radius:10px;padding:10px 12px;margin-bottom:12px}
-.pr-assigned-list{display:grid;gap:14px}
-.pr-assigned-card,.pr-no-deliveries{background:var(--pr-card);border:1px solid var(--pr-line);border-radius:17px;padding:16px}
-.pr-assigned-head{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:6px 12px;margin-bottom:14px}
-.pr-assigned-head h2,.pr-no-deliveries h2{margin:0;font-size:18px;line-height:1.3;overflow-wrap:anywhere}
-.pr-assigned-ref{color:var(--pr-muted);font-size:12px}
-.pr-next-step{display:flex;gap:10px;align-items:flex-start;background:var(--pr-soft);border-radius:12px;padding:12px}
-.pr-step-number{display:grid;flex:none;place-items:center;width:31px;height:31px;border-radius:50%;border:1px solid var(--pr-green);color:var(--pr-green);font-weight:800}
-.pr-step-label{color:var(--pr-muted);font-size:11px;font-weight:700}
-.pr-next-step h3{font-size:16px;line-height:1.35;margin:0 0 2px}
-.pr-next-step p{font-size:13px;color:var(--pr-muted);overflow-wrap:anywhere}
-.pr-assigned-card .pr-order-action{width:100%;margin-top:10px;font-weight:750}
-.pr-addresses{display:grid;grid-template-columns:1fr;gap:10px;margin:14px 0 0}
-.pr-addresses dt{font-size:12px;color:var(--pr-muted);font-weight:700}
-.pr-addresses dd{margin:2px 0 0;overflow-wrap:anywhere;font-size:14px}
-.pr-addresses a{display:inline-flex;align-items:center;min-height:44px;color:var(--pr-green);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.pr-workspace [data-live-info],.pr-workspace [data-live-load-status]{font-size:13px;color:var(--pr-ink);background:var(--pr-soft);border-radius:10px;padding:10px 12px;margin-bottom:12px}
+.pr-tabs{display:flex;gap:7px;margin-bottom:14px}
+.pr-tabs[hidden]{display:none}
+.pr-tabs .btn{flex:1}
+.pr-tabs .btn[aria-pressed=true]{border-color:var(--pr-green);color:var(--pr-green);background:var(--pr-soft)}
+.pr-trip,.pr-no-deliveries{background:var(--pr-card);border:1px solid var(--pr-line);border-radius:18px;padding:14px}
+.pr-trip-offer{background:linear-gradient(160deg,var(--pr-soft),var(--pr-card) 52%)}
+.pr-trip h2,.pr-no-deliveries h2{margin:0;font-size:23px;line-height:1.25;overflow-wrap:anywhere}
+.pr-trip h2.pr-job-alert{font-size:18px;text-transform:uppercase;letter-spacing:.04em}
+.pr-trip-header{display:flex;align-items:start;justify-content:space-between;gap:9px;flex-wrap:wrap}
+.pr-trip-header p{margin:4px 0 0}
+.pr-step{font-size:11px;font-weight:750;color:var(--pr-green);border:1px solid var(--pr-line);border-radius:999px;padding:5px 8px;white-space:nowrap}
+.pr-trip-map{position:relative;display:block;width:100%;overflow:hidden;border-radius:12px;background:#253037;margin:12px 0}
+.pr-trip-map svg{display:block;width:100%;height:clamp(124px,39vw,185px);object-fit:cover}
+.pr-trip-map span{position:absolute;left:9px;bottom:8px;display:inline-block;border-radius:6px;padding:4px 8px;background:#101918e8;color:#e7f2ec;font-size:11px}
+.pr-trip-map small{position:absolute;right:9px;bottom:8px;border-radius:6px;padding:4px 8px;background:#101918e8;color:#c8d8cf;font-size:10px}
+.pr-trip-map:focus-visible{outline-offset:3px}
+.pr-trip-details{background:var(--pr-soft);padding:13px;border-radius:12px;overflow-wrap:anywhere}
+.pr-trip-details dt,.pr-trip-label{color:var(--pr-muted);font-size:12px;font-weight:650}
+.pr-trip-details dd{font-size:15px;font-weight:750;margin:0}
+.pr-trip-details dl,.pr-trip-details ul{margin:0}
+.pr-trip-details dl>div+div{margin-top:10px;padding-top:10px;border-top:1px solid var(--pr-line)}
+.pr-trip-details .pr-customer-name,.pr-trip-details h3{display:block;margin:2px 0 4px;font-size:17px}
+.pr-route-stops>div{padding-left:16px;position:relative}
+.pr-route-stops>div:before{content:'';position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%;background:var(--pr-green)}
+.pr-route-stops>div+div:before{top:17px}
+.pr-pickup-slip{border-top:2px dashed var(--pr-line);border-bottom:2px dashed var(--pr-line)}
+.pr-pickup-slip ul{list-style:none;padding:9px 0}
+.pr-pickup-slip li{display:flex;gap:8px;padding:5px 0}
+.pr-pickup-slip li:before{content:'•';color:var(--pr-green)}
+.pr-cod{border-top:1px dashed var(--pr-line);padding-top:9px;font-size:15px;font-weight:750}
+.pr-workspace .pr-status-note{margin:10px 0 0;color:var(--pr-muted);font-size:13px}
+.pr-trip-actions{display:flex;gap:8px;margin-top:12px;align-items:stretch}
+.pr-trip-actions .btn.p{flex:1;min-height:50px;font-weight:800}
+.pr-ready[data-pr-dark=true] .pr-trip-actions .btn.p{background:#34d680;color:#0c2116;box-shadow:0 5px 20px #2fd47625}
+.pr-trip-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.pr-trip-tools .btn.s{font-size:12px;min-height:44px}
+.pr-trip-tools .pr-contact-primary{color:var(--pr-ink);background:var(--pr-card)}
+.pr-trip-tools .pr-release{margin-left:auto}
 .pr-no-deliveries p{color:var(--pr-muted);font-size:14px;margin-top:6px}
+.pr-no-deliveries button{margin-top:10px}
 .pr-account-actions{display:grid;gap:8px}
-@media(min-width:500px){.pr-addresses{grid-template-columns:repeat(2,minmax(0,1fr))}.pr-assigned-card,.pr-no-deliveries{padding:20px}}
+.pr-jobs-nav{display:flex;align-items:center;gap:6px;margin-top:10px}
+.pr-jobs-nav button{flex:1}
+.pr-jobs-nav span{color:var(--pr-muted);white-space:nowrap}
 @media(max-width:700px){.pr-ready .pr-gate-main{margin:5vh auto!important;padding:0 16px 30px!important}}
 @media(prefers-reduced-motion:reduce){.pr-ready *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -97,7 +124,7 @@ html[data-pr-theme=dark]{--pr-bg:#121a15;--pr-card:#1c271f;--pr-ink:#edf0e7;--pr
 </head>
 <body><div id="root"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js"></script><script src="js/ops.js"></script><script src="js/live-delivery-rider.js?v=3"></script>
+<script src="js/config.js"></script><script src="js/ops.js"></script><script src="js/live-delivery-rider.js?v=4"></script>
 <script>
 (() => { 'use strict';
 /* Rider identity is verified by Supabase Auth and the protected user_roles table. */
@@ -108,7 +135,7 @@ let stopDeliveries = null;
 
 const prIcons={install:'<path d="M12 3v12m-4-4 4 4 4-4M4 16v4h16v-4"/>',arrow:'<path d="M4 12h16M14 6l6 6-6 6"/>',logout:'<path d="M9 3H4v18h5M9 12h12M17 8l4 4-4 4"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>',moon:'<path d="M20 14a8 8 0 0 1-10-10 8.5 8.5 0 1 0 10 10Z"/>',screen:'<rect x="3" y="3" width="18" height="13" rx="1"/><path d="M12 16v5M7 21h10"/>',close:'<path d="m6 6 12 12M6 18 18 6"/>'};
 const prIcon=name=>`<svg class="pr-icon" viewBox="0 0 24 24" aria-hidden="true">${prIcons[name]}</svg>`;
-let prTheme='light';try{prTheme=localStorage.getItem('papalita.rider.appearance.v1')||'light';}catch(_){}
+let prTheme='dark';try{prTheme=localStorage.getItem('papalita.rider.appearance.v1')||'dark';}catch(_){}
 const prMedia=window.matchMedia('(prefers-color-scheme: dark)');
 function prApplyTheme(){const dark=prTheme==='dark'||prTheme==='system'&&prMedia.matches;document.documentElement.dataset.prTheme=dark?'dark':'light';document.body.classList.add('pr-ready');document.body.dataset.prDark=String(dark);}
 prApplyTheme();prMedia.addEventListener?.('change',prApplyTheme);
@@ -138,18 +165,19 @@ function draw(){
   <header class="pr-app-bar"><div class="pr-app-bar-inner">
    <div class="pr-app-brand">
     <img class="pr-logo" src="images/papalita_mark_color.png" alt="">
-    <div><strong>Papalita Rider</strong><small>v6</small></div>
+    <div><strong>Papalita <span>Rider</span></strong><small>v7</small></div>
    </div>
    <button class="btn s" type="button" data-pr-account>Account</button>
   </div></header>
   <main class="pr-workspace" aria-labelledby="pr-delivery-title">
    <div class="pr-page-title">
-    <div><h1 id="pr-delivery-title">My deliveries</h1><p class="pr-intro">Mga order nga gi-assign sa imo.</p></div>
+    <h1 id="pr-delivery-title">Deliveries</h1>
     <button class="btn s" type="button" data-live-refresh>Refresh</button>
    </div>
    <p data-live-load-status role="status">Loading assigned orders…</p>
    <p data-live-info role="status"></p>
-   <div class="pr-assigned-list" data-live-jobs></div>
+   <nav class="pr-tabs" aria-label="Delivery views" data-delivery-views hidden></nav>
+   <div data-live-jobs></div>
   </main>`;
  root.querySelector('[data-pr-account]').onclick=()=>{
   const d=prModal('Your rider account',`<p><b>${esc(me.name)}</b><br>${esc(me.email||'')}</p>
@@ -167,7 +195,7 @@ function draw(){
   workspace.querySelector('[data-live-refresh]').onclick=()=>location.reload();
   return;
  }
- stopDeliveries=window.PapalitaLiveRider.mount(workspace,prGetAuthClient(),()=>me?.id===id,esc);
+ stopDeliveries=window.PapalitaLiveRider.mount(workspace,prGetAuthClient(),()=>me?.id===id,esc,prModal);
  activeRiderId=id;
 }
 
@@ -217,7 +245,7 @@ function prAuthLoading(message='Checking your rider account…'){
 function prRiderGate(message=''){
  clearDeliveries();
  document.title='Papalita Rider · Sign in';
- $('#root').innerHTML=`<main class="pr-gate-main"><form id="g" class="panel pr-auth-form"><div class="pr-gate-brand"><img class="pr-logo" src="images/papalita_mark_color.png" alt="Papalita"><div><strong>Papalita</strong><small>Rider portal · v6</small></div></div><h1>Welcome back, rider.</h1><p class="mu" style="margin:7px 0 21px">Sign in to your Papalita rider account.</p><div class="field"><label for="rider-email">Email address</label><input class="in" id="rider-email" name="email" type="email" autocomplete="username" inputmode="email" value="${esc(prLoginEmail)}" required placeholder="you@example.com"></div><div class="field"><label for="rider-password">Password</label><div class="pr-password-wrap"><input class="in" id="rider-password" name="password" type="password" autocomplete="current-password" required><button type="button" class="pr-password-toggle" id="rider-password-toggle" aria-label="Show password" aria-pressed="false">Show</button></div></div><p class="err pr-auth-error" id="pe" role="alert">${esc(message)}</p><button class="btn p blk" id="rider-signin" type="submit">Sign in ${prIcon('arrow')}</button><button type="button" class="btn s blk pr-install-login" data-pr-install>${prIcon('install')}<span class="pr-install-native-label">Install Rider App</span><span class="pr-install-help-label">How to install Rider App</span></button><p class="pr-install-pending" role="status">Install Rider App will appear when Chrome is ready.</p><p class="pr-auth-access">Your account needs the <b>rider</b> role. Contact your Papalita administrator if you need access.</p><p class="sm">New rider? <a class="link" href="https://papalitaoriginal.netlify.app/apply/?role=rider">Apply as a Rider</a></p><a class="link" href="https://tomcaberio99-design.github.io/papalita/">← Back to customer app</a></form></main>`;
+ $('#root').innerHTML=`<main class="pr-gate-main"><form id="g" class="panel pr-auth-form"><div class="pr-gate-brand"><img class="pr-logo" src="images/papalita_mark_color.png" alt="Papalita"><div><strong>Papalita</strong><small>Rider portal · v7</small></div></div><h1>Welcome back, rider.</h1><p class="mu" style="margin:7px 0 21px">Sign in to your Papalita rider account.</p><div class="field"><label for="rider-email">Email address</label><input class="in" id="rider-email" name="email" type="email" autocomplete="username" inputmode="email" value="${esc(prLoginEmail)}" required placeholder="you@example.com"></div><div class="field"><label for="rider-password">Password</label><div class="pr-password-wrap"><input class="in" id="rider-password" name="password" type="password" autocomplete="current-password" required><button type="button" class="pr-password-toggle" id="rider-password-toggle" aria-label="Show password" aria-pressed="false">Show</button></div></div><p class="err pr-auth-error" id="pe" role="alert">${esc(message)}</p><button class="btn p blk" id="rider-signin" type="submit">Sign in ${prIcon('arrow')}</button><button type="button" class="btn s blk pr-install-login" data-pr-install>${prIcon('install')}<span class="pr-install-native-label">Install Rider App</span><span class="pr-install-help-label">How to install Rider App</span></button><p class="pr-install-pending" role="status">Install Rider App will appear when Chrome is ready.</p><p class="pr-auth-access">Your account needs the <b>rider</b> role. Contact your Papalita administrator if you need access.</p><p class="sm">New rider? <a class="link" href="https://papalitaoriginal.netlify.app/apply/?role=rider">Apply as a Rider</a></p><a class="link" href="https://tomcaberio99-design.github.io/papalita/">← Back to customer app</a></form></main>`;
  const form=$('#g'),password=$('#rider-password'),toggle=$('#rider-password-toggle');
  if(prSignOutFailed){const retry=document.createElement('button');retry.type='button';retry.className='btn s blk';retry.style.marginTop='10px';retry.textContent='Retry sign out';retry.onclick=()=>void prRiderSignOut();$('#rider-signin').after(retry);}
  toggle.onclick=()=>{const shown=password.type==='password';password.type=shown?'text':'password';toggle.textContent=shown?'Hide':'Show';toggle.setAttribute('aria-label',shown?'Hide password':'Show password');toggle.setAttribute('aria-pressed',String(shown));};
