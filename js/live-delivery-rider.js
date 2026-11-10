@@ -52,13 +52,27 @@
         ${disabled||savingOrder?'disabled':''}>${savingOrder===order.id?'Saving…':label}</button>`;
     const orderRef=order=>'Order #'+escape(String(order.id).slice(0,8));
     const statusLabel=order=>phaseLabel[order.status]||'Awaiting pickup';
+    function deliveryPayout(order) {
+      const q=order.delivery_pricing;
+      if (!q) return order.delivery_fee == null ? '' :
+        `<p class="pr-cod">Delivery payout · ${peso.format(Number(order.delivery_fee))}</p>`;
+      const money=cents=>peso.format(cents/100);
+      const source=q.source==='fixed_area'?'Verified fixed area rate':(q.road_m/1000).toFixed(2)+' km by road';
+      return `<div class="pr-payout">
+        <strong>Delivery payout · ${money(q.total_centavos)}</strong>
+        <span>${source} · Base ${money(q.base_centavos)}${q.interior_centavos?' + '+money(q.interior_centavos)+' interior top-up':''}${q.terrain_centavos?' + '+money(q.terrain_centavos)+' upland surcharge':''}</span>
+      </div>`;
+    }
     function offerCard(order) {
       return `<article class="pr-trip pr-trip-offer">
         <header class="pr-trip-header"><h2 class="pr-job-alert">New job alert</h2><span class="pr-step">Step 1 of 3</span></header>
         <dl class="pr-trip-details pr-route-stops">
           <div><dt>Pick up at</dt><dd>${escape(order.store||'Store')}</dd><span class="pr-order-sub">${escape(order.store_address||'')}</span></div>
-          <div><dt>Drop-off area</dt><dd>${escape(order.barangay?order.barangay+', Alegria':'Alegria')}</dd></div>
+          <div><dt>Drop-off area</dt><dd>${escape(order.delivery_pricing
+            ? order.delivery_pricing.area+', '+order.delivery_pricing.barangay+', Alegria'
+            : order.barangay?order.barangay+', Alegria':'Alegria')}</dd></div>
         </dl>
+        ${deliveryPayout(order)}
         <p class="pr-status-note">${statusLabel(order)} · ${orderRef(order)}</p>
         <div class="pr-trip-actions">
           ${actionButton(order,'skip','Skip',{style:'s'})}
@@ -96,6 +110,7 @@
         ${!pickedUp&&order.items?.length?`<details class="pr-order-items"><summary>Order items</summary>
           <ul>${order.items.map(i=>`<li>${escape(i.qty)} × ${escape(i.name||'Item')}</li>`).join('')}</ul>
         </details>`:''}
+        ${deliveryPayout(order)}
         ${cod}
         ${accepted&&!handedOff&&!pickedUp?'<p class="pr-status-note">Wait for the store to select <b>Hand to Rider</b>.</p>':''}
         <div class="pr-trip-actions pr-delivery-actions">
