@@ -154,8 +154,185 @@ html[data-pr-theme=dark]{--pr-bg:#121a15;--pr-card:#1c271f;--pr-ink:#edf0e7;--pr
 </style>
 <!-- PAPALITA RIDER PRESENTATION END -->
 
-<style id="papalita-rider-auth">.pr-ready .pr-auth-form h1{font-size:26px!important;line-height:1.25}.pr-auth-form .pr-password-wrap{position:relative}.pr-auth-form .pr-password-wrap input{padding-right:63px}.pr-password-toggle{position:absolute;right:7px;top:6px;bottom:6px;border-radius:6px;padding:0 9px;font-size:10px;color:var(--pr-green);background:var(--pr-soft)}.pr-auth-error{font-size:12px;margin:0 0 13px;color:var(--pr-danger)}.pr-auth-error:empty{display:none}.pr-auth-access{font-size:10px;line-height:1.7;color:var(--pr-muted);margin:17px 0}.pr-auth-loading{padding:0 25px 25px!important;overflow:hidden;max-width:430px;margin:auto}.pr-auth-loading .pr-gate-brand{margin-bottom:21px}.pr-auth-loading p{font-size:13px;color:var(--pr-muted)}.pr-auth-form button:disabled{opacity:.65;cursor:wait}
-@media(max-width:700px){.pr-ready .pr-auth-form h1{font-size:24px!important}.pr-ready .pr-auth-form .in{font-size:16px}.pr-auth-form .pr-password-wrap input{padding-right:63px}.pr-auth-form .pr-password-toggle{font-size:11px}.pr-auth-form .pr-auth-access{font-size:11px}}
+<style id="papalita-rider-auth">
+.pr-auth-loading{padding:0 25px 25px!important;overflow:hidden;max-width:430px;margin:auto}
+.pr-auth-loading .pr-gate-brand{margin-bottom:21px}
+.pr-auth-loading p{font-size:13px;color:var(--pr-muted)}
+
+.pr-entry {
+  --entry-bg: #fbfaf4;
+  --entry-glow: #eaf2e6;
+  --entry-ink: #15382b;
+  --entry-muted: #4c6559;
+  --entry-line: #d8e1d6;
+  --entry-accent: #087448;
+  --entry-chip: #eaf2e7;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-inline: clamp(16px, 5vw, 64px);
+  color: var(--entry-ink);
+  background: radial-gradient(ellipse at 5% 0%, var(--entry-glow), transparent 58%), var(--entry-bg);
+  font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+}
+[data-pr-theme="dark"] .pr-entry {
+  --entry-bg: #101b16;
+  --entry-glow: #20382a;
+  --entry-ink: #edf2e8;
+  --entry-muted: #b8c9be;
+  --entry-line: #375143;
+  --entry-accent: #b9e4b7;
+  --entry-chip: #22382c;
+}
+.pr-entry .pr-entry-header, .pr-entry .pr-entry-main {
+  width: 100%;
+  max-width: 1160px;
+  margin-inline: auto;
+}
+.pr-entry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 80px;
+  border-bottom: 1px solid var(--entry-line);
+}
+.pr-entry-brand { display: flex; align-items: center; gap: 11px; line-height: 1.2; }
+.pr-entry-brand img {
+  width: 44px;
+  height: 44px;
+  padding: 5px;
+  border: 1px solid var(--entry-line);
+  border-radius: 12px;
+  background: #fff;
+  object-fit: contain;
+}
+.pr-entry-brand strong { display: block; font-size: 21px; letter-spacing: -.045em; }
+.pr-entry-brand small { display: block; margin-top: 4px; color: var(--entry-muted); font-size: 11px; font-weight: 700; }
+.pr-entry-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  color: var(--entry-accent);
+  font-size: 13px;
+  font-weight: 800;
+}
+.pr-entry-back:hover { text-decoration: underline; text-underline-offset: 4px; }
+.pr-entry .pr-icon { flex: none; }
+.pr-entry-back .pr-icon { transform: rotate(180deg); }
+.pr-entry .pr-entry-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-areas: 'intro access';
+  align-items: center;
+  gap: clamp(28px, 6vw, 80px);
+  padding: clamp(36px, 6vw, 76px) 0;
+}
+.pr-entry-intro { grid-area: intro; }
+.pr-entry-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border: 1px solid var(--entry-line);
+  border-radius: 999px;
+  background: var(--entry-chip);
+  color: var(--entry-accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.pr-entry-eyebrow::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.pr-ready .pr-entry-intro h2 {
+  max-width: 13ch;
+  margin: 16px 0;
+  color: var(--entry-ink);
+  font-size: clamp(42px, 5.6vw, 72px);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -.06em;
+}
+.pr-entry-intro h2 span { color: var(--entry-accent); }
+.pr-entry-lead { max-width: 36ch; margin: 0 0 24px; color: var(--entry-muted); font-size: 16px; line-height: 1.65; }
+.pr-entry .pr-entry-apply {
+  min-height: 50px;
+  justify-content: space-between;
+  gap: 18px;
+  padding-inline: 17px;
+  background: #087448;
+  color: #fff;
+  box-shadow: 0 6px 18px #08744826;
+}
+.pr-entry .pr-entry-apply:hover { background: #065f3b; }
+.pr-entry-note { margin-top: 12px; color: var(--entry-muted); font-size: 13px; }
+.pr-entry-access {
+  grid-area: access;
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  overflow: hidden;
+  padding: clamp(24px, 3.4vw, 40px);
+  border: 1px solid #1b4f3b;
+  border-radius: 26px;
+  background: linear-gradient(145deg, #103e30, #092b23);
+  color: #fff;
+  color-scheme: light;
+  box-shadow: 0 18px 38px #14362b26;
+}
+.pr-entry-access-art { position: absolute; z-index: -1; top: -35px; right: -30px; width: 160px; color: #a4ca98; opacity: .22; pointer-events: none; }
+.pr-entry-kicker { margin: 0 0 8px; color: #e9cf85; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.pr-ready .pr-entry-access h1 { margin: 0; color: #fff; font-size: clamp(24px, 3vw, 32px); line-height: 1.2; letter-spacing: -.045em; }
+.pr-entry-access-copy { margin: 8px 0 22px; color: #d7e9df; font-size: 14px; }
+.pr-entry-access .field { margin-bottom: 14px; }
+.pr-entry-access .field label { color: #f1f8f3; font-size: 13px; }
+.pr-entry .pr-auth-form .in {
+  min-height: 49px;
+  border-color: #d4e6dc;
+  border-radius: 11px;
+  background: #f7fbf8;
+  color: #173a2c;
+  font-size: 16px;
+}
+.pr-entry .pr-auth-form .in::placeholder { color: #566b5f; }
+.pr-entry .pr-auth-form .in:focus { border-color: #a7e2bc; box-shadow: 0 0 0 3px #a7e2bc; }
+.pr-entry-access :where(a, button, summary):focus-visible { outline-color: #b9e4b7; }
+.pr-password-wrap { position: relative; }
+.pr-entry .pr-password-wrap .in { padding-right: 68px; }
+.pr-password-toggle {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  bottom: 2px;
+  min-width: 50px;
+  border-radius: 8px;
+  color: #12563c;
+  font-size: 12px;
+  font-weight: 800;
+}
+.pr-password-toggle:hover { background: #e1f2df; }
+.pr-auth-error { margin: 0 0 12px; padding: 10px 12px; border-radius: 10px; background: #fff1e5; color: #883b24; font-size: 13px; overflow-wrap: anywhere; }
+.pr-auth-error:empty { display: none; }
+.pr-entry .pr-auth-form > .btn { min-height: 48px; font-weight: 800; }
+.pr-entry .pr-entry-signin { justify-content: space-between; background: #e1f2df; color: #163b2b; }
+.pr-entry .pr-entry-signin:hover:not(:disabled) { background: #c8e8cd; }
+.pr-entry .pr-install-login, .pr-entry .pr-entry-retry {
+  margin-top: 8px;
+  border: 1px solid #8db5a1;
+  background: transparent;
+  color: #eaf6ed;
+}
+.pr-entry .pr-install-login:hover, .pr-entry .pr-entry-retry:hover { background: #ffffff14; }
+.pr-auth-form button:disabled { opacity: .65; cursor: wait; }
+.pr-auth-access { margin: 14px 0 0; color: #d7e9df; font-size: 12px; line-height: 1.6; }
+@media (max-width: 760px) {
+  .pr-entry-header { min-height: 70px; }
+  .pr-entry .pr-entry-main { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'access' 'intro'; gap: 28px; padding-block: 24px 34px; }
+  .pr-entry-access { border-radius: 20px; }
+  .pr-ready .pr-entry-intro h2 { max-width: 17ch; margin-block: 12px; font-size: clamp(30px, 7vw, 44px); }
+  .pr-entry-lead { margin-bottom: 16px; font-size: 14px; }
+}
+.pr-entry .pr-auth-form .pr-install-pending { color: #d7e9df; }
 </style>
 </head>
 <body><div id="root"></div>
@@ -407,9 +584,56 @@ function prAuthLoading(message='Checking your rider account…'){
 function prRiderGate(message=''){
  clearDeliveries();
  document.title='Papalita Rider · Sign in';
- $('#root').innerHTML=`<main class="pr-gate-main"><form id="g" class="panel pr-auth-form"><div class="pr-gate-brand"><img class="pr-logo" src="images/papalita_mark_color.png" alt="Papalita"><div><strong>Papalita</strong><small>Rider portal</small></div></div><h1>Welcome back, rider.</h1><p class="mu" style="margin:7px 0 21px">Sign in to your Papalita rider account.</p><div class="field"><label for="rider-email">Email address</label><input class="in" id="rider-email" name="email" type="email" autocomplete="username" inputmode="email" value="${esc(prLoginEmail)}" required placeholder="you@example.com"></div><div class="field"><label for="rider-password">Password</label><div class="pr-password-wrap"><input class="in" id="rider-password" name="password" type="password" autocomplete="current-password" required><button type="button" class="pr-password-toggle" id="rider-password-toggle" aria-label="Show password" aria-pressed="false">Show</button></div></div><p class="err pr-auth-error" id="pe" role="alert">${esc(message)}</p><button class="btn p blk" id="rider-signin" type="submit">Sign in ${prIcon('arrow')}</button><button type="button" class="btn s blk pr-install-login" data-pr-install>${prIcon('install')}<span class="pr-install-native-label">Install Rider App</span><span class="pr-install-help-label">How to install Rider App</span></button><p class="pr-install-pending" role="status">Install Rider App will appear when Chrome is ready.</p><p class="pr-auth-access">Your account needs the <b>rider</b> role. Contact your Papalita administrator if you need access.</p><p class="sm">New rider? <a class="link" href="https://papalitaoriginal.netlify.app/apply/?role=rider">Apply as a Rider</a></p><a class="link" href="https://tomcaberio99-design.github.io/papalita/">← Back to customer app</a></form></main>`;
+ $('#root').innerHTML=`
+  <div class="pr-entry">
+    <header class="pr-entry-header">
+      <div class="pr-entry-brand">
+        <img src="images/papalita_mark_color.png" alt="" width="44" height="44">
+        <div><strong>Papalita</strong><small>Rider Portal</small></div>
+      </div>
+      <a class="pr-entry-back" href="https://tomcaberio99-design.github.io/papalita/">${prIcon('arrow')} Customer app</a>
+    </header>
+    <main class="pr-entry-main">
+      <section class="pr-entry-access" aria-labelledby="rider-signin-title">
+        <svg class="pr-entry-access-art" viewBox="0 0 160 160" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true">
+          <circle cx="107" cy="53" r="48"/><circle cx="107" cy="53" r="64"/><circle cx="107" cy="53" r="80"/>
+          <path d="M56 131c5-29 32-33 44-54 7-12 8-28 8-38m-6 6 6-6 6 6"/>
+        </svg>
+        <p class="pr-entry-kicker">Already a rider?</p>
+        <h1 id="rider-signin-title">Sign in as a rider</h1>
+        <p class="pr-entry-access-copy">Use the email and password you registered with.</p>
+        <form id="g" class="pr-auth-form">
+          <div class="field">
+            <label for="rider-email">Email address</label>
+            <input class="in" id="rider-email" name="email" type="email" autocomplete="username" inputmode="email" value="${esc(prLoginEmail)}" required placeholder="you@example.com">
+          </div>
+          <div class="field">
+            <label for="rider-password">Password</label>
+            <div class="pr-password-wrap">
+              <input class="in" id="rider-password" name="password" type="password" autocomplete="current-password" required placeholder="Your password">
+              <button type="button" class="pr-password-toggle" id="rider-password-toggle" aria-label="Show password" aria-pressed="false">Show</button>
+            </div>
+          </div>
+          <p class="err pr-auth-error" id="pe" role="alert">${esc(message)}</p>
+          <button class="btn blk pr-entry-signin" id="rider-signin" type="submit">Sign in ${prIcon('arrow')}</button>
+          <button type="button" class="btn blk pr-install-login" data-pr-install>
+            ${prIcon('install')}<span class="pr-install-native-label">Install Rider App</span><span class="pr-install-help-label">How to install Rider App</span>
+          </button>
+          <p class="pr-install-pending" role="status">Install Rider App will appear when Chrome is ready.</p>
+        </form>
+        <p class="pr-auth-access">Your account needs the <b>rider</b> role. Contact your Papalita administrator if you need access.</p>
+      </section>
+      <section class="pr-entry-intro" aria-labelledby="rider-entry-title">
+        <span class="pr-entry-eyebrow">For riders in Alegria</span>
+        <h2 id="rider-entry-title">Deliver with <span>Papalita.</span></h2>
+        <p class="pr-entry-lead">Pick up orders from local stores and deliver them to customers around Alegria.</p>
+        <a class="btn pr-entry-apply" href="https://papalitaoriginal.netlify.app/apply/?role=rider">Apply as a Rider ${prIcon('arrow')}</a>
+        <p class="pr-entry-note">We review each application before rider access is granted.</p>
+      </section>
+    </main>
+  </div>`;
  const form=$('#g'),password=$('#rider-password'),toggle=$('#rider-password-toggle');
- if(prSignOutFailed){const retry=document.createElement('button');retry.type='button';retry.className='btn s blk';retry.style.marginTop='10px';retry.textContent='Retry sign out';retry.onclick=()=>void prRiderSignOut();$('#rider-signin').after(retry);}
+ if(prSignOutFailed){const retry=document.createElement('button');retry.type='button';retry.className='btn blk pr-entry-retry';retry.textContent='Retry sign out';retry.onclick=()=>void prRiderSignOut();$('#rider-signin').after(retry);}
  toggle.onclick=()=>{const shown=password.type==='password';password.type=shown?'text':'password';toggle.textContent=shown?'Hide':'Show';toggle.setAttribute('aria-label',shown?'Hide password':'Show password');toggle.setAttribute('aria-pressed',String(shown));};
  form.onsubmit=event=>{event.preventDefault();void prRiderSubmit(form);};
 }
